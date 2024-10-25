@@ -1,4 +1,5 @@
 # Ultraviolet purpledoc config
+kind: indigo
 inputs:
   staticSite: website
 outputs:
