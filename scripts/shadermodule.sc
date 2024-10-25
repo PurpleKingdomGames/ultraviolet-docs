@@ -39,6 +39,11 @@ trait ShaderModule extends MillIndigo {
       .withWindowSize(400, 400)
       .withAssetDirectory(os.RelPath.rel / "assets")
       .withBackgroundColor("black")
+      .excludeAssets {
+        case p if p.endsWith(os.RelPath.rel / ".gitkeep")  => true
+        case p if p.endsWith(os.RelPath.rel / ".DS_Store") => true
+        case _                                             => false
+      }
 
   def indigoGenerators: IndigoGenerators =
     IndigoGenerators("generated")
