@@ -36,11 +36,8 @@ object CustomShader:
 
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
-
       def fragment(color: vec4): vec4 =
-
         val col: vec3 = 0.5f + 0.5f * cos(env.TIME + env.UV.xyx + vec3(0.0f, 2.0f, 4.0f))
         vec4(col, 1.0f)
-
     }
   // ```

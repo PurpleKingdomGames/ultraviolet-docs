@@ -20,7 +20,7 @@ object examples extends mill.Module {
       }
       object minimal extends shadermodule.ShaderModule {
         val indigoOptions: IndigoOptions =
-          makeIndigoOptions("Minimal")
+          makeIndigoOptions("Minimal Fragment Shader Setup")
       }
 
     }
@@ -148,6 +148,11 @@ object examples extends mill.Module {
   }
 
   object vertex extends mill.Module {
+
+    object minimal extends shadermodule.ShaderModule {
+      val indigoOptions: IndigoOptions =
+        makeIndigoOptions("Minimal Vertex Shader Setup")
+    }
 
     object movingvertices extends shadermodule.ShaderModule {
       val indigoOptions: IndigoOptions =
