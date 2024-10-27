@@ -72,6 +72,9 @@
     <li class="level2 nav-leaf"><a href="../../../../documentation/motivation.html">Motivation</a></li>
     <li class="level2 nav-leaf"><a href="../../../../documentation/example.html">Example: Shadertoy</a></li>
     <li class="level2 nav-leaf"><a href="../../../../documentation/comparison.html">Language feature comparison</a></li>
+    <li class="level2 nav-node"><a href="../../../../documentation/shaderprogramtypes/">Shader Programs</a></li>
+    <li class="level3 nav-leaf"><a href="../../../../documentation/shaderprogramtypes/vertex.html">Vertex Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="../../../../documentation/shaderprogramtypes/fragment.html">Fragment Shaders</a></li>
     <li class="level1 nav-node"><a href="../../../">Examples</a></li>
     <li class="level2 nav-node"><a href="../../">Fragment</a></li>
     <li class="level3 nav-node"><a href="../">Basics</a></li>
@@ -103,7 +106,8 @@
     <li class="level2 nav-node"><a href="../../../language-reference/">Language-reference</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-reference/imports/">Imports</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
-    <li class="level3 nav-leaf"><a href="../../../vertex/minimal/">Minimal</a></li>
+    <li class="level3 nav-leaf"><a href="../../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level3 nav-leaf"><a href="../../../vertex/movingvertices/">Moving Vertices</a></li>
   </ul>
 
 </nav>
@@ -116,7 +120,7 @@
 
   <ul class="nav-list">
     <li class="level1 nav-leaf"><a href="#example-links">Example Links</a></li>
-    <li class="level1 nav-leaf"><a href="#colours-example">Colours example</a></li>
+    <li class="level1 nav-leaf"><a href="#calculating-a-time-varying-pixel-color">Calculating a time varying pixel color</a></li>
   </ul>
 
   <p class="footer"></p>
@@ -126,7 +130,7 @@
       <main class="content">
 
         <h1 id="colours" class="title">Colours</h1>
-        <p>This is the colors example based on the default shadertoy project.</p>
+        <p>A simple shader that changes the colour of the entity based on the time. The shader is based on the default shader from <a href="https://www.shadertoy.com/">shadertoy</a>.</p>
         
         <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
         <ul>
@@ -136,16 +140,20 @@
           <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//demos/examples/fragment/basics/colours/">Live demo</a></li>
         </ul>
         
-        <h2 id="colours-example" class="section"><a class="anchor-link left" href="#colours-example"><i class="icofont-laika link">&#xef71;</i></a>Colours example</h2>
-        <p>A simple shader that changes the colour of the entity based on the time. The shader is based on
-        the default shader from <a href="https://www.shadertoy.com/">https://www.shadertoy.com/</a></p>
-        <p>This is a comment</p>
-        <p>As is
-        this</p>
-        <p>And this, yes indeed. More here too.</p>
-        <pre class="keep-together pdf epub"><code class="scala">import ultraviolet.syntax.*</code></pre>
-        <p>Based on the default shader from <a href="https://www.shadertoy.com/">https://www.shadertoy.com/</a></p>
-        <p>Time varying pixel color</p>
+        <h2 id="calculating-a-time-varying-pixel-color" class="section"><a class="anchor-link left" href="#calculating-a-time-varying-pixel-color"><i class="icofont-laika link">&#xef71;</i></a>Calculating a time varying pixel color</h2>
+        <p>This example demonstrates how to calculate a time varying pixel color by using a cosine wave
+        made up of the current time and the UV coordinates.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">syntax</span><span>.*
+
+  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+
+      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+
+        </span><span class="keyword">val</span><span> </span><span class="identifier">col</span><span>: </span><span class="identifier">vec3</span><span> = </span><span class="number-literal">0.5f</span><span> + </span><span class="number-literal">0.5f</span><span> * </span><span class="identifier">cos</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">TIME</span><span> + </span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>.</span><span class="identifier">xyx</span><span> + </span><span class="identifier">vec3</span><span>(</span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">4.0f</span><span>))
+        </span><span class="identifier">vec4</span><span>(</span><span class="identifier">col</span><span>, </span><span class="number-literal">1.0f</span><span>)
+
+    }</span></code></pre>
 
         
 <hr class="footer-rule"/>

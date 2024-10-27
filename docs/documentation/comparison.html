@@ -72,6 +72,9 @@
     <li class="level2 nav-leaf"><a href="motivation.html">Motivation</a></li>
     <li class="level2 nav-leaf"><a href="example.html">Example: Shadertoy</a></li>
     <li class="level2 active nav-leaf"><a href="#">Language feature comparison</a></li>
+    <li class="level2 nav-node"><a href="shaderprogramtypes/">Shader Programs</a></li>
+    <li class="level3 nav-leaf"><a href="shaderprogramtypes/vertex.html">Vertex Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="shaderprogramtypes/fragment.html">Fragment Shaders</a></li>
     <li class="level1 nav-node"><a href="../examples/">Examples</a></li>
     <li class="level2 nav-node"><a href="../examples/fragment/">Fragment</a></li>
     <li class="level3 nav-node"><a href="../examples/fragment/basics/">Basics</a></li>
@@ -103,7 +106,8 @@
     <li class="level2 nav-node"><a href="../examples/language-reference/">Language-reference</a></li>
     <li class="level3 nav-leaf"><a href="../examples/language-reference/imports/">Imports</a></li>
     <li class="level2 nav-node"><a href="../examples/vertex/">Vertex</a></li>
-    <li class="level3 nav-leaf"><a href="../examples/vertex/minimal/">Minimal</a></li>
+    <li class="level3 nav-leaf"><a href="../examples/vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level3 nav-leaf"><a href="../examples/vertex/movingvertices/">Moving Vertices</a></li>
   </ul>
 
 </nav>
@@ -165,36 +169,36 @@
         <h4 id="indigo-import-collisions" class="section"><a class="anchor-link left" href="#indigo-import-collisions"><i class="icofont-laika link">&#xef71;</i></a>Indigo import collisions</h4>
         <p>If you&#39;re using Ultraviolet with Indigo, then you stand a chance of import collisions. The main culprits are that both Ultraviolet and Indigo contains instances of things like classes called <code>Shader</code> and <code>vec4</code>.</p>
         <p>The simplest workaround here is to declare your UV shader code in an object in a separate file, or in a sub object as follows:</p>
-        <pre class="keep-together pdf epub"><code class="scala">import indigo.* // &lt;-- bring in problem imports
-
-object MyCode:
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">indigo</span><span>.* </span><span class="comment">// &lt;-- bring in problem imports
+</span><span>
+</span><span class="keyword">object</span><span> </span><span class="type-name">MyCode</span><span>:
   
-  //...
-
-  object MyShader:
-    import ultraviolet.syntax.* // &lt;-- problem import are effectively replaced
-
-    inline def myShader = ???</code></pre>
+  </span><span class="comment">//...
+</span><span>
+  </span><span class="keyword">object</span><span> </span><span class="type-name">MyShader</span><span>:
+    </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">syntax</span><span>.* </span><span class="comment">// &lt;-- problem import are effectively replaced
+</span><span>
+    </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">myShader</span><span> = ???</span></code></pre>
         
         <h4 id="environment-definitions" class="section"><a class="anchor-link left" href="#environment-definitions"><i class="icofont-laika link">&#xef71;</i></a>Environment definitions</h4>
         <p>If your shaders environment is simple, like the shadertoy one, and can be defined using a single case class that may or may not also be declared as a UBO, then all is well.</p>
         <p>More typically, you have some environment and several UBO definitions, and you&#39;d like your code to be able to access all of them, e.g.:</p>
-        <pre class="keep-together pdf epub"><code class="scala">final case class UBO1(count: Int)
-final case class UBO2(pos: vec2)
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">final</span><span> </span><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">UBO1</span><span>(</span><span class="identifier">count</span><span>: </span><span class="type-name">Int</span><span>)
+</span><span class="keyword">final</span><span> </span><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">UBO2</span><span>(</span><span class="identifier">pos</span><span>: </span><span class="identifier">vec2</span><span>)
 
-// Delcare all this fields that make up `env`
-Shader[FragmentEnv &amp; UBO1 &amp; UBO2] { env =&gt;
-  ubo[UBO1] // Tells ultraviolet to define the UBO1 data structure
-  ubo[UBO2] // Tells ultraviolet to define the UBO1 data structure
-
-  env.count // can be a field on FragmentEnv, UBO1, or UBO2
-}</code></pre>
+</span><span class="comment">// Delcare all this fields that make up `env`
+</span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span> &amp; </span><span class="type-name">UBO1</span><span> &amp; </span><span class="type-name">UBO2</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+  </span><span class="identifier">ubo</span><span>[</span><span class="type-name">UBO1</span><span>] </span><span class="comment">// Tells ultraviolet to define the UBO1 data structure
+</span><span>  </span><span class="identifier">ubo</span><span>[</span><span class="type-name">UBO2</span><span>] </span><span class="comment">// Tells ultraviolet to define the UBO1 data structure
+</span><span>
+  </span><span class="identifier">env</span><span>.</span><span class="identifier">count</span><span> </span><span class="comment">// can be a field on FragmentEnv, UBO1, or UBO2
+</span><span>}</span></code></pre>
         <p>So far, the above works. The problem is that at the point of converting to GLSL code, you have to provide a dummy, but real instance of that funky type <code>FragmentEnv &amp; UBO1 &amp; UBO2</code></p>
         <p>You can&#39;t avoid declaring <code>UBO1</code> and <code>UBO2</code> because UV needs them to create the correct definitions, but making <code>FragmentEnv &amp; UBO1 &amp; UBO2</code> isn&#39;t a fun exercise.</p>
         <p>Unfortunately, the best solution I&#39;ve found so far is to replace <code>FragmentEnv &amp; UBO1 &amp; UBO2</code> with something like this:</p>
-        <pre class="keep-together pdf epub"><code class="scala">final case class Env(count: Int, pos: vec2) extends FragmentEnvReference
-object Env:
-  def reference: Env = Env(0, vec2(0.0f))</code></pre>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">final</span><span> </span><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">Env</span><span>(</span><span class="identifier">count</span><span>: </span><span class="type-name">Int</span><span>, </span><span class="identifier">pos</span><span>: </span><span class="identifier">vec2</span><span>) </span><span class="keyword">extends</span><span> </span><span class="type-name">FragmentEnvReference</span><span>
+</span><span class="keyword">object</span><span> </span><span class="type-name">Env</span><span>:
+  </span><span class="keyword">def</span><span> </span><span class="declaration-name">reference</span><span>: </span><span class="type-name">Env</span><span> = </span><span class="type-name">Env</span><span>(</span><span class="number-literal">0</span><span>, </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">0.0f</span><span>))</span></code></pre>
         <p>Note that <code>FragmentEnv</code> is a real thing in Indigo, it provides Indigo&#39;s standard Fragment environment (there is also <code>VertexEnv</code> and <code>BlendFragmentEnv</code>). <code>FragmentEnvReference</code> is a trait with the same fields as <code>FragmentEnv</code>, with all the values hard coded so that you can make an instance easily.</p>
         
         <h3 id="compile-time-and-runtime-errors" class="section"><a class="anchor-link left" href="#compile-time-and-runtime-errors"><i class="icofont-laika link">&#xef71;</i></a>Compile time and Runtime errors</h3>
@@ -220,22 +224,22 @@ object Env:
         <h3 id="limited-support-for-product-types" class="section"><a class="anchor-link left" href="#limited-support-for-product-types"><i class="icofont-laika link">&#xef71;</i></a>Limited support for product types</h3>
         <p>You cannot make or use arbitrary Product types. For example, it is tempting to just make a little tuple in order to return two values from a function... but you can&#39;t.</p>
         <p>The closest thing you can do is make use of &#39;structs&#39;, which in Ultraviolet are represented by classes declared in the shader body - but it&#39;s usefulness is limited.</p>
-        <pre><code class="scala">inline def fragment =
-  Shader[Unit, Unit] { _ =&gt;
-    class Light(
-        val eyePosOrDir: vec3,
-        val isDirectional: Boolean,
-        val intensity: vec3,
-        val attenuation: Float
+        <pre><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span> =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">Unit</span><span>, </span><span class="type-name">Unit</span><span>] { </span><span class="identifier">_</span><span> =&gt;
+    </span><span class="keyword">class</span><span> </span><span class="type-name">Light</span><span>(
+        </span><span class="keyword">val</span><span> </span><span class="identifier">eyePosOrDir</span><span>: </span><span class="identifier">vec3</span><span>,
+        </span><span class="keyword">val</span><span> </span><span class="identifier">isDirectional</span><span>: </span><span class="type-name">Boolean</span><span>,
+        </span><span class="keyword">val</span><span> </span><span class="identifier">intensity</span><span>: </span><span class="identifier">vec3</span><span>,
+        </span><span class="keyword">val</span><span> </span><span class="identifier">attenuation</span><span>: </span><span class="type-name">Float</span><span>
     )
 
-    def makeLight(): Light =
-      Light(vec3(1.0f), true, vec3(2.0f), 2.5f)
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">makeLight</span><span>(): </span><span class="type-name">Light</span><span> =
+      </span><span class="type-name">Light</span><span>(</span><span class="identifier">vec3</span><span>(</span><span class="number-literal">1.0f</span><span>), </span><span class="boolean-literal">true</span><span>, </span><span class="identifier">vec3</span><span>(</span><span class="number-literal">2.0f</span><span>), </span><span class="number-literal">2.5f</span><span>)
 
-    def frag: Unit =
-      val x = makeLight()
-      val y = x.eyePosOrDir.y
-  }</code></pre>
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">frag</span><span>: </span><span class="type-name">Unit</span><span> =
+      </span><span class="keyword">val</span><span> </span><span class="identifier">x</span><span> = </span><span class="identifier">makeLight</span><span>()
+      </span><span class="keyword">val</span><span> </span><span class="identifier">y</span><span> = </span><span class="identifier">x</span><span>.</span><span class="identifier">eyePosOrDir</span><span>.</span><span class="identifier">y</span><span>
+  }</span></code></pre>
         
         <h3 id="no-sum-types" class="section"><a class="anchor-link left" href="#no-sum-types"><i class="icofont-laika link">&#xef71;</i></a>No sum types</h3>
         <p>There is no way to represent anything like an enum, the closest you can get is using an <code>int</code> as a flag to switch on in a pattern match.</p>
@@ -259,19 +263,19 @@ object Env:
         
         <h3 id="just-write-a-glsl-as-a-string" class="section"><a class="anchor-link left" href="#just-write-a-glsl-as-a-string"><i class="icofont-laika link">&#xef71;</i></a>Just write a glsl as a String?</h3>
         <p>This is completely valid but only if it&#39;s the only contents of the block:</p>
-        <pre class="keep-together pdf epub"><code class="scala">Shader {
-  &quot;int foo = 10;&quot;
-}</code></pre>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="type-name">Shader</span><span> {
+  </span><span class="string-literal">&quot;int foo = 10;&quot;</span><span>
+}</span></code></pre>
         <p>This is fine anywhere:</p>
-        <pre class="keep-together pdf epub"><code class="scala">Shader {
-  RawGLSL(&quot;int foo = 10;&quot;)
-  // or
-  raw(&quot;int bar = 11;&quot;)
-}</code></pre>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="type-name">Shader</span><span> {
+  </span><span class="type-name">RawGLSL</span><span>(</span><span class="string-literal">&quot;int foo = 10;&quot;</span><span>)
+  </span><span class="comment">// or
+</span><span>  </span><span class="identifier">raw</span><span>(</span><span class="string-literal">&quot;int bar = 11;&quot;</span><span>)
+}</span></code></pre>
         <p>But this will not work:</p>
-        <pre class="keep-together pdf epub"><code class="scala">Shader {
-  raw(&quot;int foo = 10;&quot;).trim
-}</code></pre>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="type-name">Shader</span><span> {
+  </span><span class="identifier">raw</span><span>(</span><span class="string-literal">&quot;int foo = 10;&quot;</span><span>).</span><span class="identifier">trim</span><span>
+}</span></code></pre>
         <p>Because we can&#39;t do string-y things in GLSL, and trim is a string operation.</p>
         
         <h3 id="pattern-matching-weirdness" class="section"><a class="anchor-link left" href="#pattern-matching-weirdness"><i class="icofont-laika link">&#xef71;</i></a>Pattern matching weirdness</h3>
@@ -475,29 +479,29 @@ object Env:
         <p>Ultraviolet (up to 0.1.1) was built against Scala 3.2.x, but does work with Scala 3.3.0 with one minor caveat: The thing to know is that calling external inlined functions doesn&#39;t work the way it used to anymore, and will produce errors that complain about illegal forward references.</p>
         <p>Being able to call external inlined functions is important, because it&#39;s one of the main ways the Ultraviolet achieves code reuse.</p>
         <p>Here is a simple example. Given an object called <code>Importable</code> like this:</p>
-        <pre class="keep-together pdf epub"><code class="scala">object Importable:
-  inline def addOne = (i: Int) =&gt; i + 1</code></pre>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">object</span><span> </span><span class="type-name">Importable</span><span>:
+  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">addOne</span><span> = (</span><span class="identifier">i</span><span>: </span><span class="type-name">Int</span><span>) =&gt; </span><span class="identifier">i</span><span> + </span><span class="number-literal">1</span></code></pre>
         
         <h2 id="in-scala-3-2-x" class="section"><a class="anchor-link left" href="#in-scala-3-2-x"><i class="icofont-laika link">&#xef71;</i></a>In Scala 3.2.x</h2>
         <p>This used to work:</p>
-        <pre class="keep-together pdf epub"><code class="scala">import Importable.*
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="type-name">Importable</span><span>.*
 
-inline def fragment: Shader[FragEnv, Int] =
-  Shader { _ =&gt;
-    val value = 10
-    addOne(value)
-  }</code></pre>
+</span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragEnv</span><span>, </span><span class="type-name">Int</span><span>] =
+  </span><span class="type-name">Shader</span><span> { </span><span class="identifier">_</span><span> =&gt;
+    </span><span class="keyword">val</span><span> </span><span class="identifier">value</span><span> = </span><span class="number-literal">10</span><span>
+    </span><span class="identifier">addOne</span><span>(</span><span class="identifier">value</span><span>)
+  }</span></code></pre>
         
         <h2 id="scala-3-3-x" class="section"><a class="anchor-link left" href="#scala-3-3-x"><i class="icofont-laika link">&#xef71;</i></a>Scala 3.3.x</h2>
         <p>Unfortunately the way inlines are represented in the AST has now changed, and the old method does not work anymore. Luckily there is a simple workaround. All we have to do is create a local proxy with the same signature that delegates to the original function:</p>
-        <pre class="keep-together pdf epub"><code class="scala">import Importable.*
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="type-name">Importable</span><span>.*
 
-inline def fragment: Shader[FragEnv, Int] =
-  Shader { _ =&gt;
-    val proxy: Int =&gt; Int = addOne
-    val value = 10
-    proxy(value)
-  }</code></pre>
+</span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragEnv</span><span>, </span><span class="type-name">Int</span><span>] =
+  </span><span class="type-name">Shader</span><span> { </span><span class="identifier">_</span><span> =&gt;
+    </span><span class="keyword">val</span><span> </span><span class="identifier">proxy</span><span>: </span><span class="type-name">Int</span><span> =&gt; </span><span class="type-name">Int</span><span> = </span><span class="identifier">addOne</span><span>
+    </span><span class="keyword">val</span><span> </span><span class="identifier">value</span><span> = </span><span class="number-literal">10</span><span>
+    </span><span class="identifier">proxy</span><span>(</span><span class="identifier">value</span><span>)
+  }</span></code></pre>
         <p>With this small change, we can continue to reuse code between shaders as before. Indeed the compiled output will be identical to how it was before.</p>
 
         

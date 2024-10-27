@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Typelevel Laika + Helium Theme" />
+  <title>Manipulating UVs</title>
+  
+  
+  <meta name="description" content="Scala 3 to GLSL transpiler"/>
+  
+  
+  
+  <link rel="icon" sizes="32x32" type="image/png" href="../../../img/favicon.png"/>
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:500">
+  
+  <link rel="stylesheet" type="text/css" href="../../../helium/site/icofont.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../helium/site/laika-helium.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/custom.css" />
+  <script src="../../../helium/site/laika-helium.js"></script>
+  
+  
+  <script> /* for avoiding page load transitions */ </script>
+</head>
+
+  <body>
+
+    <header id="top-bar" class="light-default dark-default">
+
+  <div class="row">
+    <a id="nav-icon">
+      <i class="icofont-laika navigationMenu" title="Navigation">&#xefa2;</i>
+    </a>
+    
+    
+  </div>
+
+  <a class="icon-link glyph-link" href="../../../documentation/"><i class="icofont-laika home" title="Home">&#xef47;</i></a>
+
+  <div class="row links">
+    
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/ultraviolet-docs">Github</a>
+    
+  </div>  
+
+</header>
+    
+    <nav id="sidebar">
+
+  <div class="row">
+    
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/ultraviolet-docs">Github</a>
+    
+  </div>
+
+  <ul class="nav-list">
+    <li class="level1 nav-node"><a href="../../../documentation/">Ultraviolet</a></li>
+    <li class="level2 nav-leaf"><a href="../../../documentation/motivation.html">Motivation</a></li>
+    <li class="level2 nav-leaf"><a href="../../../documentation/example.html">Example: Shadertoy</a></li>
+    <li class="level2 nav-leaf"><a href="../../../documentation/comparison.html">Language feature comparison</a></li>
+    <li class="level2 nav-node"><a href="../../../documentation/shaderprogramtypes/">Shader Programs</a></li>
+    <li class="level3 nav-leaf"><a href="../../../documentation/shaderprogramtypes/vertex.html">Vertex Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="../../../documentation/shaderprogramtypes/fragment.html">Fragment Shaders</a></li>
+    <li class="level1 nav-node"><a href="../../">Examples</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/">Fragment</a></li>
+    <li class="level3 nav-node"><a href="../../fragment/basics/">Basics</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/basics/colours/">Colours</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/basics/minimal/">Minimal</a></li>
+    <li class="level3 nav-node"><a href="../../fragment/demos/">Demos</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/demos/campfire/">Campfire</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/demos/glowing-star/">Glowing star</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/demos/pulsingbox/">Pulsingbox</a></li>
+    <li class="level3 nav-node"><a href="../../fragment/noise/">Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/noise/cellular-noise/">Cellular noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/noise/classic-perlin-noise/">Classic perlin noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/noise/gradient-noise/">Gradient noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/noise/simplex-noise/">Simplex noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/noise/white-noise/">White noise</a></li>
+    <li class="level3 nav-node"><a href="../../fragment/patterns/">Patterns</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/patterns/grid/">Grid</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/patterns/rainbow/">Rainbow</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/patterns/simple-voronoi/">Simple voronoi</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/patterns/stripes/">Stripes</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/patterns/wavy-stripes/">Wavy stripes</a></li>
+    <li class="level3 nav-node"><a href="../../fragment/sdf/">Sdf</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/sdf/circle/">Circle</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/sdf/square/">Square</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/sdf/star/">Star</a></li>
+    <li class="level3 nav-node"><a href="../../fragment/shapes/">Shapes</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/shapes/doughnut/">Doughnut</a></li>
+    <li class="level4 nav-leaf"><a href="../../fragment/shapes/metaballs/">Metaballs</a></li>
+    <li class="level2 nav-node"><a href="../../language-reference/">Language-reference</a></li>
+    <li class="level3 nav-leaf"><a href="../../language-reference/imports/">Imports</a></li>
+    <li class="level2 nav-node"><a href="../">Vertex</a></li>
+    <li class="level3 active nav-leaf"><a href="#">Manipulating UVs</a></li>
+    <li class="level3 nav-leaf"><a href="../movingvertices/">Moving Vertices</a></li>
+  </ul>
+
+</nav>
+
+    <div id="container">
+
+      
+<nav id="page-nav">
+  <p class="header"><a href="#">Manipulating UVs</a></p>
+
+  <ul class="nav-list">
+    <li class="level1 nav-leaf"><a href="#example-links">Example Links</a></li>
+    <li class="level1 nav-leaf"><a href="#how-to-manipulate-uvs-in-a-vertex-shader">How to manipulate UVs in a vertex shader</a></li>
+  </ul>
+
+  <p class="footer"></p>
+</nav>
+
+
+      <main class="content">
+
+        <h1 id="manipulating-uvs" class="title">Manipulating UVs</h1>
+        <p>UVs are the (x, y) coordinates within an on screen entity. The range from 0.0 to 1.0 in both the x and y axis. In Indigo, those coordinates go from top left to bottom right.</p>
+        <p>In the majority of cases the standard provided UVs are perfectly adequate for you to accomplish your rendering tasks.</p>
+        <p>However from time to time you may have a requirement that involves, say, rendering a subset of a large texture within a smaller entity, e.g, a 64 x 64 pixel sprite rendering animation frames from a texture sheet that is 256 x 256 (i.e. containing 16 frames of animation). You can achieve that inside a fragment shader, but there are two things to bear in mind:</p>
+        <ol class="arabic">
+          <li>Doing these calculations in the fragment shader is relatively expensive, since you will do the calculation exactly 4 times in a vertex shader, and once PER FRAGMENT (i.e. PIXEL, more or less) in the fragment shader. Fragment shaders are <em>extremely</em> fast, so don&#39;t <em>worry</em> about doing calculations there - particularly while prototyping, it&#39;s just a consideration.</li>
+          <li>If you need to do UV manipulation in the fragment shader, then you need a custom fragment shader. If you do the work in the vertex shader, yes you need a <em>small</em> custom vertex shader, but after that you can use any existing fragment shader to do the rendering, with all the built in bells and whistles they come with.</li>
+        </ol>
+        
+        <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
+        <ul>
+          <li><a href="https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main/examples/vertex/manipulatinguvs">Edit this page</a></li>
+        </ul>
+        <ul>
+          <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//demos/examples/vertex/manipulatinguvs/">Live demo</a></li>
+        </ul>
+        
+        <h2 id="how-to-manipulate-uvs-in-a-vertex-shader" class="section"><a class="anchor-link left" href="#how-to-manipulate-uvs-in-a-vertex-shader"><i class="icofont-laika link">&#xef71;</i></a>How to manipulate UVs in a vertex shader</h2>
+        <p>We need to define a shader that takes both the usual fragment shader, and also a vertex
+        shader. In this case we pass in the default environment to both.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">shader</span><span>: </span><span class="type-name">Shader</span><span> =
+  </span><span class="type-name">UltravioletShader</span><span>(
+    </span><span class="type-name">ShaderId</span><span>(</span><span class="string-literal">&quot;shader&quot;</span><span>),
+    </span><span class="type-name">EntityShader</span><span>.</span><span class="identifier">vertex</span><span>[</span><span class="type-name">VertexEnv</span><span>](</span><span class="identifier">vertex</span><span>, </span><span class="type-name">VertexEnv</span><span>.</span><span class="identifier">reference</span><span>),
+    </span><span class="type-name">EntityShader</span><span>.</span><span class="identifier">fragment</span><span>[</span><span class="type-name">FragmentEnv</span><span>](</span><span class="identifier">fragment</span><span>, </span><span class="type-name">FragmentEnv</span><span>.</span><span class="identifier">reference</span><span>)
+  )</span></code></pre>
+        <p>A vertex shader is just a function that takes a vec4 of the current vertex position, and
+        returns a new vec4 of the manipulated vertex position, but the vertex isn&#39;t the only value we
+        can alter.</p>
+        <p>In this example, simply return the provided vertex position. The interesting part is that in a
+        vertex shader the UV values are mutable, so we take the current UV and shift it based on an
+        angle manufactured from the current time.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">vertex</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">VertexEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">VertexEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+
+      </span><span class="keyword">def</span><span> </span><span class="declaration-name">vertex</span><span>(</span><span class="identifier">v</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+        </span><span class="keyword">val</span><span> </span><span class="identifier">angle</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">TAU</span><span> * (</span><span class="identifier">env</span><span>.</span><span class="type-name">TIME</span><span> % </span><span class="number-literal">1.0f</span><span>)
+
+        </span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span> + </span><span class="identifier">vec2</span><span>(</span><span class="identifier">sin</span><span>(</span><span class="identifier">angle</span><span>) * </span><span class="number-literal">0.2f</span><span>, </span><span class="identifier">cos</span><span>(</span><span class="identifier">angle</span><span>) * </span><span class="number-literal">0.2f</span><span>)
+
+        </span><span class="identifier">v</span><span>
+    }</span></code></pre>
+        <p>This means that the entity remains in place, but where a texture would be rendering within
+        it&#39;s space is shifed around.</p>
+
+        
+<hr class="footer-rule"/>
+<footer>
+  Site generated by <a href="https://typelevel.org/Laika/">Laika</a> with the Helium theme.
+</footer>
+
+
+      </main>
+
+    </div>
+
+  </body>
+
+</html>

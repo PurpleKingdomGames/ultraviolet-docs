@@ -72,6 +72,9 @@
     <li class="level2 nav-leaf"><a href="motivation.html">Motivation</a></li>
     <li class="level2 active nav-leaf"><a href="#">Example: Shadertoy</a></li>
     <li class="level2 nav-leaf"><a href="comparison.html">Language feature comparison</a></li>
+    <li class="level2 nav-node"><a href="shaderprogramtypes/">Shader Programs</a></li>
+    <li class="level3 nav-leaf"><a href="shaderprogramtypes/vertex.html">Vertex Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="shaderprogramtypes/fragment.html">Fragment Shaders</a></li>
     <li class="level1 nav-node"><a href="../examples/">Examples</a></li>
     <li class="level2 nav-node"><a href="../examples/fragment/">Fragment</a></li>
     <li class="level3 nav-node"><a href="../examples/fragment/basics/">Basics</a></li>
@@ -103,7 +106,8 @@
     <li class="level2 nav-node"><a href="../examples/language-reference/">Language-reference</a></li>
     <li class="level3 nav-leaf"><a href="../examples/language-reference/imports/">Imports</a></li>
     <li class="level2 nav-node"><a href="../examples/vertex/">Vertex</a></li>
-    <li class="level3 nav-leaf"><a href="../examples/vertex/minimal/">Minimal</a></li>
+    <li class="level3 nav-leaf"><a href="../examples/vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level3 nav-leaf"><a href="../examples/vertex/movingvertices/">Moving Vertices</a></li>
   </ul>
 
 </nav>
@@ -128,22 +132,22 @@
         <p>This program can be run as a Scala-Cli script from <a href="https://github.com/PurpleKingdomGames/ultraviolet/tree/main/examples/shadertoy">the examples</a> and the output pasted into <a href="https://www.shadertoy.com/new">ShaderToy&#39;s editor</a>. The code produced is almost the same as the default ShaderToy template, and when run, looks like this:</p>
         <p><img src="../img/shadertoy_default.png" alt="ShaderToy's default shader example"></p>
         <p>Here&#39;s the code:</p>
-        <pre><code class="scala">import ultraviolet.shadertoy.*
-import ultraviolet.syntax.*
+        <pre><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">shadertoy</span><span>.*
+</span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">syntax</span><span>.*
 
-inline def image =
-  Shader[ShaderToyEnv, Unit] { env =&gt;
-    def mainImage(fragColor: vec4, fragCoord: vec2): vec4 = {
-      // Normalized pixel coordinates (from 0 to 1)
-      val uv: vec2 = fragCoord / env.iResolution.xy
+</span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">image</span><span> =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">ShaderToyEnv</span><span>, </span><span class="type-name">Unit</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">mainImage</span><span>(</span><span class="identifier">fragColor</span><span>: </span><span class="identifier">vec4</span><span>, </span><span class="identifier">fragCoord</span><span>: </span><span class="identifier">vec2</span><span>): </span><span class="identifier">vec4</span><span> = {
+      </span><span class="comment">// Normalized pixel coordinates (from 0 to 1)
+</span><span>      </span><span class="keyword">val</span><span> </span><span class="identifier">uv</span><span>: </span><span class="identifier">vec2</span><span> = </span><span class="identifier">fragCoord</span><span> / </span><span class="identifier">env</span><span>.</span><span class="identifier">iResolution</span><span>.</span><span class="identifier">xy</span><span>
 
-      // Time varying pixel color
-      val col: vec3 = 0.5f + 0.5f * cos(env.iTime + uv.xyx + vec3(0.0f, 2.0f, 4.0f))
+      </span><span class="comment">// Time varying pixel color
+</span><span>      </span><span class="keyword">val</span><span> </span><span class="identifier">col</span><span>: </span><span class="identifier">vec3</span><span> = </span><span class="number-literal">0.5f</span><span> + </span><span class="number-literal">0.5f</span><span> * </span><span class="identifier">cos</span><span>(</span><span class="identifier">env</span><span>.</span><span class="identifier">iTime</span><span> + </span><span class="identifier">uv</span><span>.</span><span class="identifier">xyx</span><span> + </span><span class="identifier">vec3</span><span>(</span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">4.0f</span><span>))
 
-      // Output to screen
-      vec4(col, 1.0f)
+      </span><span class="comment">// Output to screen
+</span><span>      </span><span class="identifier">vec4</span><span>(</span><span class="identifier">col</span><span>, </span><span class="number-literal">1.0f</span><span>)
     }
-  }</code></pre>
+  }</span></code></pre>
         <p>The body has comments describing it take directly from the shader toy version, but let&#39;s walk through the Ultraviolet parts:</p>
         <ol class="arabic">
           <li>First we import ultraviolet&#39;s syntax and shadertoy support.</li>
