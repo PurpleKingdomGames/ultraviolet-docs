@@ -79,7 +79,7 @@
     <li class="level2 nav-node"><a href="../../">Fragment</a></li>
     <li class="level3 nav-node"><a href="../">Basics</a></li>
     <li class="level4 active nav-leaf"><a href="#">Colours</a></li>
-    <li class="level4 nav-leaf"><a href="../minimal/">Minimal</a></li>
+    <li class="level4 nav-leaf"><a href="../minimal/">Minimal Fragment Shader Setup</a></li>
     <li class="level3 nav-node"><a href="../../demos/">Demos</a></li>
     <li class="level4 nav-leaf"><a href="../../demos/campfire/">Campfire</a></li>
     <li class="level4 nav-leaf"><a href="../../demos/glowing-star/">Glowing star</a></li>
@@ -107,6 +107,7 @@
     <li class="level3 nav-leaf"><a href="../../../language-reference/imports/">Imports</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
     <li class="level3 nav-leaf"><a href="../../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level3 nav-leaf"><a href="../../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
     <li class="level3 nav-leaf"><a href="../../../vertex/movingvertices/">Moving Vertices</a></li>
   </ul>
 
@@ -147,12 +148,9 @@
 
   </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
     </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
-
       </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-
         </span><span class="keyword">val</span><span> </span><span class="identifier">col</span><span>: </span><span class="identifier">vec3</span><span> = </span><span class="number-literal">0.5f</span><span> + </span><span class="number-literal">0.5f</span><span> * </span><span class="identifier">cos</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">TIME</span><span> + </span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>.</span><span class="identifier">xyx</span><span> + </span><span class="identifier">vec3</span><span>(</span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">4.0f</span><span>))
         </span><span class="identifier">vec4</span><span>(</span><span class="identifier">col</span><span>, </span><span class="number-literal">1.0f</span><span>)
-
     }</span></code></pre>
 
         
