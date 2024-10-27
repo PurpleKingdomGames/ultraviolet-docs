@@ -3,10 +3,7 @@ import indigo.*
 import scala.scalajs.js.annotation.*
 import generated.*
 
-/** ## Colours example
-  *
-  * A simple shader that changes the colour of the entity based on the time. The shader is based on
-  * the default shader from https://www.shadertoy.com/
+/** ## Calculating a time varying pixel color
   */
 @JSExportTopLevel("IndigoGame")
 object Colours extends IndigoShader:
@@ -14,13 +11,6 @@ object Colours extends IndigoShader:
   val config: GameConfig =
     Config.config.noResize
 
-  /* This is a comment */
-  /*
-  As is
-  this
-   */
-  /** And this, yes indeed. More here too.
-    */
   val assets: Set[AssetType]      = Assets.assets.assetSet
   val channel0: Option[AssetPath] = None
   val channel1: Option[AssetPath] = None
@@ -38,18 +28,19 @@ object CustomShader:
       EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
     )
 
+  /** This example demonstrates how to calculate a time varying pixel color by using a cosine wave
+    * made up of the current time and the UV coordinates.
+    */
   // ```scala
   import ultraviolet.syntax.*
-  // ```
-
-  // Based on the default shader from https://www.shadertoy.com/
 
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 
       def fragment(color: vec4): vec4 =
-        // Time varying pixel color
+
         val col: vec3 = 0.5f + 0.5f * cos(env.TIME + env.UV.xyx + vec3(0.0f, 2.0f, 4.0f))
         vec4(col, 1.0f)
 
     }
+  // ```

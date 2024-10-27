@@ -149,9 +149,14 @@ object examples extends mill.Module {
 
   object vertex extends mill.Module {
 
-    object minimal extends shadermodule.ShaderModule {
+    object movingvertices extends shadermodule.ShaderModule {
       val indigoOptions: IndigoOptions =
-        makeIndigoOptions("Minimal")
+        makeIndigoOptions("Moving Vertices")
+    }
+
+    object manipulatinguvs extends shadermodule.ShaderModule {
+      val indigoOptions: IndigoOptions =
+        makeIndigoOptions("Manipulating UVs")
     }
 
   }

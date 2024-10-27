@@ -1,8 +1,12 @@
 # Ultraviolet
 
-Ultraviolet is a Scala 3 to GLSL (versions 100 and 300) transpiler library built on top of Scala 3 inline macros.
+[Ultraviolet](https://github.com/PurpleKingdomGames/ultraviolet) is a Scala 3 to GLSL (versions 100 and 300) transpiler library built on top of Scala 3 inline macros.
 
-Examples can be found in the [examples directory of this repo](https://github.com/PurpleKingdomGames/ultraviolet/tree/main/examples/). You can use Ultraviolet to generate GLSL shader code for [Indigo](https://github.com/PurpleKingdomGames/indigo), and also for [ShaderToy](https://www.shadertoy.com/).
+You can use Ultraviolet to generate GLSL shader code for [Indigo](https://github.com/PurpleKingdomGames/indigo), and also for [ShaderToy](https://www.shadertoy.com/).
+
+To browse the running examples, go to [https://purplekingdomgames.github.io/ultraviolet-docs/](https://purplekingdomgames.github.io/ultraviolet-docs/).
+
+All the shader examples and demos are written in [Ultraviolet](https://github.com/PurpleKingdomGames/ultraviolet) and presented running in [Indigo](https://indigoengine.io/), but Ultraviolet will work in any context where you need to generate GLSL from Scala.
 
 ## Installation
 
