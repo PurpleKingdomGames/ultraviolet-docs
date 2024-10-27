@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="generator" content="Typelevel Laika + Helium Theme" />
-  <title>Shader Programs</title>
+  <title>Intro to Shader Programs</title>
   
   
   <meta name="description" content="Scala 3 to GLSL transpiler"/>
@@ -70,11 +70,11 @@
   <ul class="nav-list">
     <li class="level1 nav-node"><a href="../">Ultraviolet</a></li>
     <li class="level2 nav-leaf"><a href="../motivation.html">Motivation</a></li>
-    <li class="level2 nav-leaf"><a href="../example.html">Example: Shadertoy</a></li>
-    <li class="level2 nav-leaf"><a href="../comparison.html">Language feature comparison</a></li>
-    <li class="level2 active nav-node"><a href="#">Shader Programs</a></li>
-    <li class="level3 nav-leaf"><a href="vertex.html">Vertex Shaders</a></li>
-    <li class="level3 nav-leaf"><a href="fragment.html">Fragment Shaders</a></li>
+    <li class="level2 nav-node"><a href="../scalavsglsl/">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="../scalavsglsl/inlining.html">Things to know about inlining</a></li>
+    <li class="level3 nav-leaf"><a href="../scalavsglsl/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
+    <li class="level2 active nav-node"><a href="#">Intro to Shader Programs</a></li>
+    <li class="level3 nav-leaf"><a href="furtherreading.html">Further reading on Shaders</a></li>
     <li class="level1 nav-node"><a href="../../examples/">Examples</a></li>
     <li class="level2 nav-node"><a href="../../examples/fragment/">Fragment</a></li>
     <li class="level3 nav-node"><a href="../../examples/fragment/basics/">Basics</a></li>
@@ -116,10 +116,11 @@
 
       
 <nav id="page-nav">
-  <p class="header"><a href="#">Shader Programs</a></p>
+  <p class="header"><a href="#">Intro to Shader Programs</a></p>
 
   <ul class="nav-list">
-    <li class="level1 nav-leaf"><a href="#further-reading-on-shaders">Further reading on Shaders</a></li>
+    <li class="level1 nav-leaf"><a href="#what-are-shaders-and-how-are-they-used">What are shaders and how are they used?</a></li>
+    <li class="level1 nav-leaf"><a href="#entities-layers-and-blending">Entities, layers, and blending</a></li>
   </ul>
 
   <p class="footer"></p>
@@ -128,17 +129,45 @@
 
       <main class="content">
 
-        <h1 id="shader-programs" class="title">Shader Programs</h1>
-        <p>All the shaders are written in <a href="https://github.com/PurpleKingdomGames/ultraviolet">Ultraviolet</a> and presented running in <a href="https://indigoengine.io/">Indigo</a>, but Ultraviolet will work in any context where you need to generate GLSL from Scala.</p>
+        <h1 id="intro-to-shader-programs" class="title">Intro to Shader Programs</h1>
+        <p>The following is a quick overview of shaders, and how the fit into the process of rendering game graphics.</p>
         
-        <h2 id="further-reading-on-shaders" class="section"><a class="anchor-link left" href="#further-reading-on-shaders"><i class="icofont-laika link">&#xef71;</i></a>Further reading on Shaders</h2>
-        <p>Nothing I&#39;ve done here or anywhere else with regard to shaders is original. Here are a few links to shader related goodness, by people far cleverer than myself.</p>
+        <h2 id="what-are-shaders-and-how-are-they-used" class="section"><a class="anchor-link left" href="#what-are-shaders-and-how-are-they-used"><i class="icofont-laika link">&#xef71;</i></a>What are shaders and how are they used?</h2>
+        <p>In the current age of computer graphics, whether you are doing 2D or 3D, your work is most likely rendered using 3D graphics hardware, and part of that process employs a &#39;Shader program&#39; that tells the hardware how to render parts of your image.</p>
+        <p>Shader programs are actually made up of several smaller programs. In GLSL the only two types of these programs are call the vertex and fragment shaders - a pair makes your complete shader program - but in other platforms you might also be able to define additional shader types, like compute shaders.</p>
+        <p>The process for 2D graphics, where transparency happens at every level, is roughly as follows:</p>
+        <ol class="arabic">
+          <li>Start with a high level description of some on-screen entities. Where each entity has properties like position, size, and rotation.</li>
+          <li>Sort the scene by depth, and draw from furthest away to nearest, to ensure the transparency will be handled correctly.* </li>
+          <li>Convert the on-screen entities into mesh data. Since this is 2D, each entity is a rectangle. The rectangle is known as a &#39;quad&#39;. A quad is made of 2 triangle that share 4 vertices (a, b, c, and d), as follows:</li>
+        </ol>
+        <pre><code>a___d
+|\  |
+| \ |
+|__\|
+b   c</code></pre>
+        <ol class="arabic">
+          <li>Upload the mesh and other information, like textures and shader programs, to the graphics hardware.</li>
+          <li>For each vertex (a, b, c, or d), run a <strong><em>Vertex shader</em></strong> to tell the graphics hardware, where the vertices should be rendered.</li>
+          <li>The graphics hardware then interpolates between the values between the vertices, and for each renderable position between two vertexes, it runs the <strong><em>fragment shader</em></strong> supplying interpolated values, notably UV coordinates. For example, halfway between vertices (a) and (d) on the diagram, will have a UV coordinate of (0.0f, 0.5f). The fragment shader tells the graphics hardware what color that fragment (i.e. pixel, more or less. Kinda.) should be.</li>
+          <li>The rendered entity is blended into whatever else has been rendered so far by some process.</li>
+        </ol>
+        <p>(* This is known as a painters algorithm. The process is important because, perhaps surprisingly, 3D graphics hardware is not optimised for handling transparency, and game devs employ lots of tricks to work around this limitation.)</p>
+        <p>In summary:</p>
         <ul>
-          <li><a href="https://thebookofshaders.com/"><a href="https://thebookofshaders.com/">https://thebookofshaders.com/</a></a></li>
-          <li><a href="https://iquilezles.org/articles/"><a href="https://iquilezles.org/articles/">https://iquilezles.org/articles/</a></a></li>
-          <li><a href="https://github.com/ashima/webgl-noise"><a href="https://github.com/ashima/webgl-noise">https://github.com/ashima/webgl-noise</a></a></li>
-          <li><a href="https://www.shadertoy.com/"><a href="https://www.shadertoy.com/">https://www.shadertoy.com/</a></a></li>
+          <li>Vertex shaders position the entity on the screen.</li>
+          <li>Fragment shaders decide what color the pixels of the entity will be.</li>
         </ul>
+        
+        <h2 id="entities-layers-and-blending" class="section"><a class="anchor-link left" href="#entities-layers-and-blending"><i class="icofont-laika link">&#xef71;</i></a>Entities, layers, and blending</h2>
+        <p>Most of the description above applies fairly directly to rendering what Indigo calls &#39;entities&#39;. However, the last point of the description alludes to &#39;some process&#39; of blending the entity into whatever has already been drawn so far.</p>
+        <p>Blending is the process of combining one image with another, and they may not necessarily be the same size or in the same position. There are two aspects to blending:</p>
+        <ol class="arabic">
+          <li>Blend Mode - this is a hardware mode where essentially you are telling the hardware how to combine numbers. Colors are represented as <code>vec4</code>s (Vector4, i.e. x,y,z,w or r,g,b,a) so to blend red (<code>vec4(1.0f, 0.0f, 0.0f, 1.0f)</code>) and blue (<code>vec4(0.0f, 0.0f, 1.0f, 1.0f)</code>) together, you need to decide how the maths should be done.</li>
+          <li>Blend shaders.</li>
+        </ol>
+        <p>Blend shaders are very similar to entity shaders, they both have a vertex and fragment component, but a few of the values differ. Blend shaders have the source and destination color values, for example.</p>
+        <p>Indigo blends entities onto a layer, and then the layer onto the final scene rendered so far (called a buffer).</p>
 
         
 <hr class="footer-rule"/>

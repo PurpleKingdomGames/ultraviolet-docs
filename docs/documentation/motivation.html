@@ -70,11 +70,11 @@
   <ul class="nav-list">
     <li class="level1 nav-node"><a href="index.html">Ultraviolet</a></li>
     <li class="level2 active nav-leaf"><a href="#">Motivation</a></li>
-    <li class="level2 nav-leaf"><a href="example.html">Example: Shadertoy</a></li>
-    <li class="level2 nav-leaf"><a href="comparison.html">Language feature comparison</a></li>
-    <li class="level2 nav-node"><a href="shaderprogramtypes/">Shader Programs</a></li>
-    <li class="level3 nav-leaf"><a href="shaderprogramtypes/vertex.html">Vertex Shaders</a></li>
-    <li class="level3 nav-leaf"><a href="shaderprogramtypes/fragment.html">Fragment Shaders</a></li>
+    <li class="level2 nav-node"><a href="scalavsglsl/">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="scalavsglsl/inlining.html">Things to know about inlining</a></li>
+    <li class="level3 nav-leaf"><a href="scalavsglsl/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
+    <li class="level2 nav-node"><a href="shaderprogramtypes/">Intro to Shader Programs</a></li>
+    <li class="level3 nav-leaf"><a href="shaderprogramtypes/furtherreading.html">Further reading on Shaders</a></li>
     <li class="level1 nav-node"><a href="../examples/">Examples</a></li>
     <li class="level2 nav-node"><a href="../examples/fragment/">Fragment</a></li>
     <li class="level3 nav-node"><a href="../examples/fragment/basics/">Basics</a></li>
@@ -120,6 +120,7 @@
 
   <ul class="nav-list">
     <li class="level1 nav-leaf"><a href="#current-goals">Current Goals</a></li>
+    <li class="level1 nav-leaf"><a href="#non-goals">Non-goals</a></li>
   </ul>
 
   <p class="footer"></p>
@@ -131,15 +132,18 @@
         <h1 id="motivation" class="title">Motivation</h1>
         <p>This project is motivated from two needs:</p>
         <ol class="arabic">
-          <li>The most pressing need is that GLSL tooling is patchy, and I&#39;d like to have a much better shader writing experience both for myself and any other Scala devs whether they&#39;re writing shaders for <a href="https://indigoengine.io/">Indigo</a>, <a href="https://www.shadertoy.com/">ShaderToy</a>, or some other Scala front end web framework.</li>
+          <li>The most pressing need is that standard (WebGL) GLSL tooling is not very enjoyable when writing games / shaders in Scala.js.</li>
           <li>Indigo is currently locked into WebGL 2.0, and to move to other platforms or rendering technologies means having some way to abstract away from that. </li>
         </ol>
+        <p>Ultimately the aim is to be able to write Shaders in FP friendly Scala that can target more than just GLSL 300, but that is not necessary for Ultraviolet to be useful and fun.</p>
         
         <h2 id="current-goals" class="section"><a class="anchor-link left" href="#current-goals"><i class="icofont-laika link">&#xef71;</i></a>Current Goals</h2>
-        <p>Right now, the goal is an almost like-for-like experience of writing GLSL (for WebGL) in Scala 3, in all it&#39;s very specific procedural glory. It includes a few quality of life improvements such as anonymous functions and function composition, but nothing fancy for now. You can even write unit tests!</p>
+        <p>Right now, the goal is an almost like-for-like experience of writing GLSL (for WebGL) in Scala 3, in all its specific, procedural glory. It includes a few quality of life improvements such as anonymous functions and function composition, but nothing fancy for now. You can even write unit tests!</p>
         <p>The library may ultimately diverge from GLSL, and who knows what sort of problems have been caused by using GLSL as a starting point, but replacing GLSL with Scala GLSL-flavored-shader-experience is the current goal.</p>
+        
+        <h2 id="non-goals" class="section"><a class="anchor-link left" href="#non-goals"><i class="icofont-laika link">&#xef71;</i></a>Non-goals</h2>
         <p>It is <em>not</em> a goal to be able to write arbitrary Scala and have it turned into GLSL. In other words this isn&#39;t a &#39;full&#39; transpiler (like Scala.js), it&#39;s a useful cross-over subset of Scala and GLSL. As many GLSL language features as can sensibly be represented, and as much Scala as GLSL can be coerced into expressing.</p>
-        <p>Ultimately I&#39;d like to be able to write Shaders in FP friendly Scala that can target more than just GLSL 300, but that is not necessary for Ultraviolet to be useful and fun.</p>
+        <p>No monads or typeclasses or other functional abstractions. They don&#39;t much sense here anyway! Try it, see for yourself.</p>
 
         
 <hr class="footer-rule"/>
