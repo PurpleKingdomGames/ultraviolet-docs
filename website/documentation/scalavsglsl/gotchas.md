@@ -1,28 +1,4 @@
 
-# Language feature comparison
-
-***The golden rule is: Keep It Simple!***
-
-GLSL is not a general purpose language like Scala is, and while it's possible to represent most of GLSL in Scala, the opposite is not true.
-
-GLSL is for doing maths on simple numeric data types and is, as someone else described it, "a very limited programming model."
-
-For all that, it is _very good fun_. Go forth and do maths and make pretty pictures!
-
-## Floats. Everywhere.
-
-In GLSL 300 there are no double types. It was very tempting to make Ultraviolet accept `Double`s and write `Float`s for a nicer experience, but in later GLSL versions and other shader languages `Double` and `Float` are separate so Ultraviolet does 'the right thing' and the cost of some user experience.
-
-Long story short: If you see an mysterious errors about constructors, you probably just wrote `1.0` instead of `1.0f`.
-
-## Built in functions
-
-GLSL comes LOADED with useful functions for doing all kinds of maths.
-
-Since all of the implementations are well specified, Ultraviolet has fully implemented about 95% of them in Scala in order to help you write unit tests for your code.
-
-The other 5% that cannot be implemented are stubbed, and simply return fixed values. `texture2D` for example will always return `vec4(0.0f)`.
-
 ## Gotcha's, foot guns, and weird stuff
 
 ### UX/DX/API rough edges
@@ -46,6 +22,8 @@ object MyCode:
     inline def myShader = ???
 
 ```
+
+This tactic is used in all the examples.
 
 #### Environment definitions
 
@@ -99,6 +77,10 @@ Runtime print errors are unusual, but the ones to look out for are from the **ta
 
 `assert(myShaderToy.toGLSL[ShaderToy].toOutput.code.nonEmpty)`
 
+### Did you accidentally use a Double?
+
+Ultraviolet / GLSL only supports `Float`s! Scala is very good at massaging Floats and Doubles, and so you don't always get helpful warnings when you accidentally use a double. Long story short: If you see an mysterious errors about constructors, you probably just wrote `1.0` instead of `1.0f`.
+
 ### Strings? Where we're going, we don't need Strings.
 
 GLSL is a C-like language for doing maths. There are no `Char` or `String` types.
@@ -134,7 +116,7 @@ inline def fragment =
 
 ### No sum types
 
-There is no way to represent anything like an enum, the closest you can get is using an `int` as a flag to switch on in a pattern match.
+There is no way to represent anything like an `enum`, the closest you can get is using an `int` as a flag to switch on in a pattern match.
 
 ### No forward referencing
 
@@ -196,7 +178,7 @@ A pattern match is converted to a switch statement, and in GLSL you can only swi
 
 What is totally unintuitive is that on some graphics hardware, in some implementations, switch statements will process ***all*** branches irrespective of whether they're going to be used or not.
 
-The problem with that, is that if you declare the same variable name in two branches, the GLSL compiler will fail and tell you that you've redeclared it. Bonkers, but the takeaway is: Don't repeat variable names in pattern match branches...
+The problem with that, is that if you declare the same variable name in two branches, the GLSL compiler (***IN THE BROWSER AT RUNTIME***) will fail and tell you that you've redeclared it. Bonkers, I know, but the lesson is: Don't repeat variable names in pattern match branches...
 
 ### Unofficial reserved words
 
@@ -205,95 +187,6 @@ When writing shaders in Scala, Scala reserved words will be checked and errors s
 You shouldn't have too much trouble with GLSL reserved words because many of them have the same status in Scala, and Ultraviolets validation should catch all the others at compile time.
 
 Naming conventions to avoid:
+
 - Do not call a function something like `def xy(v: vec4): ???` because this will likely interfere with the Swizzle mechanisms (e.g. `vec3(1.0f).yx`). Not at the point of definition but at the point of use.
-- Do not name anything `val0...N` or `def0...N`, as this is the naming scheme UltraViolet uses internally when it needs to create identifiers, and you'll end up in a mess. The `val` and `def` prefixes where picked in the hope the Scala people would naturally avoid them.
-
-## Comparison table
-
-Only included are the differences or note worthy features. If they're the same in both languages they are omitted.
-
-| Feature                           | Scala | GLSL | Ultraviolet | Notes                                                                                            |
-| --------------------------------- | ----- | ---- | ----------- | ------------------------------------------------------------------------------------------------ |
-| Recursion                         | ✅     | ❌    | ❌           |
-| A stack!                          | ✅     | ❌    | ❌           |
-| `String` and `Char`               | ✅     | ❌    | ❌           |
-| `uint` / `uvec`                   | ❌     | ✅    | ❌           |
-| `Double` / `dvec`                 | ✅     | ❌    | ❌           |
-| `struct`                          | ❌     | ✅    | 💡           | You can define structs by declaring classes.                                                     |
-| for loops                         | ❌     | ✅    | 💡           | In Scala, use the `cfor` or `_for` methods provided to simulate for-loops.                       |
-| Imports                           | ✅     | ❌    | ✅           | Imported methods and values must be inlined.                                                     |
-| Switch statements                 | ❌     | ✅    | 💡           | Scala does not have switch statements, but they can be expressed using pattern matching instead. |
-| If statements can return values   | ✅     | ❌    | ✅           |
-| Pattern matches can return values | ✅     | ❌    | ✅           |
-| `#define`                         | ❌     | ✅    | ✅           | Use the `@define` annotation. (see note below)                                                   |
-| `const`                           | ❌     | ✅    | ✅           | `@const`                                                                                         |
-| `uniform`                         | ❌     | ✅    | ✅           | `@uniform`                                                                                       |
-| `varying`, `in`, `out`            | ❌     | ✅    | ✅           | `@in`, `@out`                                                                                    |
-| `%` (modulus op)                  | ✅     | ❌    | ✅           |
-| Lambda/Anonymous functions        | ✅     | ❌    | ✅           |
-| `compose`                         | ✅     | ❌    | ✅           |
-| `andThen`                         | ✅     | ❌    | ✅           |
-
-
-Other comments:
-
-- Although Ultraviolet is based primarily on GLSL 300, I've kept `texture2D` and `textureCube` from WebGL 1.0 for clarity, and these are automatically rewritten to `texture` for WebGL 2.0. 
-- Preprocessor directives largely don't exist, but `#define` is supported for special cases where you need to define a global value based on a non-constant value.
-- GLSL headers can be provided via `PrinterHeader`s.
-
-
-## Things to know about inlining
-
-Ultraviolet allows you to share / reuse code, as long as it is inlined following Scala 3's standard inlining rules. However there are things to know about how this will affect your GLSL!
-
-Here, 'external' means 'not inside the body of your shader'.
-
-- You cannot inline external `val`s.
-- You can inline external `def`s into your code, but:
-  - A def that is essentially a call by reference val such as `inline def x = 1.0f` will have it's value inlined.
-  - A def that is a function, laid out like a method e.g. `inline def foo(c: Int): Int = c + 1` will be inlined.
-  - A def that is an anonymous function will be embedded with a new name and will work exactly as you'd expect, i.e. `inline def foo: Int => Int = c => c + 1`
-
-## Using Ultraviolet with Scala > 3.3.0
-
-Ultraviolet (up to 0.1.1) was built against Scala 3.2.x, but does work with Scala 3.3.0 with one minor caveat: The thing to know is that calling external inlined functions doesn't work the way it used to anymore, and will produce errors that complain about illegal forward references.
-
-Being able to call external inlined functions is important, because it's one of the main ways the Ultraviolet achieves code reuse.
-
-Here is a simple example. Given an object called `Importable` like this:
-
-```scala
-object Importable:
-  inline def addOne = (i: Int) => i + 1
-```
-
-## In Scala 3.2.x
-
-This used to work:
-
-```scala
-import Importable.*
-
-inline def fragment: Shader[FragEnv, Int] =
-  Shader { _ =>
-    val value = 10
-    addOne(value)
-  }
-```
-
-## Scala 3.3.x
-
-Unfortunately the way inlines are represented in the AST has now changed, and the old method does not work anymore. Luckily there is a simple workaround. All we have to do is create a local proxy with the same signature that delegates to the original function:
-
-```scala
-import Importable.*
-
-inline def fragment: Shader[FragEnv, Int] =
-  Shader { _ =>
-    val proxy: Int => Int = addOne
-    val value = 10
-    proxy(value)
-  }
-```
-
-With this small change, we can continue to reuse code between shaders as before. Indeed the compiled output will be identical to how it was before.
+- Do not name anything `val0...N` or `def0...N`, as this is the naming scheme UltraViolet uses internally when it needs to create identifiers, and you'll end up in a mess. The `val` and `def` prefixes where picked in the hope that Scala people would naturally avoid them!

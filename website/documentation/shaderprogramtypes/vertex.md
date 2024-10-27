@@ -1,3 +1,0 @@
-# Vertex Shaders
-
-// TODO
