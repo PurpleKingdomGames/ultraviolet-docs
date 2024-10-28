@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="generator" content="Typelevel Laika + Helium Theme" />
-  <title>Campfire</title>
+  <title>Campfire Demo</title>
   
   
   <meta name="description" content="Scala 3 to GLSL transpiler"/>
@@ -81,30 +81,28 @@
     <li class="level4 nav-leaf"><a href="../../basics/colours/">Colours</a></li>
     <li class="level4 nav-leaf"><a href="../../basics/minimal/">Minimal Fragment Shader Setup</a></li>
     <li class="level3 nav-node"><a href="../">Demos</a></li>
-    <li class="level4 active nav-leaf"><a href="#">Campfire</a></li>
-    <li class="level4 nav-leaf"><a href="../glowing-star/">Glowing star</a></li>
-    <li class="level4 nav-leaf"><a href="../pulsingbox/">Pulsingbox</a></li>
+    <li class="level4 active nav-leaf"><a href="#">Campfire Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../glowing-star/">Glowing Star Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../pulsingbox/">Pulsing Box Demo</a></li>
     <li class="level3 nav-node"><a href="../../noise/">Noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/cellular-noise/">Cellular noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/classic-perlin-noise/">Classic perlin noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/gradient-noise/">Gradient noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/simplex-noise/">Simplex noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/white-noise/">White noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/cellular-noise/">Cellular Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/classic-perlin-noise/">Classic Perlin Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/gradient-noise/">Gradient Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/simplex-noise/">Simplex Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/white-noise/">White Noise</a></li>
     <li class="level3 nav-node"><a href="../../patterns/">Patterns</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/grid/">Grid</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/rainbow/">Rainbow</a></li>
-    <li class="level4 nav-leaf"><a href="../../patterns/simple-voronoi/">Simple voronoi</a></li>
+    <li class="level4 nav-leaf"><a href="../../patterns/simple-voronoi/">Voronoi Example</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/stripes/">Stripes</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/wavy-stripes/">Wavy stripes</a></li>
     <li class="level3 nav-node"><a href="../../sdf/">Sdf</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/circle/">Circle</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/square/">Square</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/star/">Star</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/circle/">Circle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/square/">Square SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/star/">Star SDF</a></li>
     <li class="level3 nav-node"><a href="../../shapes/">Shapes</a></li>
     <li class="level4 nav-leaf"><a href="../../shapes/doughnut/">Doughnut</a></li>
     <li class="level4 nav-leaf"><a href="../../shapes/metaballs/">Metaballs</a></li>
-    <li class="level2 nav-node"><a href="../../../language-reference/">Language-reference</a></li>
-    <li class="level3 nav-leaf"><a href="../../../language-reference/imports/">Imports</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
     <li class="level3 nav-leaf"><a href="../../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
     <li class="level3 nav-leaf"><a href="../../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
@@ -117,7 +115,7 @@
 
       
 <nav id="page-nav">
-  <p class="header"><a href="#">Campfire</a></p>
+  <p class="header"><a href="#">Campfire Demo</a></p>
 
   <ul class="nav-list">
     <li class="level1 nav-leaf"><a href="#example-links">Example Links</a></li>
@@ -129,7 +127,13 @@
 
       <main class="content">
 
-        <h1 id="campfire" class="title">Campfire</h1>
+        <h1 id="campfire-demo" class="title">Campfire Demo</h1>
+        <p>This tiny diorama aims to show how you could use shaders to generate dynamic pixel art, in this case the flames of a campfire.</p>
+        <p>As usual, I&#39;m borrowing from the work of Inigo Quilez, specifically for two things here:</p>
+        <ol class="arabic">
+          <li>A <a href="https://www.iquilezles.org/www/articles/gradientnoise/gradientnoise.htm">Gradient noise</a> implementation.</li>
+          <li>The <a href="https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm">Circle SDF</a> function.</li>
+        </ol>
         
         <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
         <ul>
@@ -138,10 +142,6 @@
         <ul>
           <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//demos/examples/fragment/demos/campfire/">Live demo</a></li>
         </ul>
-        <p>-- noise: <a href="https://www.iquilezles.org/www/articles/gradientnoise/gradientnoise.htm">https://www.iquilezles.org/www/articles/gradientnoise/gradientnoise.htm</a> --</p>
-        <p>-- / noise --</p>
-        <p>SDF circle <a href="https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm">https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm</a></p>
-        <p>SDF</p>
 
         
 <hr class="footer-rule"/>

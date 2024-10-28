@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="generator" content="Typelevel Laika + Helium Theme" />
-  <title>Glowing star</title>
+  <title>Glowing Star Demo</title>
   
   
   <meta name="description" content="Scala 3 to GLSL transpiler"/>
@@ -81,30 +81,28 @@
     <li class="level4 nav-leaf"><a href="../../basics/colours/">Colours</a></li>
     <li class="level4 nav-leaf"><a href="../../basics/minimal/">Minimal Fragment Shader Setup</a></li>
     <li class="level3 nav-node"><a href="../">Demos</a></li>
-    <li class="level4 nav-leaf"><a href="../campfire/">Campfire</a></li>
-    <li class="level4 active nav-leaf"><a href="#">Glowing star</a></li>
-    <li class="level4 nav-leaf"><a href="../pulsingbox/">Pulsingbox</a></li>
+    <li class="level4 nav-leaf"><a href="../campfire/">Campfire Demo</a></li>
+    <li class="level4 active nav-leaf"><a href="#">Glowing Star Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../pulsingbox/">Pulsing Box Demo</a></li>
     <li class="level3 nav-node"><a href="../../noise/">Noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/cellular-noise/">Cellular noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/classic-perlin-noise/">Classic perlin noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/gradient-noise/">Gradient noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/simplex-noise/">Simplex noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/white-noise/">White noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/cellular-noise/">Cellular Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/classic-perlin-noise/">Classic Perlin Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/gradient-noise/">Gradient Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/simplex-noise/">Simplex Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/white-noise/">White Noise</a></li>
     <li class="level3 nav-node"><a href="../../patterns/">Patterns</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/grid/">Grid</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/rainbow/">Rainbow</a></li>
-    <li class="level4 nav-leaf"><a href="../../patterns/simple-voronoi/">Simple voronoi</a></li>
+    <li class="level4 nav-leaf"><a href="../../patterns/simple-voronoi/">Voronoi Example</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/stripes/">Stripes</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/wavy-stripes/">Wavy stripes</a></li>
     <li class="level3 nav-node"><a href="../../sdf/">Sdf</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/circle/">Circle</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/square/">Square</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/star/">Star</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/circle/">Circle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/square/">Square SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/star/">Star SDF</a></li>
     <li class="level3 nav-node"><a href="../../shapes/">Shapes</a></li>
     <li class="level4 nav-leaf"><a href="../../shapes/doughnut/">Doughnut</a></li>
     <li class="level4 nav-leaf"><a href="../../shapes/metaballs/">Metaballs</a></li>
-    <li class="level2 nav-node"><a href="../../../language-reference/">Language-reference</a></li>
-    <li class="level3 nav-leaf"><a href="../../../language-reference/imports/">Imports</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
     <li class="level3 nav-leaf"><a href="../../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
     <li class="level3 nav-leaf"><a href="../../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
@@ -117,7 +115,7 @@
 
       
 <nav id="page-nav">
-  <p class="header"><a href="#">Glowing star</a></p>
+  <p class="header"><a href="#">Glowing Star Demo</a></p>
 
   <ul class="nav-list">
     <li class="level1 nav-leaf"><a href="#example-links">Example Links</a></li>
@@ -129,7 +127,11 @@
 
       <main class="content">
 
-        <h1 id="glowing-star" class="title">Glowing star</h1>
+        <h1 id="glowing-star-demo" class="title">Glowing Star Demo</h1>
+        <p>This particular demo was made, but never used, in a talk. As such there is more code here than is actually used.</p>
+        <p>Try experimenting with commenting and uncommenting the various &#39;draw&#39; functions below to get an idea of how the star is built up.</p>
+        <p>If you checkout this repo, you can run the demo locally (on mac / linux, slightly more work on Windows...) with:</p>
+        <p><code>./mill &#39;examples.fragment.demos.glowing-star.runGame&#39;</code></p>
         
         <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
         <ul>
@@ -138,15 +140,19 @@
         <ul>
           <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//demos/examples/fragment/demos/glowing-star/">Live demo</a></li>
         </ul>
-        <p>Calculate the distance of the point p from the radius r.</p>
-        <p>Calculate the distance of the point p from the star with radius r, and
-        a relative value rf controlling the depth of the stars points.</p>
-        <p>val circleSDF = sdCircle(env.UV - 0.5f, 0.25f)</p>
-        <p>drawSdfCircle(circleSDF)  // Simple SDF</p>
-        <p>drawSdfCircle2(circleSDF) // Using it as a cos wave</p>
-        <p>drawStarStep1(starSDF) // SDF</p>
-        <p>drawStarStep2(starSDF) // Annular</p>
-        <p>drawStarStep3(starSDF) // Glow</p>
+        <pre><code class="nohighlight"><span>      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+        </span><span class="comment">// val circleSDF = sdCircle(env.UV - 0.5f, 0.25f)
+</span><span>
+        </span><span class="comment">// drawSdfCircle(circleSDF)  // Simple SDF
+</span><span>        </span><span class="comment">// drawSdfCircle2(circleSDF) // Using it as a cos wave
+</span><span>
+        </span><span class="keyword">val</span><span> </span><span class="identifier">starSDF</span><span> = </span><span class="identifier">sdStar5</span><span>((</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span> - </span><span class="number-literal">0.5f</span><span>) * </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">1.0f</span><span>, -</span><span class="number-literal">1.0f</span><span>), </span><span class="number-literal">0.25f</span><span>, </span><span class="number-literal">0.6f</span><span>)
+
+        </span><span class="comment">// drawStarStep1(starSDF) // SDF
+</span><span>        </span><span class="comment">// drawStarStep2(starSDF) // Annular
+</span><span>        </span><span class="comment">// drawStarStep3(starSDF) // Glow
+</span><span>        </span><span class="identifier">drawStarStep4</span><span>(</span><span class="identifier">starSDF</span><span>) </span><span class="comment">// Putting it all together in color
+</span><span>      </span><span class="identifier">``</span><span>`</span></code></pre>
 
         
 <hr class="footer-rule"/>

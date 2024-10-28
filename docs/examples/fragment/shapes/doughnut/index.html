@@ -81,30 +81,28 @@
     <li class="level4 nav-leaf"><a href="../../basics/colours/">Colours</a></li>
     <li class="level4 nav-leaf"><a href="../../basics/minimal/">Minimal Fragment Shader Setup</a></li>
     <li class="level3 nav-node"><a href="../../demos/">Demos</a></li>
-    <li class="level4 nav-leaf"><a href="../../demos/campfire/">Campfire</a></li>
-    <li class="level4 nav-leaf"><a href="../../demos/glowing-star/">Glowing star</a></li>
-    <li class="level4 nav-leaf"><a href="../../demos/pulsingbox/">Pulsingbox</a></li>
+    <li class="level4 nav-leaf"><a href="../../demos/campfire/">Campfire Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../../demos/glowing-star/">Glowing Star Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../../demos/pulsingbox/">Pulsing Box Demo</a></li>
     <li class="level3 nav-node"><a href="../../noise/">Noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/cellular-noise/">Cellular noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/classic-perlin-noise/">Classic perlin noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/gradient-noise/">Gradient noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/simplex-noise/">Simplex noise</a></li>
-    <li class="level4 nav-leaf"><a href="../../noise/white-noise/">White noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/cellular-noise/">Cellular Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/classic-perlin-noise/">Classic Perlin Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/gradient-noise/">Gradient Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/simplex-noise/">Simplex Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../noise/white-noise/">White Noise</a></li>
     <li class="level3 nav-node"><a href="../../patterns/">Patterns</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/grid/">Grid</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/rainbow/">Rainbow</a></li>
-    <li class="level4 nav-leaf"><a href="../../patterns/simple-voronoi/">Simple voronoi</a></li>
+    <li class="level4 nav-leaf"><a href="../../patterns/simple-voronoi/">Voronoi Example</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/stripes/">Stripes</a></li>
     <li class="level4 nav-leaf"><a href="../../patterns/wavy-stripes/">Wavy stripes</a></li>
     <li class="level3 nav-node"><a href="../../sdf/">Sdf</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/circle/">Circle</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/square/">Square</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/star/">Star</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/circle/">Circle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/square/">Square SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/star/">Star SDF</a></li>
     <li class="level3 nav-node"><a href="../">Shapes</a></li>
     <li class="level4 active nav-leaf"><a href="#">Doughnut</a></li>
     <li class="level4 nav-leaf"><a href="../metaballs/">Metaballs</a></li>
-    <li class="level2 nav-node"><a href="../../../language-reference/">Language-reference</a></li>
-    <li class="level3 nav-leaf"><a href="../../../language-reference/imports/">Imports</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
     <li class="level3 nav-leaf"><a href="../../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
     <li class="level3 nav-leaf"><a href="../../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
@@ -130,6 +128,12 @@
       <main class="content">
 
         <h1 id="doughnut" class="title">Doughnut</h1>
+        <p>This demo renders a doughnut shape, by taking the annular (like an outline of a drawing) of the SDF of a circle.</p>
+        <p>However its intended use was as a height map, where the doughnut smoothly rises out of the background and sinks back into it.</p>
+        <p>To achieve that we use a smoothing function like this:</p>
+        <p><code>((cos(x * PI * 2.0) * 0.5) + 0.5) * min(step(-0.5, x), 1.0 - step(0.5, x))</code></p>
+        <p>Which you can see in action using GraphToy:</p>
+        <p><a href="https://graphtoy.com/?f1(x,t)=((cos(x%20*%20PI%20*%202.0)%20*%200.5)%20+%200.5)%20*%20min(step(-0.5,%20x),%201.0%20-%20step(0.5,%20x))&v1=true&f2(x,t)=&v2=false&f3(x,t)=&v3=false&f4(x,t)=&v4=false&f5(x,t)=&v5=false&f6(x,t)=&v6=false&grid=1&coords=0,0,12">https://graphtoy.com/?f1(x,t)=((cos(x%20*%20PI%20*%202.0)%20*%200.5)%20+%200.5)%20*%20min(step(-0.5,%20x),%201.0%20-%20step(0.5,%20x))&amp;v1=true&amp;f2(x,t)=&amp;v2=false&amp;f3(x,t)=&amp;v3=false&amp;f4(x,t)=&amp;v4=false&amp;f5(x,t)=&amp;v5=false&amp;f6(x,t)=&amp;v6=false&amp;grid=1&amp;coords=0,0,12</a></p>
         
         <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
         <ul>
@@ -138,12 +142,6 @@
         <ul>
           <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//demos/examples/fragment/shapes/doughnut/">Live demo</a></li>
         </ul>
-        <p>Make a top down view of a doughnut, where the gray value is essentially a height map of a
-        doughtnut shape. Then turn it into a normal map.</p>
-        <p>GraphToy:
-        ((cos(x * PI * 2.0) * 0.5) + 0.5) * min(step(-0.5, x), 1.0 - step(0.5, x))</p>
-        <p>Based on work by Inigo Quilez</p>
-        <p><a href="https://iquilezles.org/articles/distfunctions2d/">https://iquilezles.org/articles/distfunctions2d/</a></p>
 
         
 <hr class="footer-rule"/>
