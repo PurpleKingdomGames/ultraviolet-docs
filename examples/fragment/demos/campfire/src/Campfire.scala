@@ -31,7 +31,6 @@ object CustomShader:
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 
-      // -- noise: https://www.iquilezles.org/www/articles/gradientnoise/gradientnoise.htm --
       def hash(x: vec2): vec2 =
         val k = vec2(0.3183099f, 0.3678794f)
         val y = x * k + k.yx
@@ -57,12 +56,9 @@ object CustomShader:
           ga + u.x * (gb - ga) + u.y * (gc - ga) + u.x * u.y * (ga - gb - gc + gd) +
             du * (u.yx * (va - vb - vc + vd) + vec2(vb, vc) - va)
         )
-      // -- / noise --
 
-      // SDF circle https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
       def sdfCircle(p: vec2, r: Float): Float =
         length(p) - r
-      // SDF
 
       def fire(): vec4 =
         val octaves: Float      = 13.0f

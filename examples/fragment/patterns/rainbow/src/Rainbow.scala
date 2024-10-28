@@ -3,10 +3,6 @@ import indigo.*
 import scala.scalajs.js.annotation.*
 import generated.*
 
-/** The goal here is to make a function that, when supplied a value of range 0 to 1, returns the
-  * correct color of the rainbow for that position.
-  */
-
 @JSExportTopLevel("IndigoGame")
 object Rainbow extends IndigoShader:
 
@@ -32,15 +28,9 @@ object CustomShader:
 
   import ultraviolet.syntax.*
 
-  /*
-    GraphToy:
-    1.0 - step(0.5, x)
-   */
-
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 
-      // Takes a value p from 0 to 1 and returns the colour from the rainbow
       def rainbow(p: Float): vec4 =
         val interval = 1.0f / 7.0f
 
@@ -82,10 +72,7 @@ object CustomShader:
         )
 
       def fragment(color: vec4): vec4 =
-        // The rainbow color
         val col = rainbow(env.UV.x)
-
-        // Softened for cuteness
         vec4(0.3f) + (col * 0.7f)
 
     }

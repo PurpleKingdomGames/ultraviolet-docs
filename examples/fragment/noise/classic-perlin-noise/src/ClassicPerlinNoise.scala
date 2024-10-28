@@ -31,8 +31,6 @@ object CustomShader:
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 
-      // This is based on the classic variant (not the periodic)
-      // https://github.com/ashima/webgl-noise/blob/master/src/classicnoise2D.glsl
       def mod289(x: vec4): vec4 =
         x - floor(x * (1.0f / 289.0f)) * 289.0f
 
@@ -45,11 +43,10 @@ object CustomShader:
       def fade(t: vec2): vec2 =
         t * t * t * (t * (t * 6.0f - 15.0f) + 10.0f)
 
-      // Classic Perlin noise
       def cnoise(P: vec2): Float =
         var Pi: vec4 = floor(P.xyxy) + vec4(0.0, 0.0, 1.0, 1.0)
         val Pf: vec4 = fract(P.xyxy) - vec4(0.0, 0.0, 1.0, 1.0)
-        Pi = mod289(Pi) // To avoid truncation effects in permutation
+        Pi = mod289(Pi)
 
         val ix: vec4 = Pi.xzxz
         val iy: vec4 = Pi.yyww

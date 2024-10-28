@@ -28,8 +28,6 @@ object CustomShader:
 
   import ultraviolet.syntax.*
 
-  // Ported from: https://www.youtube.com/watch?v=l-07BXzNdPw&feature=youtu.be
-
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 
@@ -55,7 +53,7 @@ object CustomShader:
           if d < minDist then minDist = d
         }
 
-        val col: vec3 = vec3(minDist) + vec3(m) // simple voronoi + circle
+        val col: vec3 = vec3(minDist) + vec3(m)
 
         vec4(col, 1.0f)
 

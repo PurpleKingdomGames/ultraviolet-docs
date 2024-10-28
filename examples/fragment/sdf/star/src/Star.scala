@@ -28,15 +28,9 @@ object CustomShader:
 
   import ultraviolet.syntax.*
 
-  // Based on work by Inigo Quilez
-  // https://iquilezles.org/articles/distfunctions2d/
-  // https://www.shadertoy.com/view/3tSGDy
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 
-      /** Calculate the distance of the point p from the star with radius r, and a relative value rf
-        * controlling the depth of the stars points.
-        */
       def sdStar5(p: vec2, r: Float, rf: Float): Float =
         @const val k1: vec2 = vec2(0.809016994375f, -0.587785252292f)
         @const val k2: vec2 = vec2(-k1.x, k1.y)
@@ -53,13 +47,9 @@ object CustomShader:
         length(p2 - ba * h) * sign(p2.y * ba.x - p2.x * ba.y)
 
       def fragment(color: vec4): vec4 =
-
-        // The calculation assumes we're centered on the origin.
         val sdf = sdStar5(env.UV - 0.5f, 0.25f, 0.6f)
 
-        // Inside the square is a negative value, so we flip it, and use step to get a hard edge.
         val col = step(0.0f, -sdf)
 
-        // Output as a grey scale.
         vec4(vec3(col), 1.0f)
     }

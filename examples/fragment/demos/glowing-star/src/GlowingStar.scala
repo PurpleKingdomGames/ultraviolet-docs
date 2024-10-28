@@ -31,13 +31,9 @@ object CustomShader:
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 
-      // Calculate the distance of the point p from the radius r.
       def sdCircle(p: vec2, r: Float): Float =
         length(p) - r
 
-      /** Calculate the distance of the point p from the star with radius r, and
-        * a relative value rf controlling the depth of the stars points.
-        */
       def sdStar5(p: vec2, r: Float, rf: Float): Float =
         @const val k1: vec2 = vec2(0.809016994375f, -0.587785252292f)
         @const val k2: vec2 = vec2(-k1.x, k1.y)
@@ -108,6 +104,7 @@ object CustomShader:
           starFillAmount
         )
 
+      // ```scala
       def fragment(color: vec4): vec4 =
         // val circleSDF = sdCircle(env.UV - 0.5f, 0.25f)
 
@@ -120,4 +117,5 @@ object CustomShader:
         // drawStarStep2(starSDF) // Annular
         // drawStarStep3(starSDF) // Glow
         drawStarStep4(starSDF) // Putting it all together in color
+      // ```
     }

@@ -138,15 +138,6 @@ object examples extends mill.Module {
 
   }
 
-  object `language-reference` extends mill.Module {
-
-    object imports extends shadermodule.ShaderModule {
-      val indigoOptions: IndigoOptions =
-        makeIndigoOptions("Imports")
-    }
-
-  }
-
   object vertex extends mill.Module {
 
     object minimal extends shadermodule.ShaderModule {

@@ -3,10 +3,6 @@ import indigo.*
 import scala.scalajs.js.annotation.*
 import generated.*
 
-/** Make a top down view of a doughnut, where the gray value is essentially a height map of a
-  * doughtnut shape. Then turn it into a normal map.
-  */
-
 @JSExportTopLevel("IndigoGame")
 object Doughnut extends IndigoShader:
 
@@ -32,13 +28,6 @@ object CustomShader:
 
   import ultraviolet.syntax.*
 
-  /*
-  GraphToy:
-  ((cos(x * PI * 2.0) * 0.5) + 0.5) * min(step(-0.5, x), 1.0 - step(0.5, x))
-   */
-
-  // Based on work by Inigo Quilez
-  // https://iquilezles.org/articles/distfunctions2d/
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 

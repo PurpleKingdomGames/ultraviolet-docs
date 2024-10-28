@@ -28,8 +28,6 @@ object CustomShader:
 
   import ultraviolet.syntax.*
 
-  // Ported from: https://www.youtube.com/watch?v=l-07BXzNdPw&feature=youtu.be
-
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 

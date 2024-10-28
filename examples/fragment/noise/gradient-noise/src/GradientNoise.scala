@@ -31,7 +31,6 @@ object CustomShader:
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
 
-      // https://www.iquilezles.org/www/articles/gradientnoise/gradientnoise.htm
       def hash(x: vec2): vec2 =
         val k = vec2(0.3183099f, 0.3678794f)
         val y = x * k + k.yx
