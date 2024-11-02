@@ -1,4 +1,4 @@
-# Ultraviolet Examples
+# Ultraviolet Docs
 
 This repository is meant to act as 'living documentation' for Ultraviolet, a Scala 3 to GLSL transpiler. Small, simple, reference examples of how to use Ultraviolet, and perhaps a few larger demos too.
 
