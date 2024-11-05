@@ -157,4 +157,13 @@ object examples extends mill.Module {
 
   }
 
+  object `language-features` extends mill.Module {
+
+    object imports extends shadermodule.ShaderModule {
+      val indigoOptions: IndigoOptions =
+        makeIndigoOptions("Using Imports & Shared Code")
+    }
+
+  }
+
 }
