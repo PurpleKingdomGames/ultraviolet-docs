@@ -136,6 +136,25 @@ object examples extends mill.Module {
 
     }
 
+    object textures extends mill.Module {
+
+      object `basic-texture-use` extends shadermodule.ShaderModule {
+        val indigoOptions: IndigoOptions =
+          makeIndigoOptions("Basic Texture Use")
+      }
+
+      object `blending-textures` extends shadermodule.ShaderModule {
+        val indigoOptions: IndigoOptions =
+          makeIndigoOptions("Blending Textures")
+      }
+
+      object `specifying-texture-coords` extends shadermodule.ShaderModule {
+        val indigoOptions: IndigoOptions =
+          makeIndigoOptions("Specifying Texture Coordinates")
+      }
+
+    }
+
   }
 
   object vertex extends mill.Module {
