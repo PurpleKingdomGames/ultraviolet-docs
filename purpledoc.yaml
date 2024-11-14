@@ -15,10 +15,14 @@ website:
   #   image: tyrian-menu-logo.svg
   latestRelease: 0.3.0
   baseUrl: https://purplekingdomgames.github.io/ultraviolet-docs/
-repo:
-  name: Github
+docsRepo:
+  name: Docs
   url: https://github.com/PurpleKingdomGames/ultraviolet-docs
   editBaseUrl: https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main
+repo:
+  name: Github
+  url: https://github.com/PurpleKingdomGames/ultraviolet
+  editBaseUrl: https://github.com/PurpleKingdomGames/ultraviolet/blob/main
 discord:
   name: Discord
   url: https://discord.gg/b5CD47g
