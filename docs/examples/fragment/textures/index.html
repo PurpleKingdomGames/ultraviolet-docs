@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Typelevel Laika + Helium Theme" />
+  <title>Textures</title>
+  
+  
+  <meta name="description" content="Scala 3 to GLSL transpiler"/>
+  
+  
+  
+  <link rel="icon" sizes="32x32" type="image/png" href="../../../img/favicon.png"/>
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:500">
+  
+  <link rel="stylesheet" type="text/css" href="../../../helium/site/icofont.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../helium/site/laika-helium.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/custom.css" />
+  <script src="../../../helium/site/laika-helium.js"></script>
+  
+  
+  <script> /* for avoiding page load transitions */ </script>
+</head>
+
+  <body>
+
+    <header id="top-bar" class="light-default dark-default">
+
+  <div class="row">
+    <a id="nav-icon">
+      <i class="icofont-laika navigationMenu" title="Navigation">&#xefa2;</i>
+    </a>
+    
+    
+  </div>
+
+  <a class="icon-link glyph-link" href="../../../documentation/"><i class="icofont-laika home" title="Home">&#xef47;</i></a>
+
+  <div class="row links">
+    
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/ultraviolet">Github</a>
+    
+  </div>  
+
+</header>
+    
+    <nav id="sidebar">
+
+  <div class="row">
+    
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/ultraviolet">Github</a>
+    
+  </div>
+
+  <ul class="nav-list">
+    <li class="level1 nav-node"><a href="../../../documentation/">Ultraviolet</a></li>
+    <li class="level2 nav-leaf"><a href="../../../documentation/motivation.html">Motivation</a></li>
+    <li class="level2 nav-node"><a href="../../../documentation/scalavsglsl/">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="../../../documentation/scalavsglsl/inlining.html">Things to know about inlining</a></li>
+    <li class="level3 nav-leaf"><a href="../../../documentation/scalavsglsl/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
+    <li class="level2 nav-node"><a href="../../../documentation/shaderprogramtypes/">Intro to Shader Programs</a></li>
+    <li class="level3 nav-leaf"><a href="../../../documentation/shaderprogramtypes/furtherreading.html">Further reading on Shaders</a></li>
+    <li class="level1 nav-node"><a href="../../">Examples</a></li>
+    <li class="level2 nav-node"><a href="../">Fragment</a></li>
+    <li class="level3 nav-node"><a href="../basics/">Basics</a></li>
+    <li class="level4 nav-leaf"><a href="../basics/colours/">Colours</a></li>
+    <li class="level4 nav-leaf"><a href="../basics/minimal/">Minimal Fragment Shader Setup</a></li>
+    <li class="level3 nav-node"><a href="../demos/">Demos</a></li>
+    <li class="level4 nav-leaf"><a href="../demos/campfire/">Campfire Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../demos/glowing-star/">Glowing Star Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../demos/pulsingbox/">Pulsing Box Demo</a></li>
+    <li class="level3 nav-node"><a href="../noise/">Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../noise/cellular-noise/">Cellular Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../noise/classic-perlin-noise/">Classic Perlin Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../noise/gradient-noise/">Gradient Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../noise/simplex-noise/">Simplex Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../noise/white-noise/">White Noise</a></li>
+    <li class="level3 nav-node"><a href="../patterns/">Patterns</a></li>
+    <li class="level4 nav-leaf"><a href="../patterns/grid/">Grid</a></li>
+    <li class="level4 nav-leaf"><a href="../patterns/rainbow/">Rainbow</a></li>
+    <li class="level4 nav-leaf"><a href="../patterns/simple-voronoi/">Voronoi Example</a></li>
+    <li class="level4 nav-leaf"><a href="../patterns/stripes/">Stripes</a></li>
+    <li class="level4 nav-leaf"><a href="../patterns/wavy-stripes/">Wavy stripes</a></li>
+    <li class="level3 nav-node"><a href="../sdf/">Sdf</a></li>
+    <li class="level4 nav-leaf"><a href="../sdf/circle/">Circle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../sdf/square/">Square SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../sdf/star/">Star SDF</a></li>
+    <li class="level3 nav-node"><a href="../shapes/">Shapes</a></li>
+    <li class="level4 nav-leaf"><a href="../shapes/doughnut/">Doughnut</a></li>
+    <li class="level4 nav-leaf"><a href="../shapes/metaballs/">Metaballs</a></li>
+    <li class="level3 active nav-node"><a href="#">Textures</a></li>
+    <li class="level4 nav-leaf"><a href="basic-texture-use/">Basic texture use</a></li>
+    <li class="level4 nav-leaf"><a href="blending-textures/">Blending Textures</a></li>
+    <li class="level4 nav-leaf"><a href="specifying-texture-coords/">Specifying Texture Coordinates</a></li>
+    <li class="level2 nav-node"><a href="../../language-features/">Language-features</a></li>
+    <li class="level3 nav-leaf"><a href="../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
+    <li class="level2 nav-node"><a href="../../vertex/">Vertex</a></li>
+    <li class="level3 nav-leaf"><a href="../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level3 nav-leaf"><a href="../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
+    <li class="level3 nav-leaf"><a href="../../vertex/movingvertices/">Moving Vertices</a></li>
+  </ul>
+
+</nav>
+
+    <div id="container">
+
+      
+<nav id="page-nav">
+  <p class="header"><a href="#">Textures</a></p>
+
+  <ul class="nav-list">
+  </ul>
+
+  <p class="footer"></p>
+</nav>
+
+
+      <main class="content">
+
+        <h1 id="textures" class="title">Textures</h1>
+        <ul>
+          <li><a href="basic-texture-use/">basic-texture-use</a></li>
+        </ul>
+        <ul>
+          <li><a href="blending-textures/">blending-textures</a></li>
+        </ul>
+        <ul>
+          <li><a href="specifying-texture-coords/">specifying-texture-coords</a></li>
+        </ul>
+
+        
+<hr class="footer-rule"/>
+<footer>
+  Site generated by <a href="https://typelevel.org/Laika/">Laika</a> with the Helium theme.
+</footer>
+
+
+      </main>
+
+    </div>
+
+  </body>
+
+</html>
