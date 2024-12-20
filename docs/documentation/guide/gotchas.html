@@ -69,12 +69,11 @@
 
   <ul class="nav-list">
     <li class="level1 nav-node"><a href="../">Ultraviolet</a></li>
+    <li class="level2 nav-leaf"><a href="../shaders-and-glsl.html">Shaders and GLSL</a></li>
     <li class="level2 nav-leaf"><a href="../motivation.html">Motivation</a></li>
-    <li class="level2 nav-node"><a href="index.html">Scala 3 vs GLSL</a></li>
-    <li class="level3 nav-leaf"><a href="inlining.html">Things to know about inlining</a></li>
+    <li class="level2 nav-node"><a href="index.html">Writing Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="scala-vs-glsl.html">Scala 3 vs GLSL</a></li>
     <li class="level3 active nav-leaf"><a href="#">Gotcha&#39;s, foot guns, and weird stuff</a></li>
-    <li class="level2 nav-node"><a href="../shaderprogramtypes/">Intro to Shader Programs</a></li>
-    <li class="level3 nav-leaf"><a href="../shaderprogramtypes/furtherreading.html">Further reading on Shaders</a></li>
     <li class="level1 nav-node"><a href="../../examples/">Examples</a></li>
     <li class="level2 nav-node"><a href="../../examples/fragment/">Fragment</a></li>
     <li class="level3 nav-node"><a href="../../examples/fragment/basics/">Basics</a></li>
@@ -136,9 +135,10 @@
     <li class="level1 nav-leaf"><a href="#no-forward-referencing">No forward referencing</a></li>
     <li class="level1 nav-leaf"><a href="#no-your-fancy-library-won-t-work-here">No, your fancy library won&#39;t work here</a></li>
     <li class="level1 nav-leaf"><a href="#nested-functions-and-function-purity">Nested functions and function purity</a></li>
-    <li class="level1 nav-leaf"><a href="#just-write-a-glsl-as-a-string">Just write a glsl as a String?</a></li>
+    <li class="level1 nav-leaf"><a href="#just-write-glsl-as-a-string">Just write glsl as a String?</a></li>
     <li class="level1 nav-leaf"><a href="#pattern-matching-weirdness">Pattern matching weirdness</a></li>
-    <li class="level1 nav-leaf"><a href="#unofficial-reserved-words">Unofficial reserved words</a></li>
+    <li class="level1 nav-node"><a href="#unofficial-reserved-words">Unofficial reserved words</a></li>
+    <li class="level2 nav-leaf"><a href="#sharing-vals">Sharing vals</a></li>
   </ul>
 
   <p class="footer"></p>
@@ -152,6 +152,7 @@
         <h3 id="ux-dx-api-rough-edges" class="section"><a class="anchor-link left" href="#ux-dx-api-rough-edges"><i class="icofont-laika link">&#xef71;</i></a>UX/DX/API rough edges</h3>
         
         <h4 id="indigo-import-collisions" class="section"><a class="anchor-link left" href="#indigo-import-collisions"><i class="icofont-laika link">&#xef71;</i></a>Indigo import collisions</h4>
+        <blockquote>Will be fixed once version 0.4.0 is released.</blockquote>
         <p>If you&#39;re using Ultraviolet with Indigo, then you stand a chance of import collisions. The main culprits are that both Ultraviolet and Indigo contains instances of things like classes called <code>Shader</code> and <code>vec4</code>.</p>
         <p>The simplest workaround here is to declare your UV shader code in an object in a separate file, or in a sub object as follows:</p>
         <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">indigo</span><span>.* </span><span class="comment">// &lt;-- bring in problem imports
@@ -189,7 +190,7 @@
         
         <h3 id="compile-time-and-runtime-errors" class="section"><a class="anchor-link left" href="#compile-time-and-runtime-errors"><i class="icofont-laika link">&#xef71;</i></a>Compile time and Runtime errors</h3>
         <blockquote>TL;DR: Some errors only happen at runtime, if you want to catch them early, write a simple test that exercises/run your shader.</blockquote>
-        <p>Ultraviolet has a series of phases, some of which we can run at compile time, and some (currently) have to run at runtime:</p>
+        <p>Ultraviolet has a series of phases, some of which we can run at compile time, and some (currently, unfortunately) have to run at runtime:</p>
         <ol class="arabic">
           <li>(Compile) Generate shader AST from Scala code</li>
           <li>(Compile) General program validation (e.g. forward reference checks)</li>
@@ -250,7 +251,7 @@
         </ol>
         <p>These rules should be enforced by compile time program validation for you.</p>
         
-        <h3 id="just-write-a-glsl-as-a-string" class="section"><a class="anchor-link left" href="#just-write-a-glsl-as-a-string"><i class="icofont-laika link">&#xef71;</i></a>Just write a glsl as a String?</h3>
+        <h3 id="just-write-glsl-as-a-string" class="section"><a class="anchor-link left" href="#just-write-glsl-as-a-string"><i class="icofont-laika link">&#xef71;</i></a>Just write glsl as a String?</h3>
         <p>This is completely valid but only if it&#39;s the only contents of the block:</p>
         <pre class="keep-together pdf epub"><code class="nohighlight"><span class="type-name">Shader</span><span> {
   </span><span class="string-literal">&quot;int foo = 10;&quot;</span><span>
@@ -280,6 +281,9 @@
           <li>Do not call a function something like <code>def xy(v: vec4): ???</code> because this will likely interfere with the Swizzle mechanisms (e.g. <code>vec3(1.0f).yx</code>). Not at the point of definition but at the point of use.</li>
           <li>Do not name anything <code>val0...N</code> or <code>def0...N</code>, as this is the naming scheme UltraViolet uses internally when it needs to create identifiers, and you&#39;ll end up in a mess. The <code>val</code> and <code>def</code> prefixes where picked in the hope that Scala people would naturally avoid them!</li>
         </ul>
+        
+        <h4 id="sharing-vals" class="section"><a class="anchor-link left" href="#sharing-vals"><i class="icofont-laika link">&#xef71;</i></a>Sharing vals</h4>
+        <p><code>val</code>s do not work the way you might expect. <code>inline val x = 1.0f</code> will not work, since inlining of vals happens in a later Scala compiler phase to macro inlining. Instead, use the <code>final</code> keyword, i.e. <code>final val x = 1.0f</code>.</p>
 
         
 <hr class="footer-rule"/>

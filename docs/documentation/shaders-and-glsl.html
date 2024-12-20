@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Typelevel Laika + Helium Theme" />
+  <title>Shaders and GLSL</title>
+  
+  
+  <meta name="description" content="Scala 3 to GLSL transpiler"/>
+  
+  
+  
+  <link rel="icon" sizes="32x32" type="image/png" href="../img/favicon.png"/>
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:500">
+  
+  <link rel="stylesheet" type="text/css" href="../helium/site/icofont.min.css" />
+    <link rel="stylesheet" type="text/css" href="../helium/site/laika-helium.css" />
+    <link rel="stylesheet" type="text/css" href="../css/custom.css" />
+  <script src="../helium/site/laika-helium.js"></script>
+  
+  
+  <script> /* for avoiding page load transitions */ </script>
+</head>
+
+  <body>
+
+    <header id="top-bar" class="light-default dark-default">
+
+  <div class="row">
+    <a id="nav-icon">
+      <i class="icofont-laika navigationMenu" title="Navigation">&#xefa2;</i>
+    </a>
+    
+    
+  </div>
+
+  <a class="icon-link glyph-link" href="index.html"><i class="icofont-laika home" title="Home">&#xef47;</i></a>
+
+  <div class="row links">
+    
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/ultraviolet">Github</a>
+    
+  </div>  
+
+</header>
+    
+    <nav id="sidebar">
+
+  <div class="row">
+    
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/ultraviolet">Github</a>
+    
+  </div>
+
+  <ul class="nav-list">
+    <li class="level1 nav-node"><a href="index.html">Ultraviolet</a></li>
+    <li class="level2 active nav-leaf"><a href="#">Shaders and GLSL</a></li>
+    <li class="level2 nav-leaf"><a href="motivation.html">Motivation</a></li>
+    <li class="level2 nav-node"><a href="guide/">Writing Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="guide/scala-vs-glsl.html">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="guide/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
+    <li class="level1 nav-node"><a href="../examples/">Examples</a></li>
+    <li class="level2 nav-node"><a href="../examples/fragment/">Fragment</a></li>
+    <li class="level3 nav-node"><a href="../examples/fragment/basics/">Basics</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/basics/colours/">Colours</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/basics/minimal/">Minimal Fragment Shader Setup</a></li>
+    <li class="level3 nav-node"><a href="../examples/fragment/demos/">Demos</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/demos/campfire/">Campfire Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/demos/glowing-star/">Glowing Star Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/demos/pulsingbox/">Pulsing Box Demo</a></li>
+    <li class="level3 nav-node"><a href="../examples/fragment/noise/">Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/noise/cellular-noise/">Cellular Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/noise/classic-perlin-noise/">Classic Perlin Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/noise/gradient-noise/">Gradient Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/noise/simplex-noise/">Simplex Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/noise/white-noise/">White Noise</a></li>
+    <li class="level3 nav-node"><a href="../examples/fragment/patterns/">Patterns</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/patterns/grid/">Grid</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/patterns/rainbow/">Rainbow</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/patterns/simple-voronoi/">Voronoi Example</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/patterns/stripes/">Stripes</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/patterns/wavy-stripes/">Wavy stripes</a></li>
+    <li class="level3 nav-node"><a href="../examples/fragment/sdf/">Sdf</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/sdf/circle/">Circle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/sdf/square/">Square SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/sdf/star/">Star SDF</a></li>
+    <li class="level3 nav-node"><a href="../examples/fragment/shapes/">Shapes</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/shapes/doughnut/">Doughnut</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/shapes/metaballs/">Metaballs</a></li>
+    <li class="level3 nav-node"><a href="../examples/fragment/textures/">Textures</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/textures/basic-texture-use/">Basic texture use</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/textures/blending-textures/">Blending Textures</a></li>
+    <li class="level4 nav-leaf"><a href="../examples/fragment/textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
+    <li class="level2 nav-node"><a href="../examples/language-features/">Language-features</a></li>
+    <li class="level3 nav-leaf"><a href="../examples/language-features/imports/">Using Imports &amp; Shared Code</a></li>
+    <li class="level2 nav-node"><a href="../examples/vertex/">Vertex</a></li>
+    <li class="level3 nav-leaf"><a href="../examples/vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level3 nav-leaf"><a href="../examples/vertex/minimal/">Minimal Vertex Shader Setup</a></li>
+    <li class="level3 nav-leaf"><a href="../examples/vertex/movingvertices/">Moving Vertices</a></li>
+  </ul>
+
+</nav>
+
+    <div id="container">
+
+      
+<nav id="page-nav">
+  <p class="header"><a href="#">Shaders and GLSL</a></p>
+
+  <ul class="nav-list">
+    <li class="level1 nav-node"><a href="#what-is-a-shader">What is a shader?</a></li>
+    <li class="level2 nav-leaf"><a href="#graphics-hardware">Graphics Hardware</a></li>
+    <li class="level1 nav-leaf"><a href="#shaders-in-2d-graphics">Shaders in 2D graphics</a></li>
+    <li class="level1 nav-leaf"><a href="#what-is-glsl">What is GLSL?</a></li>
+    <li class="level1 nav-leaf"><a href="#entities-layers-and-blending">Entities, layers, and blending</a></li>
+    <li class="level1 nav-leaf"><a href="#further-reading-on-shaders">Further reading on Shaders</a></li>
+  </ul>
+
+  <p class="footer"></p>
+</nav>
+
+
+      <main class="content">
+
+        <h1 id="shaders-and-glsl" class="title">Shaders and GLSL</h1>
+        <p>The following is a quick overview of shaders, and how they fit into the process of rendering game graphics.</p>
+        <blockquote>This section contains simplifications, approximations, hand waving, and downright lies. The aim is to quickly give you some intuition, not to turn you into a rendering pipeline expert.</blockquote>
+        
+        <h2 id="what-is-a-shader" class="section"><a class="anchor-link left" href="#what-is-a-shader"><i class="icofont-laika link">&#xef71;</i></a>What is a shader?</h2>
+        <p>In the current age of computer graphics, whether you are doing 2D or 3D, your work is most likely rendered using 3D graphics hardware, and part of that process employs a &#39;Shader program&#39; that tells the hardware how to render parts of your image. Shader programs are made up of two or more smaller programs. In WebGL, the only two available types of these programs are called the vertex and fragment shaders - a pair makes your complete shader program - but in other platforms you might also be able to define additional shader types, like compute shaders.</p>
+        
+        <h3 id="graphics-hardware" class="section"><a class="anchor-link left" href="#graphics-hardware"><i class="icofont-laika link">&#xef71;</i></a>Graphics Hardware</h3>
+        <p>Computer graphics are usually processed on dedicated hardware, called a GPU (Graphics Processing Unit).</p>
+        <p>GPUs differ from CPUs (Central Processing Unit), because they are a type of vector processor, meaning they are designed to do huge amounts of one kind of work at a time. In the case of graphics rendering, that roughly translates to &quot;rendering millions of triangles&quot;.</p>
+        <p>A good analogy is a factory production line, which is set up to mass produce yellow rubber ducks. If you wanted to switch to producing green frogs instead of yellow ducks, then you need to go through the expensive process of halting production, cleaning everything down, reconfiguration the hardware, and restarting production.</p>
+        <p>The process of rendering an array of triangles goes something like this:</p>
+        <ol class="arabic">
+          <li>Prepare the data in the graphics cards memory, including:</li>
+        </ol>
+        <ol class="arabic">
+          <li>Textures</li>
+        </ol>
+        <ol class="arabic">
+          <li>Triangle data (arrays of coordinates)</li>
+        </ol>
+        <ol class="arabic">
+          <li>Shader programs (for WebGL, one shader program is a pair of programs called the vertex and fragment shaders respectively)</li>
+        </ol>
+        <ol class="arabic">
+          <li>Constants, variables, and other reference data</li>
+        </ol>
+        <ol class="arabic">
+          <li>etc.</li>
+          <li>Run a program (the vertex shader) to correctly position the triangle on the screen while accounting for, among other things, scale, perspective, and camera location.</li>
+          <li>Run another program (the fragment shader) to draw the triangle with the right textures and lighting and effects.</li>
+          <li>Return the image.</li>
+        </ol>
+        <p>Vertex shaders are run once per vertex (corner) of a triangle. Fragment shaders are run once per &#39;fragment&#39; which though not technically accurate, for our purposes we can think of pixels. Both programs are written in a language called GLSL (for WebGL) and run with &#39;embarrassing parallelism&#39;, meaning that in the case of the fragment shader for example, each execution of the program renders a single &#39;pixel&#39;, in parallel, with no knowledge of the surrounding pixels. In Scala pseudo code, it&#39;s a bit like this:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">pixels</span><span>: </span><span class="type-name">List</span><span>[</span><span class="type-name">Pixel</span><span>]    = ???
+</span><span class="keyword">val</span><span> </span><span class="identifier">render</span><span>: </span><span class="type-name">Pixel</span><span> =&gt; </span><span class="type-name">Color</span><span> = ???
+
+</span><span class="identifier">pixels</span><span>.</span><span class="identifier">par</span><span>.</span><span class="identifier">foreach</span><span>(</span><span class="identifier">render</span><span>)</span></code></pre>
+        <p>As with the factory in the analogy, this process suffers and slows down if there is a &#39;context switch&#39;, in which any of the data or conditions are changed, because the parallel processing production line must be interrupted and reset.</p>
+        
+        <h2 id="shaders-in-2d-graphics" class="section"><a class="anchor-link left" href="#shaders-in-2d-graphics"><i class="icofont-laika link">&#xef71;</i></a>Shaders in 2D graphics</h2>
+        <p>The process specifically for 2D graphics is roughly as follows:</p>
+        <ol class="arabic">
+          <li>Start with a high level description of some on-screen entities. Where each entity has properties like position, size, and rotation.</li>
+          <li>Sort the scene by depth, and draw from furthest away to nearest, to ensure the transparency will be handled correctly.* </li>
+          <li>Convert the on-screen entities into mesh data. Since this is 2D, each entity is a rectangle. The rectangle is known as a &#39;quad&#39;. A quad is made of 2 triangles that share 4 vertices (a, b, c, and d), as follows:</li>
+        </ol>
+        <pre><code>a___d
+|\  |
+| \ |
+|__\|
+b   c</code></pre>
+        <ol class="arabic">
+          <li>Upload the mesh and other information, like textures and shader programs, to the graphics hardware.</li>
+          <li>For each vertex (a, b, c, or d), run a <strong><em>Vertex shader</em></strong> to tell the graphics hardware, where the vertices should be rendered.</li>
+          <li>The graphics hardware then interpolates between the values between the vertices, and for each render-able position between two vertexes, it runs the <strong><em>fragment shader</em></strong> supplying interpolated values, notably UV coordinates. For example, halfway between vertices (a) and (d) on the diagram, will have a UV coordinate of (0.0f, 0.5f). The fragment shader tells the graphics hardware what color that fragment (i.e. pixel, more or less. Kinda.) should be.</li>
+          <li>The rendered entity is blended into whatever else has been rendered so far by some process.</li>
+        </ol>
+        <p>(* This is known as a painters algorithm. The process is important because, perhaps surprisingly, 3D graphics hardware is not good at handling transparency, and game developers employ lots of tricks to work around this limitation.)</p>
+        
+        <h2 id="what-is-glsl" class="section"><a class="anchor-link left" href="#what-is-glsl"><i class="icofont-laika link">&#xef71;</i></a>What is GLSL?</h2>
+        <p>GLSL is a very small C-like language that is compiled and run on the GPU. There are other GLSL-like languages and formats (such as HLSL), but Ultraviolet only cares about GLSL since that is the language of WebGL (versions 100 and 300, specifically). </p>
+        <p><strong><em>GLSL is</em></strong> for doing maths on arrays of simple numeric data types.</p>
+        <p><strong><em>GLSL is not</em></strong> a general purpose language like Scala.</p>
+        <p>The implications of that are that while it is possible to represent most of GLSL in Scala, the opposite is not true. For example, GLSL has no notion of strings.</p>
+        
+        <h2 id="entities-layers-and-blending" class="section"><a class="anchor-link left" href="#entities-layers-and-blending"><i class="icofont-laika link">&#xef71;</i></a>Entities, layers, and blending</h2>
+        <p>Most of the description above applies fairly directly to rendering what Indigo calls &#39;entities&#39; - things on the screen. However, the description alludes to &#39;some process&#39; of blending the entity into whatever has already been drawn so far.</p>
+        <p>Blending is the process of combining one image with another, and they may not necessarily be the same size or in the same position. There are two aspects to blending:</p>
+        <ol class="arabic">
+          <li>Blend Mode - this is a hardware mode where essentially you are telling the hardware how to combine numbers. Colors are represented as <code>vec4</code>s (<code>Vector4</code>, i.e. x,y,z,w or r,g,b,a) so to blend red (<code>vec4(1.0f, 0.0f, 0.0f, 1.0f)</code>) and blue (<code>vec4(0.0f, 0.0f, 1.0f, 1.0f)</code>) together, you need to decide how the maths should be done, e.g. add, multiply, subtract, interpolate, etc.</li>
+          <li>Blend shaders - very similar to entity shaders, they both have a vertex and fragment component, but a few of the values differ. Blend shaders have the source and destination color values, for example.</li>
+        </ol>
+        <p>Indigo blends entities onto a layer, and then the layer onto the final scene rendered so far (called a buffer).</p>
+        
+        <h1 id="further-reading-on-shaders" class="section"><a class="anchor-link left" href="#further-reading-on-shaders"><i class="icofont-laika link">&#xef71;</i></a>Further reading on Shaders</h1>
+        <p>Nothing created here with regard to shaders is original. Here are a few links to shader related goodness.</p>
+        <ul>
+          <li><a href="https://thebookofshaders.com/"><a href="https://thebookofshaders.com/">https://thebookofshaders.com/</a></a></li>
+          <li><a href="https://iquilezles.org/articles/"><a href="https://iquilezles.org/articles/">https://iquilezles.org/articles/</a></a></li>
+          <li><a href="https://github.com/ashima/webgl-noise"><a href="https://github.com/ashima/webgl-noise">https://github.com/ashima/webgl-noise</a></a></li>
+          <li><a href="https://www.shadertoy.com/"><a href="https://www.shadertoy.com/">https://www.shadertoy.com/</a></a></li>
+          <li><a href="https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)"><a href="https://www.khronos.org/opengl/wiki/Core_Language_(GLSL">https://www.khronos.org/opengl/wiki/Core_Language_(GLSL</a>)</a></li>
+        </ul>
+
+        
+<hr class="footer-rule"/>
+<footer>
+  Site generated by <a href="https://typelevel.org/Laika/">Laika</a> with the Helium theme.
+</footer>
+
+
+      </main>
+
+    </div>
+
+  </body>
+
+</html>

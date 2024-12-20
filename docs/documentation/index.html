@@ -69,12 +69,11 @@
 
   <ul class="nav-list">
     <li class="level1 active nav-node"><a href="#">Ultraviolet</a></li>
+    <li class="level2 nav-leaf"><a href="shaders-and-glsl.html">Shaders and GLSL</a></li>
     <li class="level2 nav-leaf"><a href="motivation.html">Motivation</a></li>
-    <li class="level2 nav-node"><a href="scalavsglsl/">Scala 3 vs GLSL</a></li>
-    <li class="level3 nav-leaf"><a href="scalavsglsl/inlining.html">Things to know about inlining</a></li>
-    <li class="level3 nav-leaf"><a href="scalavsglsl/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
-    <li class="level2 nav-node"><a href="shaderprogramtypes/">Intro to Shader Programs</a></li>
-    <li class="level3 nav-leaf"><a href="shaderprogramtypes/furtherreading.html">Further reading on Shaders</a></li>
+    <li class="level2 nav-node"><a href="guide/">Writing Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="guide/scala-vs-glsl.html">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="guide/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
     <li class="level1 nav-node"><a href="../examples/">Examples</a></li>
     <li class="level2 nav-node"><a href="../examples/fragment/">Fragment</a></li>
     <li class="level3 nav-node"><a href="../examples/fragment/basics/">Basics</a></li>
@@ -124,7 +123,6 @@
   <p class="header"><a href="#">Ultraviolet</a></p>
 
   <ul class="nav-list">
-    <li class="level1 nav-leaf"><a href="#give-me-the-tl-dr">Give me the TL;DR</a></li>
     <li class="level1 nav-leaf"><a href="#installation">Installation</a></li>
   </ul>
 
@@ -135,21 +133,9 @@
       <main class="content">
 
         <h1 id="ultraviolet" class="title">Ultraviolet</h1>
-        <p><a href="https://github.com/PurpleKingdomGames/ultraviolet">Ultraviolet</a> is a Scala 3 to GLSL (versions 100 and 300) transpiler library built on top of Scala 3 inline macros.</p>
+        <p><a href="https://github.com/PurpleKingdomGames/ultraviolet">Ultraviolet</a> is a Scala 3 to GLSL 100/300 &#39;inline&#39; transpiler library.</p>
         <p>You can use Ultraviolet to generate GLSL shader code for any WebGL use case, such as with <a href="https://www.shadertoy.com/">ShaderToy</a>, but is primarily designed to support <a href="https://github.com/PurpleKingdomGames/indigo">Indigo</a>.</p>
         <p>All the shader examples and demos in these docs are written in <a href="https://github.com/PurpleKingdomGames/ultraviolet">Ultraviolet</a> and presented using <a href="https://indigoengine.io/">Indigo</a>.</p>
-        <p>The golden rule when writing shaders in Ultraviolet is: <strong><em>Keep It Simple!</em></strong></p>
-        <p>GLSL is not a general purpose language like Scala is, and while it&#39;s possible to represent most of GLSL in Scala, the opposite is not true.</p>
-        <p>GLSL is for doing maths on arrays of simple numeric data types and is, as someone else described it, &quot;a very limited programming model.&quot;</p>
-        <p>For all that, it is <em>very good fun</em>. Go forth and do maths and make pretty pictures!</p>
-        
-        <h2 id="give-me-the-tl-dr" class="section"><a class="anchor-link left" href="#give-me-the-tl-dr"><i class="icofont-laika link">&#xef71;</i></a>Give me the TL;DR</h2>
-        <p>If you&#39;ve stumbled across this project and have no idea what all this shader stuff is about:</p>
-        <ol class="arabic">
-          <li>A shader program is used to render graphics on a GPU.</li>
-          <li><strong><em>Think of a tiny C-like program that runs for every pixel on the screen</em></strong>.</li>
-          <li>Ultraviolet allows you to write those programs in Scala 3, where you would normally use GLSL targeting WebGL in a browser.</li>
-        </ol>
         
         <h2 id="installation" class="section"><a class="anchor-link left" href="#installation"><i class="icofont-laika link">&#xef71;</i></a>Installation</h2>
         <p>Check the repo for the latest release number, and substitute the <code>x.y.z</code> below accordingly.</p>

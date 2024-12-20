@@ -69,12 +69,11 @@
 
   <ul class="nav-list">
     <li class="level1 nav-node"><a href="../../../documentation/">Ultraviolet</a></li>
+    <li class="level2 nav-leaf"><a href="../../../documentation/shaders-and-glsl.html">Shaders and GLSL</a></li>
     <li class="level2 nav-leaf"><a href="../../../documentation/motivation.html">Motivation</a></li>
-    <li class="level2 nav-node"><a href="../../../documentation/scalavsglsl/">Scala 3 vs GLSL</a></li>
-    <li class="level3 nav-leaf"><a href="../../../documentation/scalavsglsl/inlining.html">Things to know about inlining</a></li>
-    <li class="level3 nav-leaf"><a href="../../../documentation/scalavsglsl/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
-    <li class="level2 nav-node"><a href="../../../documentation/shaderprogramtypes/">Intro to Shader Programs</a></li>
-    <li class="level3 nav-leaf"><a href="../../../documentation/shaderprogramtypes/furtherreading.html">Further reading on Shaders</a></li>
+    <li class="level2 nav-node"><a href="../../../documentation/guide/">Writing Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="../../../documentation/guide/scala-vs-glsl.html">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="../../../documentation/guide/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
     <li class="level1 nav-node"><a href="../../">Examples</a></li>
     <li class="level2 nav-node"><a href="../../fragment/">Fragment</a></li>
     <li class="level3 nav-node"><a href="../../fragment/basics/">Basics</a></li>
@@ -137,9 +136,7 @@
 
         <h1 id="using-imports-shared-code" class="title">Using Imports &amp; Shared Code</h1>
         <p>Imports and shared code are not entirely straight forward to use with Ultraviolet.</p>
-        <p>Ultraviolet would never have come into being without Scala 3&#39;s powerful inline macro system, but this is where you really start to see the limits of the current setup, and it&#39;s all down to how inlining works. No doubt all these problems are solvable, we only await someone with the time and inclination to come and fix them!</p>
-        <p>In any case, while sharing code in Ultraviolet is undoubtedly particular and peculiar to use, it is still a massive improvement over building shaders with strings as you would in JavaScript.</p>
-        <p>Please see <a href="../../../documentation/scalavsglsl/inlining.html">the main docs on inlining</a> for more information.</p>
+        <p>Please see <a href="../../../documentation/guide/">the main docs on writing shaders and code reuse</a> for more information.</p>
         
         <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
         <ul>

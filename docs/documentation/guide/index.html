@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Typelevel Laika + Helium Theme" />
+  <title>Writing Shaders</title>
+  
+  
+  <meta name="description" content="Scala 3 to GLSL transpiler"/>
+  
+  
+  
+  <link rel="icon" sizes="32x32" type="image/png" href="../../img/favicon.png"/>
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:500">
+  
+  <link rel="stylesheet" type="text/css" href="../../helium/site/icofont.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../helium/site/laika-helium.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/custom.css" />
+  <script src="../../helium/site/laika-helium.js"></script>
+  
+  
+  <script> /* for avoiding page load transitions */ </script>
+</head>
+
+  <body>
+
+    <header id="top-bar" class="light-default dark-default">
+
+  <div class="row">
+    <a id="nav-icon">
+      <i class="icofont-laika navigationMenu" title="Navigation">&#xefa2;</i>
+    </a>
+    
+    
+  </div>
+
+  <a class="icon-link glyph-link" href="../"><i class="icofont-laika home" title="Home">&#xef47;</i></a>
+
+  <div class="row links">
+    
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/ultraviolet">Github</a>
+    
+  </div>  
+
+</header>
+    
+    <nav id="sidebar">
+
+  <div class="row">
+    
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/ultraviolet">Github</a>
+    
+  </div>
+
+  <ul class="nav-list">
+    <li class="level1 nav-node"><a href="../">Ultraviolet</a></li>
+    <li class="level2 nav-leaf"><a href="../shaders-and-glsl.html">Shaders and GLSL</a></li>
+    <li class="level2 nav-leaf"><a href="../motivation.html">Motivation</a></li>
+    <li class="level2 active nav-node"><a href="#">Writing Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="scala-vs-glsl.html">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
+    <li class="level1 nav-node"><a href="../../examples/">Examples</a></li>
+    <li class="level2 nav-node"><a href="../../examples/fragment/">Fragment</a></li>
+    <li class="level3 nav-node"><a href="../../examples/fragment/basics/">Basics</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/basics/colours/">Colours</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/basics/minimal/">Minimal Fragment Shader Setup</a></li>
+    <li class="level3 nav-node"><a href="../../examples/fragment/demos/">Demos</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/demos/campfire/">Campfire Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/demos/glowing-star/">Glowing Star Demo</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/demos/pulsingbox/">Pulsing Box Demo</a></li>
+    <li class="level3 nav-node"><a href="../../examples/fragment/noise/">Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/noise/cellular-noise/">Cellular Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/noise/classic-perlin-noise/">Classic Perlin Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/noise/gradient-noise/">Gradient Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/noise/simplex-noise/">Simplex Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/noise/white-noise/">White Noise</a></li>
+    <li class="level3 nav-node"><a href="../../examples/fragment/patterns/">Patterns</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/patterns/grid/">Grid</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/patterns/rainbow/">Rainbow</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/patterns/simple-voronoi/">Voronoi Example</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/patterns/stripes/">Stripes</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/patterns/wavy-stripes/">Wavy stripes</a></li>
+    <li class="level3 nav-node"><a href="../../examples/fragment/sdf/">Sdf</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/sdf/circle/">Circle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/sdf/square/">Square SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/sdf/star/">Star SDF</a></li>
+    <li class="level3 nav-node"><a href="../../examples/fragment/shapes/">Shapes</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/shapes/doughnut/">Doughnut</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/shapes/metaballs/">Metaballs</a></li>
+    <li class="level3 nav-node"><a href="../../examples/fragment/textures/">Textures</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/textures/basic-texture-use/">Basic texture use</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/textures/blending-textures/">Blending Textures</a></li>
+    <li class="level4 nav-leaf"><a href="../../examples/fragment/textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
+    <li class="level2 nav-node"><a href="../../examples/language-features/">Language-features</a></li>
+    <li class="level3 nav-leaf"><a href="../../examples/language-features/imports/">Using Imports &amp; Shared Code</a></li>
+    <li class="level2 nav-node"><a href="../../examples/vertex/">Vertex</a></li>
+    <li class="level3 nav-leaf"><a href="../../examples/vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level3 nav-leaf"><a href="../../examples/vertex/minimal/">Minimal Vertex Shader Setup</a></li>
+    <li class="level3 nav-leaf"><a href="../../examples/vertex/movingvertices/">Moving Vertices</a></li>
+  </ul>
+
+</nav>
+
+    <div id="container">
+
+      
+<nav id="page-nav">
+  <p class="header"><a href="#">Writing Shaders</a></p>
+
+  <ul class="nav-list">
+    <li class="level1 nav-leaf"><a href="#getting-started">Getting started</a></li>
+    <li class="level1 nav-leaf"><a href="#sharing-and-testing-code">Sharing and Testing Code</a></li>
+    <li class="level1 nav-node"><a href="#best-practices">Best practices</a></li>
+    <li class="level2 nav-leaf"><a href="#unit-tests-that-check-the-output">Unit tests that check the output</a></li>
+    <li class="level2 nav-leaf"><a href="#pure-functions-always">Pure functions, always</a></li>
+  </ul>
+
+  <p class="footer"></p>
+</nav>
+
+
+      <main class="content">
+
+        <h1 id="writing-shaders" class="title">Writing Shaders</h1>
+        <p>Ultraviolet functions within a couple of significant constraints that affect how it works and its usability.</p>
+        <p>The first constraint, as mentioned elsewhere, is that GLSL is NOT a general purpose programming language. While we can represent <em>most</em> of GLSL in Scala, we <em>cannot</em> represent (in any useful sense) all of Scala in GLSL. The code might look like Scala, but it isn&#39;t, and you may need to be a little forgiving / creative with your coding approach. There are some functional niceties in Ultraviolet, but first and foremost this is imperative, C-like Scala.</p>
+        <p>The second constraint is that shaders in Ultraviolet rely on Scala 3&#39;s inline macros in order to function. This has the benefit of allowing you to reuse and share code, and the drawback that you need to jump through a few hoops to make that work... and you just have to know about them.</p>
+        <p>We&#39;re going to look at the basics below, but in general it is best to <a href="../../examples/">look at the examples</a> for real code that you can be sure is up to date and working. Code presented here will be kept to a minimum to hopefully avoid it falling out of date and being misleading.</p>
+        
+        <h3 id="getting-started" class="section"><a class="anchor-link left" href="#getting-started"><i class="icofont-laika link">&#xef71;</i></a>Getting started</h3>
+        <p>The <code>Shader</code> block is the root of any Ultraviolet shader. Within this context, you write your vertex or fragment shader code, which will ultimately be converted to GLSL.</p>
+        <p>A small, contrived, Indigo flavored fragment shader looks like this:</p>
+        <pre><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">syntax</span><span>.*
+
+</span><span class="keyword">object</span><span> </span><span class="type-name">MyShader</span><span>:
+
+  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragmentShader</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+      </span><span class="keyword">def</span><span> </span><span class="declaration-name">calculateBlue</span><span>(</span><span class="identifier">uv</span><span>: </span><span class="identifier">vec2</span><span>): </span><span class="type-name">Float</span><span> =
+        </span><span class="identifier">uv</span><span>.</span><span class="identifier">x</span><span>
+
+      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+        </span><span class="comment">// Here we&#39;re making a vec4 using the UV coordinates, a vec2, plugged into the
+</span><span>        </span><span class="comment">// red and green values, followed by the UV.x that has been extracted by a function
+</span><span>        </span><span class="comment">// as a Float for the blue value, and setting the alpha to full/max, i.e. 1.0f.
+</span><span>        </span><span class="identifier">vec4</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>, </span><span class="identifier">calculateBlue</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>), </span><span class="number-literal">1.0f</span><span>)
+    }</span></code></pre>
+        <p>A shader is always written within a <code>Shader</code> &#39;block&#39; that takes an environment type, and an initial function which is called <code>fragment</code> for fragment shaders and <code>vertex</code> for vertex shaders.</p>
+        <p>The <code>fragment</code> and <code>vertex</code> functions must return a <code>vec4</code>, representing an RGBA (i.e. <code>vec4(red, green, blue, alpha)</code>) color or a vertex position, respectively. In the case of vertex shaders you can also set additional fields, such as the <code>UV</code> value, or set <code>varying</code> values that will be sent across to the fragment shader.</p>
+        <p>Within a <code>Shader</code> block, given the constraints mentioned, we can write our code more or less as usual with variables and functions and so on.</p>
+        
+        <h3 id="sharing-and-testing-code" class="section"><a class="anchor-link left" href="#sharing-and-testing-code"><i class="icofont-laika link">&#xef71;</i></a>Sharing and Testing Code</h3>
+        <p>Putting all your shader code in the shader block is the most straight forward way to write shaders, but it has one big problem: It&#39;s difficult to test and share / reuse.</p>
+        <p>However, thanks to the power of inlining and the fact that Ultraviolet is built on inline macros, there is a way around this limitation.</p>
+        <p>Here is the same code again, but this time with the <code>calculateBlue</code> function moved out of the shader block.</p>
+        <pre><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">syntax</span><span>.*
+
+</span><span class="keyword">object</span><span> </span><span class="type-name">MyShader</span><span>:
+
+  </span><span class="comment">// MUST be marked as `inline`
+</span><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">calculateBlue</span><span>(</span><span class="identifier">uv</span><span>: </span><span class="identifier">vec2</span><span>): </span><span class="type-name">Float</span><span> =
+    </span><span class="identifier">uv</span><span>.</span><span class="identifier">x</span><span>
+
+  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragmentShader</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+
+      </span><span class="keyword">val</span><span> </span><span class="identifier">proxy</span><span>: </span><span class="identifier">vec2</span><span> =&gt; </span><span class="type-name">Float</span><span> =
+        </span><span class="identifier">uv</span><span> =&gt; </span><span class="identifier">calculateBlue</span><span>(</span><span class="identifier">uv</span><span>)
+
+      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+        </span><span class="comment">// Here we&#39;re making a vec4 using the UV coordinates, a vec2, plugged into the
+</span><span>        </span><span class="comment">// red and green values, followed by the UV.x that has been extracted by a function
+</span><span>        </span><span class="comment">// as a Float for the blue value, and setting the alpha to full/max, i.e. 1.0f.
+</span><span>        </span><span class="identifier">vec4</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>, </span><span class="identifier">proxy</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>), </span><span class="number-literal">1.0f</span><span>)
+    }</span></code></pre>
+        <p>This ends up working exactly the same as the original, but the <code>calculateBlue</code> function is now outside the shader block, and can be unit tested. To make that work, it was <em>necessary</em> to include a <code>proxy</code> function locally within the shader block.</p>
+        <p>If you wanted to use that function again in a different shader, you can use a particular formulation of <code>import</code>, like this.</p>
+        <pre><code class="nohighlight"><span class="keyword">object</span><span> </span><span class="type-name">MyOtherShader</span><span>:
+
+  </span><span class="comment">// Must import the function or *
+</span><span>  </span><span class="keyword">import</span><span> </span><span class="type-name">MyShader</span><span>.*
+
+  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">differentShader</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+
+      </span><span class="keyword">val</span><span> </span><span class="identifier">proxy</span><span>: </span><span class="identifier">vec2</span><span> =&gt; </span><span class="type-name">Float</span><span> =
+        </span><span class="identifier">uv</span><span> =&gt; </span><span class="identifier">calculateBlue</span><span>(</span><span class="identifier">uv</span><span>)
+
+      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+        </span><span class="identifier">vec4</span><span>(</span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">0.0f</span><span>, </span><span class="identifier">proxy</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>), </span><span class="number-literal">1.0f</span><span>)
+    }</span></code></pre>
+        <p>If you do <em>not</em> use the function <code>proxy</code>, the code from your function will be inlined at the call site. That might be ok if it is one line of simple logic, but more likely it will do something odd and produce errors at compile or runtime. </p>
+        <p>If you want to reuse values outside your shader place, use <code>final val</code>s or <code>inline def</code>s, i.e.:</p>
+        <pre><code class="nohighlight"><span class="comment">// These work
+</span><span class="keyword">final</span><span> </span><span class="keyword">val</span><span> </span><span class="identifier">x</span><span>  = </span><span class="number-literal">1.0f</span><span>
+</span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">y</span><span> = </span><span class="number-literal">2.0f</span><span>
+
+</span><span class="comment">// These compile because Scala can see them, but do not work because they don&#39;t exist in the GLSL.
+</span><span class="keyword">val</span><span> </span><span class="identifier">z</span><span>        = </span><span class="number-literal">3.0f</span><span>
+</span><span class="identifier">inline</span><span> </span><span class="keyword">val</span><span> </span><span class="identifier">w</span><span> = </span><span class="number-literal">4.0f</span><span>
+
+</span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">shader</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="identifier">vec4</span><span>(</span><span class="identifier">x</span><span>, </span><span class="identifier">y</span><span>, </span><span class="identifier">z</span><span>, </span><span class="identifier">w</span><span>)
+  }</span></code></pre>
+        <p>Produces a GLSL <code>vec4</code> of <code>vec4(1.0f,2.0f,z,w)</code> where <code>z</code> and <code>w</code> do not refer to anything in the final GLSL shader program, and will error.</p>
+        
+        <h3 id="best-practices" class="section"><a class="anchor-link left" href="#best-practices"><i class="icofont-laika link">&#xef71;</i></a>Best practices</h3>
+        <p>&#39;Best practices&#39; seems a bit strong, but here are some &#39;good&#39; practices to consider:</p>
+        
+        <h4 id="unit-tests-that-check-the-output" class="section"><a class="anchor-link left" href="#unit-tests-that-check-the-output"><i class="icofont-laika link">&#xef71;</i></a>Unit tests that check the output</h4>
+        <p>It is a good idea to check that the output of your code is what you expect, particularly if you&#39;ve tried to run it and gotten an error or no output.</p>
+        <p>To do that, consider writing a simple acceptance test, like the ones found <a href="https://github.com/PurpleKingdomGames/ultraviolet/blob/main/ultraviolet/shared/src/test/scala/ultraviolet/acceptance/GLSLExamplesTests.scala">here</a>:</p>
+        <pre><code class="nohighlight"><span>  </span><span class="identifier">test</span><span>(</span><span class="string-literal">&quot;can build a multi-statement function&quot;</span><span>) {
+
+    </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">shader</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragEnv</span><span>, </span><span class="identifier">vec4</span><span>] =
+      </span><span class="type-name">Shader</span><span> { </span><span class="identifier">env</span><span> =&gt;
+        </span><span class="keyword">def</span><span> </span><span class="declaration-name">calculateColour</span><span>(</span><span class="identifier">uv</span><span>: </span><span class="identifier">vec2</span><span>, </span><span class="identifier">sdf</span><span>: </span><span class="type-name">Float</span><span>): </span><span class="identifier">vec4</span><span> =
+          </span><span class="keyword">val</span><span> </span><span class="identifier">fill</span><span>       = </span><span class="identifier">vec4</span><span>(</span><span class="identifier">uv</span><span>, </span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)
+          </span><span class="keyword">val</span><span> </span><span class="identifier">fillAmount</span><span> = (</span><span class="number-literal">1.0f</span><span> - </span><span class="identifier">step</span><span>(</span><span class="number-literal">0.0f</span><span>, </span><span class="identifier">sdf</span><span>)) * </span><span class="identifier">fill</span><span>.</span><span class="identifier">w</span><span>
+          </span><span class="identifier">vec4</span><span>(</span><span class="identifier">fill</span><span>.</span><span class="identifier">xyz</span><span> * </span><span class="identifier">fillAmount</span><span>, </span><span class="identifier">fillAmount</span><span>)
+
+        </span><span class="identifier">calculateColour</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>, </span><span class="number-literal">3.0</span><span>)
+      }
+
+    </span><span class="keyword">val</span><span> </span><span class="identifier">actual</span><span> =
+      </span><span class="identifier">shader</span><span>.</span><span class="identifier">toGLSL</span><span>[</span><span class="type-name">WebGL2</span><span>].</span><span class="identifier">toOutput</span><span>.</span><span class="identifier">code</span><span>
+
+    </span><span class="identifier">assertEquals</span><span>(
+      </span><span class="identifier">actual</span><span>,
+      </span><span class="string-literal">s&quot;&quot;&quot;
+      |vec4 calculateColour(in vec2 uv,in float sdf){
+      |  vec4 fill=vec4(uv,0.0,1.0);
+      |  float fillAmount=(1.0-step(0.0,sdf))*fill.w;
+      |  return vec4(fill.xyz*fillAmount,fillAmount);
+      |}
+      |calculateColour(UV,3.0);
+      |&quot;&quot;&quot;</span><span>.</span><span class="identifier">stripMargin</span><span>.</span><span class="identifier">trim</span><span>
+    )
+  }</span></code></pre>
+        <p>Note that if you&#39;re code is failing validation, perhaps with an illegal forward reference error, you can disable validation like this, so you can see what is going on.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="diff-removed">-shader.toGLSL[WebGL2].toOutput.code</span><span>
+</span><span class="diff-added">+shader.toGLSL[WebGL2](false).toOutput.code</span></code></pre>
+        
+        <h4 id="pure-functions-always" class="section"><a class="anchor-link left" href="#pure-functions-always"><i class="icofont-laika link">&#xef71;</i></a>Pure functions, always</h4>
+        <p>Function definitions, particularly for imported or anonymous functions, are moved to the top of the code that gets output. This can lead to &quot;illegal forward reference&quot; errors if you try to make use of local variables you expect to be present.</p>
+        <p>Constant variables are available to functions, but in general you can avoid a lot of heartache by keeping your functions pure, i.e. they only operate on their arguments, not external state / values.</p>
+
+        
+<hr class="footer-rule"/>
+<footer>
+  Site generated by <a href="https://typelevel.org/Laika/">Laika</a> with the Helium theme.
+</footer>
+
+
+      </main>
+
+    </div>
+
+  </body>
+
+</html>
