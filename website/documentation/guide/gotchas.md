@@ -5,6 +5,8 @@
 
 #### Indigo import collisions
 
+> Will be fixed once version 0.4.0 is released.
+
 If you're using Ultraviolet with Indigo, then you stand a chance of import collisions. The main culprits are that both Ultraviolet and Indigo contains instances of things like classes called `Shader` and `vec4`.
 
 The simplest workaround here is to declare your UV shader code in an object in a separate file, or in a sub object as follows:
@@ -62,7 +64,7 @@ Note that `FragmentEnv` is a real thing in Indigo, it provides Indigo's standard
 
 > TL;DR: Some errors only happen at runtime, if you want to catch them early, write a simple test that exercises/run your shader.
 
-Ultraviolet has a series of phases, some of which we can run at compile time, and some (currently) have to run at runtime:
+Ultraviolet has a series of phases, some of which we can run at compile time, and some (currently, unfortunately) have to run at runtime:
 
 1. (Compile) Generate shader AST from Scala code
 2. (Compile) General program validation (e.g. forward reference checks)
@@ -141,7 +143,7 @@ In general, this is manageable problem, but there are two rules to follow:
 
 These rules should be enforced by compile time program validation for you.
 
-### Just write a glsl as a String?
+### Just write glsl as a String?
 
 This is completely valid but only if it's the only contents of the block:
 
@@ -190,3 +192,7 @@ Naming conventions to avoid:
 
 - Do not call a function something like `def xy(v: vec4): ???` because this will likely interfere with the Swizzle mechanisms (e.g. `vec3(1.0f).yx`). Not at the point of definition but at the point of use.
 - Do not name anything `val0...N` or `def0...N`, as this is the naming scheme UltraViolet uses internally when it needs to create identifiers, and you'll end up in a mess. The `val` and `def` prefixes where picked in the hope that Scala people would naturally avoid them!
+
+#### Sharing vals
+
+`val`s do not work the way you might expect. `inline val x = 1.0f` will not work, since inlining of vals happens in a later Scala compiler phase to macro inlining. Instead, use the `final` keyword, i.e. `final val x = 1.0f`.
