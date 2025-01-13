@@ -183,6 +183,11 @@ object examples extends mill.Module {
         makeIndigoOptions("Using Imports & Shared Code")
     }
 
+    object ubos extends shadermodule.ShaderModule {
+      val indigoOptions: IndigoOptions =
+        makeIndigoOptions("Supplying Data to a Shader with UBOs")
+    }
+
   }
 
 }
