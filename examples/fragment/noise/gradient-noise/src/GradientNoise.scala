@@ -16,48 +16,31 @@ object GradientNoise extends IndigoShader:
   val channel3: Option[AssetPath] = None
 
   val shader: Shader =
-    CustomShader.shader
+    GradientNoiseShader.shader
 
-object CustomShader:
+object GradientNoiseShader:
 
-  val shader: Shader =
+  val shader: UltravioletShader =
     UltravioletShader.entityFragment(
-      ShaderId("shader"),
-      EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
+      ShaderId("gradient noise shader"),
+      EntityShader.fragment(fragment, FragmentEnv.reference)
     )
 
   import ultraviolet.syntax.*
 
-  inline def fragment: Shader[FragmentEnv, Unit] =
+  /** The noise function is imported, but we then need to set up a proxy function. This is because the
+    * macro system relies on inlining, and we want to create a function definition, not just inline
+    * the noise code at the point of use.
+    */
+  // ```scala
+  inline def fragment =
     Shader[FragmentEnv] { env =>
+      import ultraviolet.noise.*
 
-      def hash(x: vec2): vec2 =
-        val k = vec2(0.3183099f, 0.3678794f)
-        val y = x * k + k.yx
-        -1.0f + 2.0f * fract(16.0f * k * fract(y.x * y.y * (y.x + y.y)))
-
-      def noise(p: vec2): vec3 =
-        val i: vec2  = floor(p)
-        val f: vec2  = fract(p)
-        val u: vec2  = f * f * (3.0f - 2.0f * f)
-        val du: vec2 = 6.0f * f * (1.0f - f)
-        val ga: vec2 = hash(i + vec2(0.0f, 0.0f))
-        val gb: vec2 = hash(i + vec2(1.0f, 0.0f))
-        val gc: vec2 = hash(i + vec2(0.0f, 1.0f))
-        val gd: vec2 = hash(i + vec2(1.0f, 1.0f))
-
-        val va: Float = dot(ga, f - vec2(0.0f, 0.0f))
-        val vb: Float = dot(gb, f - vec2(1.0f, 0.0f))
-        val vc: Float = dot(gc, f - vec2(0.0f, 1.0f))
-        val vd: Float = dot(gd, f - vec2(1.0f, 1.0f))
-
-        vec3(
-          va + u.x * (vb - va) + u.y * (vc - va) + u.x * u.y * (va - vb - vc + vd),
-          ga + u.x * (gb - ga) + u.y * (gc - ga) + u.x * u.y * (ga - gb - gc + gd) +
-            du * (u.yx * (va - vb - vc + vd) + vec2(vb, vc) - va)
-        )
+      def proxy: vec2 => vec3 =
+        p => gradient(p)
 
       def fragment(color: vec4): vec4 =
-        vec4(noise(env.UV * 8.0f), 1.0f)
-
+        vec4(proxy(env.UV * 8.0f), 1.0f)
     }
+  // ```

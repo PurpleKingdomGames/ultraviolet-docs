@@ -8,7 +8,7 @@ All the shader examples and demos in these docs are written in [Ultraviolet](htt
 
 ## Installation
 
-Check the repo for the latest release number, and substitute the `x.y.z` below accordingly.
+Check the repo for the [latest release number](https://github.com/PurpleKingdomGames/ultraviolet/releases), and substitute the `x.y.z` below accordingly.
 
 sbt
 

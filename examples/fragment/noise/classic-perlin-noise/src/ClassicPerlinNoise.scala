@@ -16,74 +16,31 @@ object ClassicPerlinNoise extends IndigoShader:
   val channel3: Option[AssetPath] = None
 
   val shader: Shader =
-    CustomShader.shader
+    PerlinNoiseShader.shader
 
-object CustomShader:
+object PerlinNoiseShader:
 
-  val shader: Shader =
+  val shader: UltravioletShader =
     UltravioletShader.entityFragment(
-      ShaderId("shader"),
-      EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
+      ShaderId("perlin noise shader"),
+      EntityShader.fragment(fragment, FragmentEnv.reference)
     )
 
   import ultraviolet.syntax.*
 
-  inline def fragment: Shader[FragmentEnv, Unit] =
+  /** The noise function is imported, but we then need to set up a proxy function. This is because the
+    * macro system relies on inlining, and we want to create a function definition, not just inline
+    * the noise code at the point of use.
+    */
+  // ```scala
+  inline def fragment =
     Shader[FragmentEnv] { env =>
+      import ultraviolet.noise.*
 
-      def mod289(x: vec4): vec4 =
-        x - floor(x * (1.0f / 289.0f)) * 289.0f
-
-      def permute(x: vec4): vec4 =
-        mod289(((x * 34.0f) + 10.0f) * x)
-
-      def taylorInvSqrt(r: vec4): vec4 =
-        1.79284291400159f - 0.85373472095314f * r
-
-      def fade(t: vec2): vec2 =
-        t * t * t * (t * (t * 6.0f - 15.0f) + 10.0f)
-
-      def cnoise(P: vec2): Float =
-        var Pi: vec4 = floor(P.xyxy) + vec4(0.0, 0.0, 1.0, 1.0)
-        val Pf: vec4 = fract(P.xyxy) - vec4(0.0, 0.0, 1.0, 1.0)
-        Pi = mod289(Pi)
-
-        val ix: vec4 = Pi.xzxz
-        val iy: vec4 = Pi.yyww
-        val fx: vec4 = Pf.xzxz
-        val fy: vec4 = Pf.yyww
-
-        val i: vec4 = permute(permute(ix) + iy)
-
-        var gx: vec4 = fract(i * (1.0f / 41.0f)) * 2.0f - 1.0f
-        val gy: vec4 = abs(gx) - 0.5f
-        val tx: vec4 = floor(gx + 0.5f)
-        gx = gx - tx
-
-        var g00: vec2 = vec2(gx.x, gy.x)
-        var g10: vec2 = vec2(gx.y, gy.y)
-        var g01: vec2 = vec2(gx.z, gy.z)
-        var g11: vec2 = vec2(gx.w, gy.w)
-
-        val norm: vec4 =
-          taylorInvSqrt(vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)))
-        g00 *= norm.x
-        g01 *= norm.y
-        g10 *= norm.z
-        g11 *= norm.w
-
-        val n00: Float = dot(g00, vec2(fx.x, fy.x))
-        val n10: Float = dot(g10, vec2(fx.y, fy.y))
-        val n01: Float = dot(g01, vec2(fx.z, fy.z))
-        val n11: Float = dot(g11, vec2(fx.w, fy.w))
-
-        val fade_xy: vec2 = fade(Pf.xy)
-        val n_x: vec2     = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x)
-        val n_xy: Float   = mix(n_x.x, n_x.y, fade_xy.y)
-
-        2.3f * n_xy
+      def proxy: vec2 => Float =
+        p => perlin(p)
 
       def fragment(color: vec4): vec4 =
-        vec4(vec3(cnoise(env.UV * 8.0f)), 1.0f)
-
+        vec4(vec3(proxy(env.UV * 8.0f)), 1.0f)
     }
+  // ```

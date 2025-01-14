@@ -7,8 +7,8 @@ import $ivy.`io.indigoengine::mill-indigo:0.17.0`, millindigo._
 import $ivy.`org.typelevel::scalac-options:0.1.7`, org.typelevel.scalacoptions._
 
 trait ShaderModule extends MillIndigo {
-  def scalaVersion   = "3.5.0"
-  def scalaJSVersion = "1.17.0"
+  def scalaVersion   = "3.6.2"
+  def scalaJSVersion = "1.18.1"
 
   override def scalacOptions = T {
     val flags = super.scalacOptions() ++
@@ -90,7 +90,7 @@ trait ShaderModule extends MillIndigo {
 
   def ivyDeps =
     Agg(
-      ivy"io.indigoengine::ultraviolet::0.3.0",
+      ivy"io.indigoengine::ultraviolet::0.4.0",
       ivy"io.indigoengine::indigo-json-circe::$indigoVersion",
       ivy"io.indigoengine::indigo::$indigoVersion",
       ivy"io.indigoengine::indigo-extras::$indigoVersion"
@@ -98,7 +98,7 @@ trait ShaderModule extends MillIndigo {
 
   object test extends ScalaJSTests {
     def ivyDeps = Agg(
-      ivy"org.scalameta::munit::0.7.29"
+      ivy"org.scalameta::munit::1.0.4"
     )
 
     override def moduleKind = T(mill.scalajslib.api.ModuleKind.CommonJSModule)

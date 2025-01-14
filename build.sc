@@ -18,6 +18,17 @@ object examples extends mill.Module {
         val indigoOptions: IndigoOptions =
           makeIndigoOptions("Colours")
       }
+      
+      object `colour-constants` extends shadermodule.ShaderModule {
+        val indigoOptions: IndigoOptions =
+          makeIndigoOptions("Colour Constants")
+      }
+      
+      object `colour-interpolators` extends shadermodule.ShaderModule {
+        val indigoOptions: IndigoOptions =
+          makeIndigoOptions("Colour Interpolators")
+      }
+      
       object minimal extends shadermodule.ShaderModule {
         val indigoOptions: IndigoOptions =
           makeIndigoOptions("Minimal Fragment Shader Setup")
@@ -105,19 +116,34 @@ object examples extends mill.Module {
 
     object sdf extends mill.Module {
 
+      object box extends shadermodule.ShaderModule {
+        val indigoOptions: IndigoOptions =
+          makeIndigoOptions("Box SDF")
+      }
+
       object circle extends shadermodule.ShaderModule {
         val indigoOptions: IndigoOptions =
           makeIndigoOptions("Circle SDF")
       }
 
-      object square extends shadermodule.ShaderModule {
+      object hexagon extends shadermodule.ShaderModule {
         val indigoOptions: IndigoOptions =
-          makeIndigoOptions("Square SDF")
+          makeIndigoOptions("Hexagon SDF")
+      }
+
+      object segment extends shadermodule.ShaderModule {
+        val indigoOptions: IndigoOptions =
+          makeIndigoOptions("Segment SDF")
       }
 
       object star extends shadermodule.ShaderModule {
         val indigoOptions: IndigoOptions =
           makeIndigoOptions("Star")
+      }
+
+      object triangle extends shadermodule.ShaderModule {
+        val indigoOptions: IndigoOptions =
+          makeIndigoOptions("Triangle")
       }
 
     }

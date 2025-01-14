@@ -4,7 +4,7 @@ import scala.scalajs.js.annotation.*
 import generated.*
 
 @JSExportTopLevel("IndigoGame")
-object Circle extends IndigoShader:
+object BoxSDF extends IndigoShader:
 
   val config: GameConfig =
     Config.config.noResize
@@ -16,13 +16,13 @@ object Circle extends IndigoShader:
   val channel3: Option[AssetPath] = None
 
   val shader: Shader =
-    CircleShader.shader
+    BoxShader.shader
 
-object CircleShader:
+object BoxShader:
 
   val shader: UltravioletShader =
     UltravioletShader.entityFragment(
-      ShaderId("circle shader"),
+      ShaderId("box shader"),
       EntityShader.fragment(fragment, FragmentEnv.reference)
     )
 
@@ -40,13 +40,13 @@ object CircleShader:
       import ultraviolet.sdf.*
       import FillColorHelper.*
 
-      def proxy: (vec2, Float) => Float =
-        (p, r) => circle(p, r)
+      def proxy: (vec2, vec2) => Float =
+        (p, b) => box(p, b)
 
       def calculateColour: (vec2, Float) => vec4 = (uv, sdf) => fill(uv, sdf)
 
       def fragment(color: vec4): vec4 =
-        calculateColour(env.UV, proxy(env.UV - 0.5f, 0.4f))
+        calculateColour(env.UV, proxy(env.UV - 0.5f, vec2(0.2f, 0.4f)))
     }
   // ```
 

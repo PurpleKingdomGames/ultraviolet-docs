@@ -4,7 +4,7 @@ import scala.scalajs.js.annotation.*
 import generated.*
 
 @JSExportTopLevel("IndigoGame")
-object Circle extends IndigoShader:
+object Segment extends IndigoShader:
 
   val config: GameConfig =
     Config.config.noResize
@@ -16,13 +16,13 @@ object Circle extends IndigoShader:
   val channel3: Option[AssetPath] = None
 
   val shader: Shader =
-    CircleShader.shader
+    SegmentShader.shader
 
-object CircleShader:
+object SegmentShader:
 
   val shader: UltravioletShader =
     UltravioletShader.entityFragment(
-      ShaderId("circle shader"),
+      ShaderId("segment shader"),
       EntityShader.fragment(fragment, FragmentEnv.reference)
     )
 
@@ -33,6 +33,9 @@ object CircleShader:
     * the body at the point of use.
     * 
     * This shader also uses an imported 'fill' function to calculate a nice colour gradient.
+    *
+    * Note that we can't just render the line segment, because at 0.0f the SDF is 0.0f, so we need
+    * the annular, i.e. abs(sdf) - thickness-of-border.
     */
   // ```scala
   inline def fragment =
@@ -40,13 +43,14 @@ object CircleShader:
       import ultraviolet.sdf.*
       import FillColorHelper.*
 
-      def proxy: (vec2, Float) => Float =
-        (p, r) => circle(p, r)
+      def proxy: (vec2, vec2, vec2) => Float =
+        (p, a, b) => segment(p, a, b)
 
       def calculateColour: (vec2, Float) => vec4 = (uv, sdf) => fill(uv, sdf)
 
       def fragment(color: vec4): vec4 =
-        calculateColour(env.UV, proxy(env.UV - 0.5f, 0.4f))
+        val segSDF = proxy(env.UV, vec2(0.2f), vec2(0.8f))
+        calculateColour(env.UV, abs(segSDF) - 0.1f)
     }
   // ```
 

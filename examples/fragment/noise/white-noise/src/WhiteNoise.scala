@@ -16,27 +16,31 @@ object WhiteNoise extends IndigoShader:
   val channel3: Option[AssetPath] = None
 
   val shader: Shader =
-    CustomShader.shader
+    WhiteNoiseShader.shader
 
-object CustomShader:
+object WhiteNoiseShader:
 
-  val shader: Shader =
+  val shader: UltravioletShader =
     UltravioletShader.entityFragment(
-      ShaderId("shader"),
-      EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
+      ShaderId("white noise shader"),
+      EntityShader.fragment(fragment, FragmentEnv.reference)
     )
 
   import ultraviolet.syntax.*
 
-  inline def fragment: Shader[FragmentEnv, Unit] =
+  /** The noise function is imported, but we then need to set up a proxy function. This is because the
+    * macro system relies on inlining, and we want to create a function definition, not just inline
+    * the noise code at the point of use.
+    */
+  // ```scala
+  inline def fragment =
     Shader[FragmentEnv] { env =>
+      import ultraviolet.noise.*
 
-      def whiteNoise(p: vec2): vec3 =
-        var a: vec3 = fract(p.xyx * vec3(123.34f, 234.34f, 345.65f))
-        a = a + dot(a, a + 34.45f)
-        fract(vec3(a.x * a.y, a.y * a.z, a.z * a.x))
+      def proxy: vec2 => vec3 =
+        p => white(p)
 
       def fragment(color: vec4): vec4 =
-        vec4(whiteNoise(env.UV + fract(env.TIME)), 1.0f)
-
+        vec4(proxy(env.UV + fract(env.TIME)), 1.0f)
     }
+  // ```

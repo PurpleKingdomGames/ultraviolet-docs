@@ -4,7 +4,7 @@ import scala.scalajs.js.annotation.*
 import generated.*
 
 @JSExportTopLevel("IndigoGame")
-object SquareSDF extends IndigoShader:
+object ColourInterpolators extends IndigoShader:
 
   val config: GameConfig =
     Config.config.noResize
@@ -28,17 +28,18 @@ object CustomShader:
 
   import ultraviolet.syntax.*
 
+  /** In this example, interpolate a hex colour value to a vec3 (hexa would produce a vec4), and a
+    * blue color as a vec4 using `rgba` (rgb would produce a vec3). The blue colour is then
+    * converted to a vec3 with a swizzle, and the two are added together to create magenta.
+    */
+  // ```scala
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>
-
-      def sdBox(p: vec2, b: vec2): Float =
-        val d = abs(p) - b
-        length(max(d, 0.0f)) + min(max(d.x, d.y), 0.0f)
-
       def fragment(color: vec4): vec4 =
-        val sdf = sdBox(env.UV - 0.5f, vec2(0.25f))
+        val red     = hex"#FF0000"
+        val blue    = rgba"0,0,255,255"
+        val magenta = red.xyz + blue.xyz
 
-        val col = step(0.0f, -sdf)
-
-        vec4(vec3(col), 1.0f)
+        vec4(magenta, 1.0f)
     }
+  // ```
