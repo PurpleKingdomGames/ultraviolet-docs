@@ -2,6 +2,7 @@ import indigo.*
 
 import scala.scalajs.js.annotation.*
 import generated.*
+import ultraviolet.syntax.*
 
 /** ## How to composite one texture over another
   */
@@ -22,21 +23,20 @@ object BlendingTextures extends IndigoShader:
   val channel0: Option[AssetPath] = Option(AssetPath("assets/fire-background.png"))
   val channel1: Option[AssetPath] = Option(AssetPath("assets/campfire.png"))
   // ```
-  val channel2: Option[AssetPath] = None
-  val channel3: Option[AssetPath] = None
+  val channel2: Option[AssetPath]        = None
+  val channel3: Option[AssetPath]        = None
+  val uniformBlocks: Batch[UniformBlock] = Batch.empty
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     CustomShader.shader
 
 object CustomShader:
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     UltravioletShader.entityFragment(
       ShaderId("shader"),
       EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
     )
-
-  import ultraviolet.syntax.*
 
   /** We can access the color of each texture by using the channel reference.
     *
@@ -58,11 +58,11 @@ object CustomShader:
 
   // ```scala
   inline def fragment: Shader[FragmentEnv, Unit] =
-  Shader[FragmentEnv] { env =>
-    def fragment(color: vec4): vec4 =
-      val background: vec4 = env.CHANNEL_0
-      val foreground: vec4 = env.CHANNEL_1
+    Shader[FragmentEnv] { env =>
+      def fragment(color: vec4): vec4 =
+        val background: vec4 = env.CHANNEL_0
+        val foreground: vec4 = env.CHANNEL_1
 
-      mix(background, foreground, foreground.a)
-  }
+        mix(background, foreground, foreground.a)
+    }
   // ```

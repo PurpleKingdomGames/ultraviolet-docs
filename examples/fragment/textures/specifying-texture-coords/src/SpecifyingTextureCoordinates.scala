@@ -2,6 +2,7 @@ import indigo.*
 
 import scala.scalajs.js.annotation.*
 import generated.*
+import ultraviolet.syntax.*
 
 /** ## Stretching a texture to fill the entity.
   *
@@ -48,22 +49,21 @@ object SpecifyingTextureCoordinates extends IndigoShader:
   // ```scala
   val channel0: Option[AssetPath] = Option(AssetPath("assets/fire-background.png"))
   // ```
-  val channel1: Option[AssetPath] = None
-  val channel2: Option[AssetPath] = None
-  val channel3: Option[AssetPath] = None
+  val channel1: Option[AssetPath]        = None
+  val channel2: Option[AssetPath]        = None
+  val channel3: Option[AssetPath]        = None
+  val uniformBlocks: Batch[UniformBlock] = Batch.empty
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     CustomShader.shader
 
 object CustomShader:
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     UltravioletShader.entityFragment(
       ShaderId("shader"),
       EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
     )
-
-  import ultraviolet.syntax.*
 
   inline def fragment: Shader[FragmentEnv, Unit] =
     Shader[FragmentEnv] { env =>

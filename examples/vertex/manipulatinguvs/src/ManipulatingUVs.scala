@@ -2,6 +2,7 @@ import indigo.*
 
 import scala.scalajs.js.annotation.*
 import generated.*
+import ultraviolet.syntax.*
 
 /** ## How to manipulate UVs in a vertex shader
   */
@@ -11,13 +12,14 @@ object ManipulatingUVs extends IndigoShader:
   val config: GameConfig =
     Config.config.noResize
 
-  val assets: Set[AssetType]      = Assets.assets.assetSet
-  val channel0: Option[AssetPath] = None
-  val channel1: Option[AssetPath] = None
-  val channel2: Option[AssetPath] = None
-  val channel3: Option[AssetPath] = None
+  val assets: Set[AssetType]             = Assets.assets.assetSet
+  val channel0: Option[AssetPath]        = None
+  val channel1: Option[AssetPath]        = None
+  val channel2: Option[AssetPath]        = None
+  val channel3: Option[AssetPath]        = None
+  val uniformBlocks: Batch[UniformBlock] = Batch.empty
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     CustomShader.shader
 
 object CustomShader:
@@ -26,15 +28,13 @@ object CustomShader:
     * shader. In this case we pass in the default environment to both.
     */
   // ```scala
-  val shader: Shader =
+  val shader: ShaderProgram =
     UltravioletShader(
       ShaderId("shader"),
       EntityShader.vertex[VertexEnv](vertex, VertexEnv.reference),
       EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
     )
   // ```
-
-  import ultraviolet.syntax.*
 
   /** A vertex shader is just a function that takes a vec4 of the current vertex position, and
     * returns a new vec4 of the manipulated vertex position, but the vertex isn't the only value we

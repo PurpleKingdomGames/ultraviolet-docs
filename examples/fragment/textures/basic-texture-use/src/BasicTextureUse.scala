@@ -2,6 +2,7 @@ import indigo.*
 
 import scala.scalajs.js.annotation.*
 import generated.*
+import ultraviolet.syntax.*
 
 /** ## How to directly use a texture
   */
@@ -20,22 +21,21 @@ object BasicTextureUse extends IndigoShader:
   // ```scala
   val channel0: Option[AssetPath] = Option(AssetPath("assets/fire-background.png"))
   // ```
-  val channel1: Option[AssetPath] = None
-  val channel2: Option[AssetPath] = None
-  val channel3: Option[AssetPath] = None
+  val channel1: Option[AssetPath]        = None
+  val channel2: Option[AssetPath]        = None
+  val channel3: Option[AssetPath]        = None
+  val uniformBlocks: Batch[UniformBlock] = Batch.empty
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     CustomShader.shader
 
 object CustomShader:
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     UltravioletShader.entityFragment(
       ShaderId("shader"),
       EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
     )
-
-  import ultraviolet.syntax.*
 
   /** In the simplest use of an image/texture, you just need to use of the appropriate channel, in
     * this case `env.CHANNEL_0`. This type of channel reference provides the color of the pixel at

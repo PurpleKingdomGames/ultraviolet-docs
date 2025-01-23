@@ -2,6 +2,7 @@ import indigo.*
 
 import scala.scalajs.js.annotation.*
 import generated.*
+import ultraviolet.syntax.*
 
 /** ## How to set up a minimal vertex shader
   */
@@ -11,20 +12,19 @@ object MinimalVertex extends IndigoShader:
   val config: GameConfig =
     Config.config.noResize
 
-  val assets: Set[AssetType]      = Assets.assets.assetSet
-  val channel0: Option[AssetPath] = None
-  val channel1: Option[AssetPath] = None
-  val channel2: Option[AssetPath] = None
-  val channel3: Option[AssetPath] = None
+  val assets: Set[AssetType]             = Assets.assets.assetSet
+  val channel0: Option[AssetPath]        = None
+  val channel1: Option[AssetPath]        = None
+  val channel2: Option[AssetPath]        = None
+  val channel3: Option[AssetPath]        = None
+  val uniformBlocks: Batch[UniformBlock] = Batch.empty
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     CustomShader.shader
 
 /** Inside a custom shader object we define an ultraviolet shader. To do that, we need to supply a
   * ShaderId, that we'll need to register in Indigo's boot data, and also the vertex and fragment
   * shaders themselves.
-  *
-  * We import the ultraviolet syntax inside the object in order to avoid import collisions.
   *
   * The vertex shader presented here is a 'no-op', it simply returns the vertex position as is,
   * without modification. However we could use this function to affect the position of the vertex or
@@ -37,14 +37,12 @@ object MinimalVertex extends IndigoShader:
 // ```scala
 object CustomShader:
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     UltravioletShader(
       ShaderId("shader"),
       EntityShader.vertex[VertexEnv](vertex, VertexEnv.reference),
       EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
     )
-
-  import ultraviolet.syntax.*
 
   inline def vertex: Shader[VertexEnv, Unit] =
     Shader[VertexEnv] { env =>

@@ -2,6 +2,7 @@ import indigo.*
 
 import scala.scalajs.js.annotation.*
 import generated.*
+import ultraviolet.syntax.*
 
 @JSExportTopLevel("IndigoGame")
 object BoxSDF extends IndigoShader:
@@ -9,13 +10,14 @@ object BoxSDF extends IndigoShader:
   val config: GameConfig =
     Config.config.noResize
 
-  val assets: Set[AssetType]      = Assets.assets.assetSet
-  val channel0: Option[AssetPath] = None
-  val channel1: Option[AssetPath] = None
-  val channel2: Option[AssetPath] = None
-  val channel3: Option[AssetPath] = None
+  val assets: Set[AssetType]             = Assets.assets.assetSet
+  val channel0: Option[AssetPath]        = None
+  val channel1: Option[AssetPath]        = None
+  val channel2: Option[AssetPath]        = None
+  val channel3: Option[AssetPath]        = None
+  val uniformBlocks: Batch[UniformBlock] = Batch.empty
 
-  val shader: Shader =
+  val shader: ShaderProgram =
     BoxShader.shader
 
 object BoxShader:
@@ -26,12 +28,10 @@ object BoxShader:
       EntityShader.fragment(fragment, FragmentEnv.reference)
     )
 
-  import ultraviolet.syntax.*
-
   /** The sdf function is imported, but we then need to set up a proxy function. This is because the
     * macro system relies on inlining, and we want to create a function definition, not just inline
     * the body at the point of use.
-    * 
+    *
     * This shader also uses an imported 'fill' function to calculate a nice colour gradient.
     */
   // ```scala
@@ -51,8 +51,6 @@ object BoxShader:
   // ```
 
 object FillColorHelper:
-
-  import ultraviolet.syntax.*
   import ultraviolet.colors.*
 
   inline def fill(uv: vec2, sdf: Float): vec4 =
