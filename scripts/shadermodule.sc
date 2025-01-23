@@ -28,7 +28,17 @@ trait ShaderModule extends MillIndigo {
 
     // Alledgedly unused local definitions are unavoidable in Ultraviolet,
     // so we remove the flag to make things tolerable.
-    flags.filterNot(_ == "-Wunused:locals")
+    flags.filterNot { f => 
+      f == "-Wunused:locals" ||
+      // f == "-Wunused:value" ||
+      // f == "-Wunused:explicits" ||
+      // f == "-Wunused:imports" ||
+      // f == "-Wunused:params" ||
+      // f == "-Wunused:privates" ||
+      // f == "-Wvalue-discard" ||
+      // f == "-Ywarn-value-discard" ||
+      f == "-Wnonunit-statement"
+    }
   }
 
   def indigoOptions: IndigoOptions

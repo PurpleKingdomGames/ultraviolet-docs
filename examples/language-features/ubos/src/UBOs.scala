@@ -2,6 +2,8 @@ import indigo.*
 
 import scala.scalajs.js.annotation.*
 import generated.*
+import ultraviolet.syntax.*
+
 
 /** ## How to use Uniform Buffer Objects (UBOs) to supply data to a shader
   */
@@ -17,26 +19,33 @@ object UBOs extends IndigoShader:
   val channel2: Option[AssetPath] = None
   val channel3: Option[AssetPath] = None
 
-  val shader: Shader =
-    CustomShader.Shader
-    // TODO: I'm stuck until I can publish the next version of indigo...
+  val uniformBlocks: Batch[UniformBlock] =
+    Batch(
+      CustomData(vec4(1.0f, 0.0f, 1.0f, 1.0f))
+    )
 
-/** 
-  */
+  val shader: ShaderProgram =
+    CustomShader.shader
+
+/** */
 // ```scala
 object CustomShader:
 
-  val shader: Shader =
+  class Env extends CustomData(vec4(0.0f)) with FragmentEnvReference
+
+  val shader: ShaderProgram =
     UltravioletShader.entityFragment(
       ShaderId("shader"),
-      EntityShader.fragment[FragmentEnv](fragment, FragmentEnv.reference)
+      EntityShader.fragment[Env](fragment, new Env)
     )
 
-  import ultraviolet.syntax.*
+  inline def fragment: Shader[Env, Unit] =
+    Shader[Env] { env =>
+      ubo[CustomData]
 
-  inline def fragment: Shader[FragmentEnv, Unit] =
-    Shader[FragmentEnv] { env =>
       def fragment(color: vec4): vec4 =
-        vec4(1.0f, 0.0f, 0.0f, 1.0f)
+        env.CUSTOM_COLOR
     }
 // ```
+
+case class CustomData(CUSTOM_COLOR: vec4) derives ToUniformBlock
