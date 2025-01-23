@@ -153,7 +153,6 @@
         <p>Inside a custom shader object we define an ultraviolet shader. To do that, we need to supply a
         ShaderId, that we&#39;ll need to register in Indigo&#39;s boot data, and also the vertex and fragment
         shaders themselves.</p>
-        <p>We import the ultraviolet syntax inside the object in order to avoid import collisions.</p>
         <p>The vertex shader presented here is a &#39;no-op&#39;, it simply returns the vertex position as is,
         without modification. However we could use this function to affect the position of the vertex or
         values such as the UV coordinates. We could also do calculations and pass the results across to
@@ -162,14 +161,12 @@
         channels, just so that we can see the effect of the shader.</p>
         <pre><code class="nohighlight"><span class="keyword">object</span><span> </span><span class="type-name">CustomShader</span><span>:
 
-  </span><span class="keyword">val</span><span> </span><span class="identifier">shader</span><span>: </span><span class="type-name">Shader</span><span> =
+  </span><span class="keyword">val</span><span> </span><span class="identifier">shader</span><span>: </span><span class="type-name">ShaderProgram</span><span> =
     </span><span class="type-name">UltravioletShader</span><span>(
       </span><span class="type-name">ShaderId</span><span>(</span><span class="string-literal">&quot;shader&quot;</span><span>),
       </span><span class="type-name">EntityShader</span><span>.</span><span class="identifier">vertex</span><span>[</span><span class="type-name">VertexEnv</span><span>](</span><span class="identifier">vertex</span><span>, </span><span class="type-name">VertexEnv</span><span>.</span><span class="identifier">reference</span><span>),
       </span><span class="type-name">EntityShader</span><span>.</span><span class="identifier">fragment</span><span>[</span><span class="type-name">FragmentEnv</span><span>](</span><span class="identifier">fragment</span><span>, </span><span class="type-name">FragmentEnv</span><span>.</span><span class="identifier">reference</span><span>)
     )
-
-  </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">syntax</span><span>.*
 
   </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">vertex</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">VertexEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
     </span><span class="type-name">Shader</span><span>[</span><span class="type-name">VertexEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;

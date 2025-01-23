@@ -148,9 +148,9 @@
         <ul>
           <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//demos/examples/fragment/noise/classic-perlin-noise/">Live demo</a></li>
         </ul>
-        <p>The noise function is imported, but we then need to set up a proxy function. This is because the
-        macro system relies on inlining, and we want to create a function definition, not just inline
-        the noise code at the point of use.</p>
+        <p>The noise function is imported, but we then need to set up a proxy function. This is because
+        the macro system relies on inlining, and we want to create a function definition, not just
+        inline the noise code at the point of use.</p>
         <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span> =
     </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
       </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">noise</span><span>.*

@@ -158,7 +158,7 @@
         <h2 id="how-to-manipulate-uvs-in-a-vertex-shader" class="section"><a class="anchor-link left" href="#how-to-manipulate-uvs-in-a-vertex-shader"><i class="icofont-laika link">&#xef71;</i></a>How to manipulate UVs in a vertex shader</h2>
         <p>We need to define a shader that takes both the usual fragment shader, and also a vertex
         shader. In this case we pass in the default environment to both.</p>
-        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">shader</span><span>: </span><span class="type-name">Shader</span><span> =
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">shader</span><span>: </span><span class="type-name">ShaderProgram</span><span> =
   </span><span class="type-name">UltravioletShader</span><span>(
     </span><span class="type-name">ShaderId</span><span>(</span><span class="string-literal">&quot;shader&quot;</span><span>),
     </span><span class="type-name">EntityShader</span><span>.</span><span class="identifier">vertex</span><span>[</span><span class="type-name">VertexEnv</span><span>](</span><span class="identifier">vertex</span><span>, </span><span class="type-name">VertexEnv</span><span>.</span><span class="identifier">reference</span><span>),

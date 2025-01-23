@@ -160,13 +160,11 @@
         <p><code>vec4(red = 1.0f, green == 0.0f, blue = 0.0f, alpha = 1.0f)</code></p>
         <pre><code class="nohighlight"><span class="keyword">object</span><span> </span><span class="type-name">CustomShader</span><span>:
 
-  </span><span class="keyword">val</span><span> </span><span class="identifier">shader</span><span>: </span><span class="type-name">Shader</span><span> =
+  </span><span class="keyword">val</span><span> </span><span class="identifier">shader</span><span>: </span><span class="type-name">ShaderProgram</span><span> =
     </span><span class="type-name">UltravioletShader</span><span>.</span><span class="identifier">entityFragment</span><span>(
       </span><span class="type-name">ShaderId</span><span>(</span><span class="string-literal">&quot;shader&quot;</span><span>),
       </span><span class="type-name">EntityShader</span><span>.</span><span class="identifier">fragment</span><span>[</span><span class="type-name">FragmentEnv</span><span>](</span><span class="identifier">fragment</span><span>, </span><span class="type-name">FragmentEnv</span><span>.</span><span class="identifier">reference</span><span>)
     )
-
-  </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">syntax</span><span>.*
 
   </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
     </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
