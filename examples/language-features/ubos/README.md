@@ -1,12 +1,14 @@
 # Supplying Data with UBOs
 
-At some point, you're going to want to be able to supply data to your shader for some reason. To do that, we use Uniform Buffer Objects (UBO).
+At some point, you're going to want to be able to supply data to your shader for some reason, for example, perhaps your shader renders planets and you need to give it the color scheme to change water into lava.
 
-Ultraviolet allows you to declare UBO's as case classes. It isn't a perfect set up, but it works.
+To send data to shaders we use Uniform Buffer Objects (UBOs).
+
+Ultraviolet allows you to declare UBOs as case classes. It isn't a perfect set up, but it works.
 
 ## UBO Data Packing Rules
 
-Take heed! When you send data to a shader what you're really doing it sending a bunch of floats which will be read as a C-like struct at the other end. There are rules about how these floats get packed so that they are correctly read at the other end.
+Take heed! When you send data to a shader what you're really doing is sending a series of floats which will be read as a C-like struct at the other end. There are rules about how these floats get packed so that they are correctly read at the other end.
 
 Full rules follow, but to give you some idea:
 
@@ -30,9 +32,9 @@ This will be very inefficiently packed into this:
 5.0,0.0,0.0,0.0
 ```
 
-Look at all that waste! Might not be a problem for simple cases, but if you're trying to send a lot of data within the limits, then you could run into trouble.
+Look at all that waste! So many `0.0`s! Might not be a problem for simple cases, but if you're trying to send a lot of data within the limits, then you could run into trouble.
 
-Why does it do this? Well, `angle` is good, and we might expect that we can fit position into the remaining three floats after it (i.e. 1.0,[2.0,3.0,4.0],5.0,0.0,0.0,0.0), but the stride is 16 bytes, and a `vec3` is treated as a 16 bytes of data, so by default they cannot be merged.
+Why does it do this? Well, `angle` seems good, and we might expect that we can fit position into the remaining three floats after it (i.e. 1.0,<2.0,3.0,4.0>,5.0,0.0,0.0,0.0), but the stride is 16 bytes, and a `vec3` is treated as a 16 bytes of data, so by default they cannot be merged.
 
 Better strategies...
 
