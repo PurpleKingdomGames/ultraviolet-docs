@@ -3,7 +3,7 @@ import mill.scalalib._
 import mill.scalajslib._
 import mill.scalajslib.api._
 
-import $ivy.`io.indigoengine::mill-indigo:0.18.1-SNAPSHOT`, millindigo._
+import $ivy.`io.indigoengine::mill-indigo:0.19.0`, millindigo._
 import $ivy.`org.typelevel::scalac-options:0.1.7`, org.typelevel.scalacoptions._
 
 trait ShaderModule extends MillIndigo {
@@ -60,11 +60,11 @@ trait ShaderModule extends MillIndigo {
       .generateConfig("Config", indigoOptions)
       .listAssets("Assets", indigoOptions.assets)
 
-  val indigoVersion = "0.18.1-SNAPSHOT"
+  val indigoVersion = "0.19.0"
 
   def ivyDeps =
     Agg(
-      ivy"io.indigoengine::ultraviolet::0.4.1-SNAPSHOT",
+      ivy"io.indigoengine::ultraviolet::0.5.0",
       ivy"io.indigoengine::indigo-json-circe::$indigoVersion",
       ivy"io.indigoengine::indigo::$indigoVersion",
       ivy"io.indigoengine::indigo-extras::$indigoVersion"
