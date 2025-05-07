@@ -13,7 +13,7 @@ website:
   #   height: 50.0
   # logo:
   #   image: tyrian-menu-logo.svg
-  latestRelease: 0.5.0
+  latestRelease: 0.6.0
   baseUrl: https://purplekingdomgames.github.io/ultraviolet-docs/
 docsRepo:
   name: Docs
