@@ -45,7 +45,7 @@
 
   <div class="row links">
     
-    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/live_demos">Live Demos</a>
     
     <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
     
@@ -59,7 +59,7 @@
 
   <div class="row">
     
-    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/demos">Live Demos</a>
+    <a class="button-link" href="https://purplekingdomgames.github.io/ultraviolet-docs/live_demos">Live Demos</a>
     
     <a class="button-link" href="https://discord.gg/b5CD47g">Discord</a>
     
@@ -75,50 +75,55 @@
     <li class="level3 nav-leaf"><a href="../../../../documentation/guide/scala-vs-glsl.html">Scala 3 vs GLSL</a></li>
     <li class="level3 nav-leaf"><a href="../../../../documentation/guide/premultiplied-alpha.html">Premultiplied Alpha</a></li>
     <li class="level3 nav-leaf"><a href="../../../../documentation/guide/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
+    <li class="level3 nav-leaf"><a href="../../../../documentation/guide/shadertoy.html">Shadertoy</a></li>
     <li class="level1 nav-node"><a href="../../../">Examples</a></li>
+    <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
+    <li class="level3 nav-leaf"><a href="../../../vertex/movingvertices/">Moving Vertices</a></li>
+    <li class="level3 nav-leaf"><a href="../../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
+    <li class="level3 nav-leaf"><a href="../../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
     <li class="level2 nav-node"><a href="../../">Fragment</a></li>
-    <li class="level3 nav-node"><a href="../../basics/">Basics</a></li>
-    <li class="level4 nav-leaf"><a href="../../basics/colour-constants/">Colour Constants</a></li>
-    <li class="level4 nav-leaf"><a href="../../basics/colour-interpolators/">Colour Interpolators</a></li>
-    <li class="level4 nav-leaf"><a href="../../basics/colours/">Colours</a></li>
-    <li class="level4 nav-leaf"><a href="../../basics/minimal/">Minimal Fragment Shader Setup</a></li>
     <li class="level3 nav-node"><a href="../../demos/">Demos</a></li>
     <li class="level4 nav-leaf"><a href="../../demos/campfire/">Campfire Demo</a></li>
     <li class="level4 nav-leaf"><a href="../../demos/glowing-star/">Glowing Star Demo</a></li>
     <li class="level4 nav-leaf"><a href="../../demos/pulsingbox/">Pulsing Box Demo</a></li>
     <li class="level3 nav-node"><a href="../">Noise</a></li>
     <li class="level4 nav-leaf"><a href="../cellular-noise/">Cellular Noise</a></li>
-    <li class="level4 nav-leaf"><a href="../classic-perlin-noise/">Classic Perlin Noise</a></li>
-    <li class="level4 nav-leaf"><a href="../gradient-noise/">Gradient Noise</a></li>
     <li class="level4 nav-leaf"><a href="../simplex-noise/">Simplex Noise</a></li>
     <li class="level4 active nav-leaf"><a href="#">White Noise</a></li>
-    <li class="level3 nav-node"><a href="../../patterns/">Patterns</a></li>
-    <li class="level4 nav-leaf"><a href="../../patterns/grid/">Grid</a></li>
-    <li class="level4 nav-leaf"><a href="../../patterns/rainbow/">Rainbow</a></li>
-    <li class="level4 nav-leaf"><a href="../../patterns/simple-voronoi/">Voronoi Example</a></li>
-    <li class="level4 nav-leaf"><a href="../../patterns/stripes/">Stripes</a></li>
-    <li class="level4 nav-leaf"><a href="../../patterns/wavy-stripes/">Wavy stripes</a></li>
-    <li class="level3 nav-node"><a href="../../sdf/">Sdf</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/box/">Square SDF</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/circle/">Circle SDF</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/hexagon/">Hexagon SDF</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/segment/">Segment SDF</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/star/">Star SDF</a></li>
-    <li class="level4 nav-leaf"><a href="../../sdf/triangle/">Triangle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../gradient-noise/">Gradient Noise</a></li>
+    <li class="level4 nav-leaf"><a href="../classic-perlin-noise/">Classic Perlin Noise</a></li>
     <li class="level3 nav-node"><a href="../../shapes/">Shapes</a></li>
     <li class="level4 nav-leaf"><a href="../../shapes/doughnut/">Doughnut</a></li>
     <li class="level4 nav-leaf"><a href="../../shapes/metaballs/">Metaballs</a></li>
+    <li class="level3 nav-node"><a href="../../patterns/">Patterns</a></li>
+    <li class="level4 nav-leaf"><a href="../../patterns/grid/">Grid</a></li>
+    <li class="level4 nav-leaf"><a href="../../patterns/rainbow/">Rainbow</a></li>
+    <li class="level4 nav-leaf"><a href="../../patterns/wavy-stripes/">Wavy stripes</a></li>
+    <li class="level4 nav-leaf"><a href="../../patterns/stripes/">Stripes</a></li>
+    <li class="level4 nav-leaf"><a href="../../patterns/simple-voronoi/">Voronoi Example</a></li>
+    <li class="level3 nav-node"><a href="../../sdf/">Sdf</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/circle/">Circle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/star/">Star SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/hexagon/">Hexagon SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/triangle/">Triangle SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/segment/">Segment SDF</a></li>
+    <li class="level4 nav-leaf"><a href="../../sdf/box/">Square SDF</a></li>
     <li class="level3 nav-node"><a href="../../textures/">Textures</a></li>
-    <li class="level4 nav-leaf"><a href="../../textures/basic-texture-use/">Basic texture use</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/blending-textures/">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
+    <li class="level4 nav-leaf"><a href="../../textures/basic-texture-use/">Basic texture use</a></li>
+    <li class="level3 nav-node"><a href="../../basics/">Basics</a></li>
+    <li class="level4 nav-leaf"><a href="../../basics/colours/">Colours</a></li>
+    <li class="level4 nav-leaf"><a href="../../basics/colour-constants/">Colour Constants</a></li>
+    <li class="level4 nav-leaf"><a href="../../basics/minimal/">Minimal Fragment Shader Setup</a></li>
+    <li class="level4 nav-leaf"><a href="../../basics/colour-interpolators/">Colour Interpolators</a></li>
     <li class="level2 nav-node"><a href="../../../language-features/">Language-features</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/ubos/">Supplying Data with UBOs</a></li>
-    <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
-    <li class="level3 nav-leaf"><a href="../../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
-    <li class="level3 nav-leaf"><a href="../../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
-    <li class="level3 nav-leaf"><a href="../../../vertex/movingvertices/">Moving Vertices</a></li>
+    <li class="level1 nav-node"><a href="../../../../shadertoy/">Shadertoy</a></li>
+    <li class="level2 nav-leaf"><a href="../../../../shadertoy/seascape/">Seascape</a></li>
+    <li class="level2 nav-leaf"><a href="../../../../shadertoy/default/">Default</a></li>
+    <li class="level2 nav-leaf"><a href="../../../../shadertoy/plasma/">Plasma</a></li>
   </ul>
 
 </nav>
@@ -147,7 +152,7 @@
           <li><a href="https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main/examples/fragment/noise/white-noise">View example code</a></li>
         </ul>
         <ul>
-          <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//demos/examples/fragment/noise/white-noise/">Live demo</a></li>
+          <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//live_demos/examples/fragment/noise/white-noise/">Live demo</a></li>
         </ul>
         <p>The noise function is imported, but we then need to set up a proxy function. This is because
         the macro system relies on inlining, and we want to create a function definition, not just
