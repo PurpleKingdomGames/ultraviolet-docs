@@ -18,17 +18,17 @@ object examples extends mill.Module {
         val indigoOptions: IndigoOptions =
           makeIndigoOptions("Colours")
       }
-      
+
       object `colour-constants` extends shadermodule.ShaderModule {
         val indigoOptions: IndigoOptions =
           makeIndigoOptions("Colour Constants")
       }
-      
+
       object `colour-interpolators` extends shadermodule.ShaderModule {
         val indigoOptions: IndigoOptions =
           makeIndigoOptions("Colour Interpolators")
       }
-      
+
       object minimal extends shadermodule.ShaderModule {
         val indigoOptions: IndigoOptions =
           makeIndigoOptions("Minimal Fragment Shader Setup")
@@ -214,6 +214,25 @@ object examples extends mill.Module {
         makeIndigoOptions("Supplying Data to a Shader with UBOs")
     }
 
+  }
+
+}
+
+object shadertoy extends mill.Module {
+
+  object default extends shadermodule.ShaderModule {
+    val indigoOptions: IndigoOptions =
+      makeIndigoOptions("Default Shadertoy Example")
+  }
+
+  object plasma extends shadermodule.ShaderModule {
+    val indigoOptions: IndigoOptions =
+      makeIndigoOptions("Plasma Shadertoy Example")
+  }
+
+  object seascape extends shadermodule.ShaderModule {
+    val indigoOptions: IndigoOptions =
+      makeIndigoOptions("Seascape Shadertoy Example")
   }
 
 }

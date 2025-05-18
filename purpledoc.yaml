@@ -15,6 +15,10 @@ website:
   #   image: tyrian-menu-logo.svg
   latestRelease: 0.6.0
   baseUrl: https://purplekingdomgames.github.io/ultraviolet-docs/
+  navigationOrder:
+    - documentation
+    - examples
+    - shadertoy
 docsRepo:
   name: Docs
   url: https://github.com/PurpleKingdomGames/ultraviolet-docs
