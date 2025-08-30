@@ -113,7 +113,7 @@
     <li class="level4 nav-leaf"><a href="../../fragment/textures/basic-texture-use/">Basic texture use</a></li>
     <li class="level4 nav-leaf"><a href="../../fragment/textures/blending-textures/">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../../fragment/textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
-    <li class="level2 nav-node"><a href="../">Language-features</a></li>
+    <li class="level2 nav-node"><a href="../">Language features</a></li>
     <li class="level3 nav-leaf"><a href="../imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 active nav-leaf"><a href="#">Supplying Data with UBOs</a></li>
     <li class="level2 nav-node"><a href="../../vertex/">Vertex</a></li>
@@ -290,13 +290,13 @@ But this isn&#39;t: FVV0</code></pre>
         the top of the shader body.</p>
         <p>We can now access the <code>CUSTOM_COLOR</code> field from the shader environment, and return it as the
         fragment color.</p>
-        <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">Env</span><span>, </span><span class="type-name">Unit</span><span>] =
-    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">Env</span><span>] { </span><span class="identifier">env</span><span> =&gt;
-      </span><span class="identifier">ubo</span><span>[</span><span class="type-name">CustomData</span><span>]
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">Env</span><span>, </span><span class="type-name">Unit</span><span>] =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">Env</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="identifier">ubo</span><span>[</span><span class="type-name">CustomData</span><span>]
 
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-        </span><span class="identifier">env</span><span>.</span><span class="type-name">CUSTOM_COLOR</span><span>
-    }</span></code></pre>
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="identifier">env</span><span>.</span><span class="type-name">CUSTOM_COLOR</span><span>
+  }</span></code></pre>
 
         
 <hr class="footer-rule"/>

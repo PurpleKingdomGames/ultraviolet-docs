@@ -113,7 +113,7 @@
     <li class="level4 nav-leaf"><a href="../../fragment/textures/basic-texture-use/">Basic texture use</a></li>
     <li class="level4 nav-leaf"><a href="../../fragment/textures/blending-textures/">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../../fragment/textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
-    <li class="level2 nav-node"><a href="../../language-features/">Language-features</a></li>
+    <li class="level2 nav-node"><a href="../../language-features/">Language features</a></li>
     <li class="level3 nav-leaf"><a href="../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 nav-leaf"><a href="../../language-features/ubos/">Supplying Data with UBOs</a></li>
     <li class="level2 nav-node"><a href="../">Vertex</a></li>
@@ -177,16 +177,16 @@ b   c</code></pre>
         returns a new vec4 of the manipulated vertex position.</p>
         <p>In this example, we calculate an angle based on the current time, and then shift the current
         vertex by that angle.</p>
-        <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">vertex</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">VertexEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
-    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">VertexEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">vertex</span><span>(</span><span class="identifier">v</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-        </span><span class="keyword">val</span><span> </span><span class="identifier">angle</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">TAU</span><span> * (</span><span class="identifier">env</span><span>.</span><span class="type-name">TIME</span><span> % </span><span class="number-literal">1.0f</span><span>)
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">vertex</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">VertexEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">VertexEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">vertex</span><span>(</span><span class="identifier">v</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="keyword">val</span><span> </span><span class="identifier">angle</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">TAU</span><span> * (</span><span class="identifier">env</span><span>.</span><span class="type-name">TIME</span><span> % </span><span class="number-literal">1.0f</span><span>)
 
-        </span><span class="identifier">v</span><span> + </span><span class="identifier">vec4</span><span>(
-          </span><span class="identifier">vec2</span><span>(</span><span class="identifier">sin</span><span>(</span><span class="identifier">angle</span><span>) * </span><span class="number-literal">0.2f</span><span>, </span><span class="identifier">cos</span><span>(</span><span class="identifier">angle</span><span>) * </span><span class="number-literal">0.2f</span><span>),
-          </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">0.0f</span><span>)
-        )
-    }</span></code></pre>
+      </span><span class="identifier">v</span><span> + </span><span class="identifier">vec4</span><span>(
+        </span><span class="identifier">vec2</span><span>(</span><span class="identifier">sin</span><span>(</span><span class="identifier">angle</span><span>) * </span><span class="number-literal">0.2f</span><span>, </span><span class="identifier">cos</span><span>(</span><span class="identifier">angle</span><span>) * </span><span class="number-literal">0.2f</span><span>),
+        </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">0.0f</span><span>)
+      )
+  }</span></code></pre>
 
         
 <hr class="footer-rule"/>

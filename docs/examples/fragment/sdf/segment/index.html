@@ -113,7 +113,7 @@
     <li class="level4 nav-leaf"><a href="../../textures/basic-texture-use/">Basic texture use</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/blending-textures/">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
-    <li class="level2 nav-node"><a href="../../../language-features/">Language-features</a></li>
+    <li class="level2 nav-node"><a href="../../../language-features/">Language features</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/ubos/">Supplying Data with UBOs</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
@@ -160,20 +160,20 @@
         <p>This shader also uses an imported &#39;fill&#39; function to calculate a nice colour gradient.</p>
         <p>Note that we can&#39;t just render the line segment, because at 0.0f the SDF is 0.0f, so we need
         the annular, i.e. abs(sdf) - thickness-of-border.</p>
-        <pre><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span> =
-    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
-      </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">sdf</span><span>.*
-      </span><span class="keyword">import</span><span> </span><span class="type-name">FillColorHelper</span><span>.*
+        <pre><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span> =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">sdf</span><span>.*
+    </span><span class="keyword">import</span><span> </span><span class="type-name">FillColorHelper</span><span>.*
 
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">proxy</span><span>: (</span><span class="identifier">vec2</span><span>, </span><span class="identifier">vec2</span><span>, </span><span class="identifier">vec2</span><span>) =&gt; </span><span class="type-name">Float</span><span> =
-        (</span><span class="identifier">p</span><span>, </span><span class="identifier">a</span><span>, </span><span class="identifier">b</span><span>) =&gt; </span><span class="identifier">segment</span><span>(</span><span class="identifier">p</span><span>, </span><span class="identifier">a</span><span>, </span><span class="identifier">b</span><span>)
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">proxy</span><span>: (</span><span class="identifier">vec2</span><span>, </span><span class="identifier">vec2</span><span>, </span><span class="identifier">vec2</span><span>) =&gt; </span><span class="type-name">Float</span><span> =
+      (</span><span class="identifier">p</span><span>, </span><span class="identifier">a</span><span>, </span><span class="identifier">b</span><span>) =&gt; </span><span class="identifier">segment</span><span>(</span><span class="identifier">p</span><span>, </span><span class="identifier">a</span><span>, </span><span class="identifier">b</span><span>)
 
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">calculateColour</span><span>: (</span><span class="identifier">vec2</span><span>, </span><span class="type-name">Float</span><span>) =&gt; </span><span class="identifier">vec4</span><span> = (</span><span class="identifier">uv</span><span>, </span><span class="identifier">sdf</span><span>) =&gt; </span><span class="identifier">fill</span><span>(</span><span class="identifier">uv</span><span>, </span><span class="identifier">sdf</span><span>)
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">calculateColour</span><span>: (</span><span class="identifier">vec2</span><span>, </span><span class="type-name">Float</span><span>) =&gt; </span><span class="identifier">vec4</span><span> = (</span><span class="identifier">uv</span><span>, </span><span class="identifier">sdf</span><span>) =&gt; </span><span class="identifier">fill</span><span>(</span><span class="identifier">uv</span><span>, </span><span class="identifier">sdf</span><span>)
 
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-        </span><span class="keyword">val</span><span> </span><span class="identifier">segSDF</span><span> = </span><span class="identifier">proxy</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>, </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">0.2f</span><span>), </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">0.8f</span><span>))
-        </span><span class="identifier">calculateColour</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>, </span><span class="identifier">abs</span><span>(</span><span class="identifier">segSDF</span><span>) - </span><span class="number-literal">0.1f</span><span>)
-    }</span></code></pre>
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="keyword">val</span><span> </span><span class="identifier">segSDF</span><span> = </span><span class="identifier">proxy</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>, </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">0.2f</span><span>), </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">0.8f</span><span>))
+      </span><span class="identifier">calculateColour</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>, </span><span class="identifier">abs</span><span>(</span><span class="identifier">segSDF</span><span>) - </span><span class="number-literal">0.1f</span><span>)
+  }</span></code></pre>
 
         
 <hr class="footer-rule"/>

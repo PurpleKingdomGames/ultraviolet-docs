@@ -113,7 +113,7 @@
     <li class="level4 nav-leaf"><a href="../basic-texture-use/">Basic texture use</a></li>
     <li class="level4 active nav-leaf"><a href="#">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../specifying-texture-coords/">Specifying Texture Coordinates</a></li>
-    <li class="level2 nav-node"><a href="../../../language-features/">Language-features</a></li>
+    <li class="level2 nav-node"><a href="../../../language-features/">Language features</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/ubos/">Supplying Data with UBOs</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
@@ -174,14 +174,14 @@
         <p>It is important to note that <code>mix</code> is just a mathematical function that will work with many
         numeric and vector types, we&#39;re using it for textures here, but you can use it to interpolate
         between any values you like.</p>
-        <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
-    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-        </span><span class="keyword">val</span><span> </span><span class="identifier">background</span><span>: </span><span class="identifier">vec4</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">CHANNEL_0</span><span>
-        </span><span class="keyword">val</span><span> </span><span class="identifier">foreground</span><span>: </span><span class="identifier">vec4</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">CHANNEL_1</span><span>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="keyword">val</span><span> </span><span class="identifier">background</span><span>: </span><span class="identifier">vec4</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">CHANNEL_0</span><span>
+      </span><span class="keyword">val</span><span> </span><span class="identifier">foreground</span><span>: </span><span class="identifier">vec4</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">CHANNEL_1</span><span>
 
-        </span><span class="identifier">mix</span><span>(</span><span class="identifier">background</span><span>, </span><span class="identifier">foreground</span><span>, </span><span class="identifier">foreground</span><span>.</span><span class="identifier">a</span><span>)
-    }</span></code></pre>
+      </span><span class="identifier">mix</span><span>(</span><span class="identifier">background</span><span>, </span><span class="identifier">foreground</span><span>, </span><span class="identifier">foreground</span><span>.</span><span class="identifier">a</span><span>)
+  }</span></code></pre>
 
         
 <hr class="footer-rule"/>

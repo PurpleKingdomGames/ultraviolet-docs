@@ -113,7 +113,7 @@
     <li class="level4 nav-leaf"><a href="../../textures/basic-texture-use/">Basic texture use</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/blending-textures/">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
-    <li class="level2 nav-node"><a href="../../../language-features/">Language-features</a></li>
+    <li class="level2 nav-node"><a href="../../../language-features/">Language features</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/ubos/">Supplying Data with UBOs</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
@@ -156,14 +156,14 @@
         </ul>
         <p>In this example, we extract a vec3 of red (1, 0, 0) and blue (0, 0, 1) using a &#39;swizzle&#39; (the
         <code>.xyz</code>) and add them together to create magenta (1, 0, 1).</p>
-        <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
-    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
-      </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">colors</span><span>.*
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">colors</span><span>.*
 
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-        </span><span class="keyword">val</span><span> </span><span class="identifier">magenta</span><span> = </span><span class="type-name">Red</span><span>.</span><span class="identifier">xyz</span><span> + </span><span class="type-name">Blue</span><span>.</span><span class="identifier">xyz</span><span>
-        </span><span class="identifier">vec4</span><span>(</span><span class="identifier">magenta</span><span>, </span><span class="number-literal">1.0f</span><span>)
-    }</span></code></pre>
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="keyword">val</span><span> </span><span class="identifier">magenta</span><span> = </span><span class="type-name">Red</span><span>.</span><span class="identifier">xyz</span><span> + </span><span class="type-name">Blue</span><span>.</span><span class="identifier">xyz</span><span>
+      </span><span class="identifier">vec4</span><span>(</span><span class="identifier">magenta</span><span>, </span><span class="number-literal">1.0f</span><span>)
+  }</span></code></pre>
 
         
 <hr class="footer-rule"/>

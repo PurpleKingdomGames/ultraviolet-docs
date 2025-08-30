@@ -113,7 +113,7 @@
     <li class="level4 nav-leaf"><a href="../../textures/basic-texture-use/">Basic texture use</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/blending-textures/">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
-    <li class="level2 nav-node"><a href="../../../language-features/">Language-features</a></li>
+    <li class="level2 nav-node"><a href="../../../language-features/">Language features</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/ubos/">Supplying Data with UBOs</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
@@ -157,16 +157,16 @@
         <p>The noise function is imported, but we then need to set up a proxy function. This is because
         the macro system relies on inlining, and we want to create a function definition, not just
         inline the noise code at the point of use.</p>
-        <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span> =
-    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
-      </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">noise</span><span>.*
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span> =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">noise</span><span>.*
 
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">proxy</span><span>: </span><span class="identifier">vec2</span><span> =&gt; </span><span class="identifier">vec3</span><span> =
-        </span><span class="identifier">p</span><span> =&gt; </span><span class="identifier">gradient</span><span>(</span><span class="identifier">p</span><span>)
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">proxy</span><span>: </span><span class="identifier">vec2</span><span> =&gt; </span><span class="identifier">vec3</span><span> =
+      </span><span class="identifier">p</span><span> =&gt; </span><span class="identifier">gradient</span><span>(</span><span class="identifier">p</span><span>)
 
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-        </span><span class="identifier">vec4</span><span>(</span><span class="identifier">proxy</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span> * </span><span class="number-literal">8.0f</span><span>), </span><span class="number-literal">1.0f</span><span>)
-    }</span></code></pre>
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="identifier">vec4</span><span>(</span><span class="identifier">proxy</span><span>(</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span> * </span><span class="number-literal">8.0f</span><span>), </span><span class="number-literal">1.0f</span><span>)
+  }</span></code></pre>
 
         
 <hr class="footer-rule"/>

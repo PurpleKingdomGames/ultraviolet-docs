@@ -113,7 +113,7 @@
     <li class="level4 nav-leaf"><a href="../../textures/basic-texture-use/">Basic texture use</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/blending-textures/">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
-    <li class="level2 nav-node"><a href="../../../language-features/">Language-features</a></li>
+    <li class="level2 nav-node"><a href="../../../language-features/">Language features</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/ubos/">Supplying Data with UBOs</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
@@ -157,19 +157,18 @@
         <ul>
           <li><a href="https://purplekingdomgames.github.io/ultraviolet-docs//live_demos/examples/fragment/demos/glowing-star/">Live demo</a></li>
         </ul>
-        <pre><code class="nohighlight"><span>      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-        </span><span class="comment">// val circleSDF = sdCircle(env.UV - 0.5f, 0.25f)
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+  </span><span class="comment">// val circleSDF = sdCircle(env.UV - 0.5f, 0.25f)
 </span><span>
-        </span><span class="comment">// drawSdfCircle(circleSDF)  // Simple SDF
-</span><span>        </span><span class="comment">// drawSdfCircle2(circleSDF) // Using it as a cos wave
+  </span><span class="comment">// drawSdfCircle(circleSDF)  // Simple SDF
+</span><span>  </span><span class="comment">// drawSdfCircle2(circleSDF) // Using it as a cos wave
 </span><span>
-        </span><span class="keyword">val</span><span> </span><span class="identifier">starSDF</span><span> = </span><span class="identifier">sdStar5</span><span>((</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span> - </span><span class="number-literal">0.5f</span><span>) * </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">1.0f</span><span>, -</span><span class="number-literal">1.0f</span><span>), </span><span class="number-literal">0.25f</span><span>, </span><span class="number-literal">0.6f</span><span>)
+  </span><span class="keyword">val</span><span> </span><span class="identifier">starSDF</span><span> = </span><span class="identifier">sdStar5</span><span>((</span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span> - </span><span class="number-literal">0.5f</span><span>) * </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">1.0f</span><span>, -</span><span class="number-literal">1.0f</span><span>), </span><span class="number-literal">0.25f</span><span>, </span><span class="number-literal">0.6f</span><span>)
 
-        </span><span class="comment">// drawStarStep1(starSDF) // SDF
-</span><span>        </span><span class="comment">// drawStarStep2(starSDF) // Annular
-</span><span>        </span><span class="comment">// drawStarStep3(starSDF) // Glow
-</span><span>        </span><span class="identifier">drawStarStep4</span><span>(</span><span class="identifier">starSDF</span><span>) </span><span class="comment">// Putting it all together in color
-</span><span>      </span><span class="identifier">``</span><span>`</span></code></pre>
+  </span><span class="comment">// drawStarStep1(starSDF) // SDF
+</span><span>  </span><span class="comment">// drawStarStep2(starSDF) // Annular
+</span><span>  </span><span class="comment">// drawStarStep3(starSDF) // Glow
+</span><span>  </span><span class="identifier">drawStarStep4</span><span>(</span><span class="identifier">starSDF</span><span>) </span><span class="comment">// Putting it all together in color</span></code></pre>
 
         
 <hr class="footer-rule"/>

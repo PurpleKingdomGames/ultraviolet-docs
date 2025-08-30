@@ -113,7 +113,7 @@
     <li class="level4 nav-leaf"><a href="../../textures/basic-texture-use/">Basic texture use</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/blending-textures/">Blending Textures</a></li>
     <li class="level4 nav-leaf"><a href="../../textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
-    <li class="level2 nav-node"><a href="../../../language-features/">Language-features</a></li>
+    <li class="level2 nav-node"><a href="../../../language-features/">Language features</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/imports/">Using Imports &amp; Shared Code</a></li>
     <li class="level3 nav-leaf"><a href="../../../language-features/ubos/">Supplying Data with UBOs</a></li>
     <li class="level2 nav-node"><a href="../../../vertex/">Vertex</a></li>
@@ -157,15 +157,15 @@
         <p>In this example, interpolate a hex colour value to a vec3 (hexa would produce a vec4), and a
         blue color as a vec4 using <code>rgba</code> (rgb would produce a vec3). The blue colour is then
         converted to a vec3 with a swizzle, and the two are added together to create magenta.</p>
-        <pre class="keep-together pdf epub"><code class="nohighlight"><span>  </span><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
-    </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
-      </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
-        </span><span class="keyword">val</span><span> </span><span class="identifier">red</span><span>     = </span><span class="string-literal">hex&quot;#FF0000&quot;</span><span>
-        </span><span class="keyword">val</span><span> </span><span class="identifier">blue</span><span>    = </span><span class="string-literal">rgba&quot;0,0,255,255&quot;</span><span>
-        </span><span class="keyword">val</span><span> </span><span class="identifier">magenta</span><span> = </span><span class="identifier">red</span><span>.</span><span class="identifier">xyz</span><span> + </span><span class="identifier">blue</span><span>.</span><span class="identifier">xyz</span><span>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>, </span><span class="type-name">Unit</span><span>] =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">FragmentEnv</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="keyword">val</span><span> </span><span class="identifier">red</span><span>     = </span><span class="string-literal">hex&quot;#FF0000&quot;</span><span>
+      </span><span class="keyword">val</span><span> </span><span class="identifier">blue</span><span>    = </span><span class="string-literal">rgba&quot;0,0,255,255&quot;</span><span>
+      </span><span class="keyword">val</span><span> </span><span class="identifier">magenta</span><span> = </span><span class="identifier">red</span><span>.</span><span class="identifier">xyz</span><span> + </span><span class="identifier">blue</span><span>.</span><span class="identifier">xyz</span><span>
 
-        </span><span class="identifier">vec4</span><span>(</span><span class="identifier">magenta</span><span>, </span><span class="number-literal">1.0f</span><span>)
-    }</span></code></pre>
+      </span><span class="identifier">vec4</span><span>(</span><span class="identifier">magenta</span><span>, </span><span class="number-literal">1.0f</span><span>)
+  }</span></code></pre>
 
         
 <hr class="footer-rule"/>
