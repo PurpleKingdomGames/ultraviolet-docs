@@ -135,7 +135,8 @@
   <p class="header"><a href="#">Triangle SDF</a></p>
 
   <ul class="nav-list">
-    <li class="level1 nav-leaf"><a href="#example-links">Example Links</a></li>
+    <li class="level1 nav-leaf"><a href="#demo">Demo</a></li>
+    <li class="level1 nav-leaf"><a href="#links">Links</a></li>
   </ul>
 
   <p class="footer"></p>
@@ -147,7 +148,17 @@
         <h1 id="triangle-sdf" class="title">Triangle SDF</h1>
         <p>Based on work by Inigo Quilez: <a href="https://iquilezles.org/articles/distfunctions2d/">https://iquilezles.org/articles/distfunctions2d/</a></p>
         
-        <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
+        <h2 id="demo" class="section"><a class="anchor-link left" href="#demo"><i class="icofont-laika link">&#xef71;</i></a>Demo</h2>
+        <div id="live-demo" style="border:2px solid #e400ff;width:400px;height:400px;background:#a888db33;color: #e400ff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          ▶  Click to play
+        </div>
+        <script>
+  document.getElementById("live-demo").addEventListener("click", function() {
+    this.innerHTML = '<iframe width="396" height="396" src="https://purplekingdomgames.github.io/ultraviolet-docs//live_demos/examples/fragment/sdf/triangle/" frameborder="0" allow="autoplay; encrypted-media" scrolling="no"></iframe>';
+  });
+</script>
+        
+        <h2 id="links" class="section"><a class="anchor-link left" href="#links"><i class="icofont-laika link">&#xef71;</i></a>Links</h2>
         <ul>
           <li><a href="https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main/examples/fragment/sdf/triangle">View example code</a></li>
         </ul>

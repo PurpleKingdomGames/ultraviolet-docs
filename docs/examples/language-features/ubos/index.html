@@ -139,7 +139,8 @@
     <li class="level2 nav-leaf"><a href="#_1-reorder-the-fields">1. Reorder the fields</a></li>
     <li class="level2 nav-leaf"><a href="#_2-manually-pack-the-data">2. Manually pack the data</a></li>
     <li class="level2 nav-leaf"><a href="#the-rules">The Rules</a></li>
-    <li class="level1 nav-leaf"><a href="#example-links">Example Links</a></li>
+    <li class="level1 nav-leaf"><a href="#demo">Demo</a></li>
+    <li class="level1 nav-leaf"><a href="#links">Links</a></li>
     <li class="level1 nav-node"><a href="#how-to-use-uniform-buffer-objects-ubos-to-supply-data-to-a-shader">How to use Uniform Buffer Objects (UBOs) to supply data to a shader</a></li>
     <li class="level2 nav-leaf"><a href="#creating-the-data-structure">Creating the data structure</a></li>
     <li class="level2 nav-leaf"><a href="#setting-up-the-uniform-block-data">Setting up the uniform block data</a></li>
@@ -216,7 +217,17 @@ You also can&#39;t straddle byte boundries. So if you&#39;re trying to pack this
 This is valid: F0VV
 But this isn&#39;t: FVV0</code></pre>
         
-        <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
+        <h2 id="demo" class="section"><a class="anchor-link left" href="#demo"><i class="icofont-laika link">&#xef71;</i></a>Demo</h2>
+        <div id="live-demo" style="border:2px solid #e400ff;width:400px;height:400px;background:#a888db33;color: #e400ff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          ▶  Click to play
+        </div>
+        <script>
+  document.getElementById("live-demo").addEventListener("click", function() {
+    this.innerHTML = '<iframe width="396" height="396" src="https://purplekingdomgames.github.io/ultraviolet-docs//live_demos/examples/language-features/ubos/" frameborder="0" allow="autoplay; encrypted-media" scrolling="no"></iframe>';
+  });
+</script>
+        
+        <h2 id="links" class="section"><a class="anchor-link left" href="#links"><i class="icofont-laika link">&#xef71;</i></a>Links</h2>
         <ul>
           <li><a href="https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main/examples/language-features/ubos">View example code</a></li>
         </ul>

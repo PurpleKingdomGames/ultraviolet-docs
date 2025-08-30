@@ -135,7 +135,8 @@
   <p class="header"><a href="#">Colours</a></p>
 
   <ul class="nav-list">
-    <li class="level1 nav-leaf"><a href="#example-links">Example Links</a></li>
+    <li class="level1 nav-leaf"><a href="#demo">Demo</a></li>
+    <li class="level1 nav-leaf"><a href="#links">Links</a></li>
     <li class="level1 nav-leaf"><a href="#calculating-a-time-varying-pixel-color">Calculating a time varying pixel color</a></li>
   </ul>
 
@@ -148,7 +149,17 @@
         <h1 id="colours" class="title">Colours</h1>
         <p>A simple shader that changes the colour of the entity based on the time. The shader is based on the default shader from <a href="https://www.shadertoy.com/">shadertoy</a>.</p>
         
-        <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
+        <h2 id="demo" class="section"><a class="anchor-link left" href="#demo"><i class="icofont-laika link">&#xef71;</i></a>Demo</h2>
+        <div id="live-demo" style="border:2px solid #e400ff;width:400px;height:400px;background:#a888db33;color: #e400ff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          ▶  Click to play
+        </div>
+        <script>
+  document.getElementById("live-demo").addEventListener("click", function() {
+    this.innerHTML = '<iframe width="396" height="396" src="https://purplekingdomgames.github.io/ultraviolet-docs//live_demos/examples/fragment/basics/colours/" frameborder="0" allow="autoplay; encrypted-media" scrolling="no"></iframe>';
+  });
+</script>
+        
+        <h2 id="links" class="section"><a class="anchor-link left" href="#links"><i class="icofont-laika link">&#xef71;</i></a>Links</h2>
         <ul>
           <li><a href="https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main/examples/fragment/basics/colours">View example code</a></li>
         </ul>

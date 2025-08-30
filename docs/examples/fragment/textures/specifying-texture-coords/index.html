@@ -135,7 +135,8 @@
   <p class="header"><a href="#">Specifying Texture Coordinates</a></p>
 
   <ul class="nav-list">
-    <li class="level1 nav-leaf"><a href="#example-links">Example Links</a></li>
+    <li class="level1 nav-leaf"><a href="#demo">Demo</a></li>
+    <li class="level1 nav-leaf"><a href="#links">Links</a></li>
     <li class="level1 nav-node"><a href="#stretching-a-texture-to-fill-the-entity">Stretching a texture to fill the entity.</a></li>
     <li class="level2 nav-leaf"><a href="#how-indigo-stores-texture-information">How Indigo stores texture information</a></li>
     <li class="level2 nav-leaf"><a href="#using-texture2d">Using <code>texture2D</code></a></li>
@@ -152,7 +153,17 @@
         <p>In Indigo proper, <code>CHANNEL_0</code> is carefully constructed to ensure that the texture coordinate read adheres to the fill type specified in Indigo, based on the UV coordinates passed to the fragment shader from the vertex shader.</p>
         <p>There are times, though, when you want to be able to control the texture coordinates directly. Maybe you only want to render a sub region of a texture, for example. Let&#39;s explore an example.</p>
         
-        <h2 id="example-links" class="section"><a class="anchor-link left" href="#example-links"><i class="icofont-laika link">&#xef71;</i></a>Example Links</h2>
+        <h2 id="demo" class="section"><a class="anchor-link left" href="#demo"><i class="icofont-laika link">&#xef71;</i></a>Demo</h2>
+        <div id="live-demo" style="border:2px solid #e400ff;width:400px;height:400px;background:#a888db33;color: #e400ff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          ▶  Click to play
+        </div>
+        <script>
+  document.getElementById("live-demo").addEventListener("click", function() {
+    this.innerHTML = '<iframe width="396" height="396" src="https://purplekingdomgames.github.io/ultraviolet-docs//live_demos/examples/fragment/textures/specifying-texture-coords/" frameborder="0" allow="autoplay; encrypted-media" scrolling="no"></iframe>';
+  });
+</script>
+        
+        <h2 id="links" class="section"><a class="anchor-link left" href="#links"><i class="icofont-laika link">&#xef71;</i></a>Links</h2>
         <ul>
           <li><a href="https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main/examples/fragment/textures/specifying-texture-coords">View example code</a></li>
         </ul>
