@@ -14,7 +14,7 @@ website:
   # logo:
   #   image: tyrian-menu-logo.svg
   latestRelease: 0.7.0
-  baseUrl: https://purplekingdomgames.github.io/ultraviolet-docs/
+  baseUrl: https://ultraviolet.indigoengine.io/
   navigationOrder:
     - documentation
     - examples
