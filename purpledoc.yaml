@@ -30,3 +30,6 @@ repo:
 discord:
   name: Discord
   url: https://discord.gg/b5CD47g
+demo:
+  width: 400
+  height: 400
