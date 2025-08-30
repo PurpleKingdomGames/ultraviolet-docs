@@ -3,17 +3,16 @@ import mill.scalalib._
 import mill.scalajslib._
 import mill.scalajslib.api._
 
-import $ivy.`io.indigoengine::mill-indigo:0.21.0`, indigoplugin._
+import $ivy.`io.indigoengine::mill-indigo:0.22.0`, indigoplugin._
 import $ivy.`org.typelevel::scalac-options:0.1.7`, org.typelevel.scalacoptions._
 
 trait ShaderModule extends MillIndigo {
-  def scalaVersion   = "3.6.4"
+  def scalaVersion   = "3.7.2"
   def scalaJSVersion = "1.19.0"
 
   override def scalacOptions = T {
     val flags = super.scalacOptions() ++
-      ScalacOptions.defaultTokensForVersion(ScalaVersion.unsafeFromString(scalaVersion())) ++
-      Seq("-Xfatal-warnings")
+      ScalacOptions.defaultTokensForVersion(ScalaVersion.unsafeFromString(scalaVersion()))
 
     /*
     By default, we get the following flags:
@@ -60,11 +59,11 @@ trait ShaderModule extends MillIndigo {
       .generateConfig("Config", indigoOptions)
       .listAssets("Assets", indigoOptions.assets)
 
-  val indigoVersion = "0.21.0"
+  val indigoVersion = "0.22.0"
 
   def ivyDeps =
     Agg(
-      ivy"io.indigoengine::ultraviolet::0.6.0",
+      ivy"io.indigoengine::ultraviolet::0.7.0",
       ivy"io.indigoengine::indigo-json-circe::$indigoVersion",
       ivy"io.indigoengine::indigo::$indigoVersion",
       ivy"io.indigoengine::indigo-extras::$indigoVersion"
