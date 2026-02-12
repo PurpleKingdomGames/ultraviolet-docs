@@ -13,7 +13,7 @@ website:
   #   height: 50.0
   # logo:
   #   image: tyrian-menu-logo.svg
-  latestRelease: 0.7.0
+  latestRelease: 0.8.0
   baseUrl: https://ultraviolet.indigoengine.io/
   navigationOrder:
     - documentation
@@ -25,11 +25,11 @@ docsRepo:
   editBaseUrl: https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main
 repo:
   name: Github
-  url: https://github.com/PurpleKingdomGames/ultraviolet
-  editBaseUrl: https://github.com/PurpleKingdomGames/ultraviolet/blob/main
+  url: https://github.com/PurpleKingdomGames/indigoengine
+  editBaseUrl: https://github.com/PurpleKingdomGames/indigoengine/blob/main
 discord:
   name: Discord
-  url: https://discord.gg/b5CD47g
+  url: https://discord.gg/3E2r9FwwHu
 demo:
   width: 400
   height: 400
