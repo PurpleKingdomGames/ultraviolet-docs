@@ -7,7 +7,7 @@ import $ivy.`io.indigoengine::mill-indigo:0.22.0`, indigoplugin._
 import $ivy.`org.typelevel::scalac-options:0.1.7`, org.typelevel.scalacoptions._
 
 trait ShaderModule extends MillIndigo {
-  def scalaVersion   = "3.7.3"
+  def scalaVersion   = "3.7.2"
   def scalaJSVersion = "1.20.1"
 
   override def scalacOptions = T {
