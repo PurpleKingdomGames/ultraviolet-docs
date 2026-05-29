@@ -1,0 +1,3 @@
+package build.shadertoy
+
+object `package` extends mill.Module

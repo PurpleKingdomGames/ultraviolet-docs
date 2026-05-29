@@ -1,18 +1,21 @@
+package examples
+
 import indigo.*
 
-import scala.scalajs.js.annotation.*
 import generated.*
 import ultraviolet.syntax.*
 
 /** ## Calculating a time varying pixel color
   */
-@JSExportTopLevel("IndigoGame")
-object Colours extends IndigoShader:
+final class Colours() extends Game.ShaderPlayground:
 
-  val config: GameConfig =
-    Config.config.noResize
+  val gameId: GameId =
+    GameId("game")
 
-  val assets: Set[AssetType]             = Assets.assets.assetSet
+  val config: EngineConfig =
+    Config.config
+
+  val assets: Set[AssetType]             = Assets.assets.assetSetRelative
   val channel0: Option[AssetPath]        = None
   val channel1: Option[AssetPath]        = None
   val channel2: Option[AssetPath]        = None

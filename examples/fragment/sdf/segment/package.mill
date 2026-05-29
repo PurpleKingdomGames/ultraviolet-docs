@@ -1,0 +1,7 @@
+package build.examples.fragment.sdf.segment
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Segment SDF")

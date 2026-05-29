@@ -1,6 +1,7 @@
+package examples
+
 import indigo.*
 
-import scala.scalajs.js.annotation.*
 import generated.*
 import ultraviolet.syntax.*
 
@@ -36,13 +37,15 @@ import ultraviolet.syntax.*
   * `texture()`, but it was convenient to keep the old terminology to help disambiguate terms, and
   * Ultraviolet translates it to the right name for you based on the compilation target.
   */
-@JSExportTopLevel("IndigoGame")
-object SpecifyingTextureCoordinates extends IndigoShader:
+final class SpecifyingTextureCoordinates() extends Game.ShaderPlayground:
 
-  val config: GameConfig =
-    Config.config.noResize
+  val gameId: GameId =
+    GameId("game")
 
-  val assets: Set[AssetType] = Assets.assets.assetSet
+  val config: EngineConfig =
+    Config.config
+
+  val assets: Set[AssetType] = Assets.assets.assetSetRelative
 
   /** As usual, we need to first assign a texture to a channel.
     */

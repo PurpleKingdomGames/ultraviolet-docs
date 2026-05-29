@@ -1,18 +1,21 @@
+package examples
+
 import indigo.*
 
-import scala.scalajs.js.annotation.*
 import generated.*
 import ultraviolet.syntax.*
 
 /** ## How to composite one texture over another
   */
-@JSExportTopLevel("IndigoGame")
-object BlendingTextures extends IndigoShader:
+final class BlendingTextures() extends Game.ShaderPlayground:
 
-  val config: GameConfig =
-    Config.config.noResize
+  val gameId: GameId =
+    GameId("game")
 
-  val assets: Set[AssetType] = Assets.assets.assetSet
+  val config: EngineConfig =
+    Config.config
+
+  val assets: Set[AssetType] = Assets.assets.assetSetRelative
 
   /** First we need to assign our two textures to two channels.
     *
