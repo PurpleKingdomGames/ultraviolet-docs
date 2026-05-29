@@ -1,0 +1,3 @@
+package build.examples.fragment.shapes
+
+object `package` extends mill.Module

@@ -1,0 +1,7 @@
+package build.examples.`language-features`.ubos
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Supplying Data to a Shader with UBOs")

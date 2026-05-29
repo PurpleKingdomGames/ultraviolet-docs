@@ -1,29 +1,38 @@
+package shadertoy
+
 import indigo.*
 
-import scala.scalajs.js.annotation.*
 import generated.*
-import ultraviolet.shadertoy.*
+import ultraviolet.predef.shadertoy.*
 import ultraviolet.syntax.*
 
-@JSExportTopLevel("IndigoGame")
-object Default extends IndigoSandbox[Unit, Unit]:
+final class Default() extends Game[Unit, Unit, Unit]:
 
-  val config: GameConfig          = Config.config.noResize
-  val assets: Set[AssetType]      = Set()
-  val fonts: Set[FontInfo]        = Set()
-  val animations: Set[Animation]  = Set()
-  val shaders: Set[ShaderProgram] = Set()
+  val gameId: GameId =
+    GameId("game")
 
-  def setup(assetCollection: AssetCollection, dice: Dice): Outcome[Startup[Unit]] =
+  def scenes(bootData: Unit): NonEmptyBatch[Scene[Unit, Unit]] =
+    NonEmptyBatch(Scene.empty)
+
+  def initialScene(bootData: Unit): Option[SceneName] =
+    None
+
+  def eventFilters: EventFilters =
+    EventFilters.Permissive
+
+  def boot(flags: Map[String, String]): Outcome[BootResult[Unit, Unit]] =
+    Outcome(BootResult.noData(Config.config))
+
+  def setup(bootData: Unit, assetCollection: AssetCollection, dice: Dice): Outcome[Startup[Unit]] =
     Outcome(Startup.Success(()))
 
   def initialModel(startupData: Unit): Outcome[Unit] =
     Outcome(())
 
-  def updateModel(context: Context[Unit], model: Unit): GlobalEvent => Outcome[Unit] =
+  def updateModel(context: Context, model: Unit): GlobalEvent => Outcome[Unit] =
     _ => Outcome(model)
 
-  def present(context: Context[Unit], model: Unit): Outcome[SceneUpdateFragment] =
+  def present(context: Context, model: Unit): Outcome[SceneUpdateFragment] =
     Outcome(SceneUpdateFragment.empty)
 
 /** ## Ultraviolet Shadertoy code
@@ -227,5 +236,5 @@ object ShaderToyExample:
 object Output:
 
   val imageCode: String =
-    ShaderToyExample.image.toGLSL[ShaderToy].toOutput.code
+    ShaderToyExample.image.toGLSL(ShaderToyProgram).code
 // ```

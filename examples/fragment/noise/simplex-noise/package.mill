@@ -1,0 +1,7 @@
+package build.examples.fragment.noise.`simplex-noise`
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Simplex Noise")

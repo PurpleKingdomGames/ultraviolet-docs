@@ -1,0 +1,7 @@
+package build.shadertoy.plasma
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Plasma Shadertoy Example")

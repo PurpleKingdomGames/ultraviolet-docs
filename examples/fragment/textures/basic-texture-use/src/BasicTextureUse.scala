@@ -1,18 +1,21 @@
+package examples
+
 import indigo.*
 
-import scala.scalajs.js.annotation.*
 import generated.*
 import ultraviolet.syntax.*
 
 /** ## How to directly use a texture
   */
-@JSExportTopLevel("IndigoGame")
-object BasicTextureUse extends IndigoShader:
+final class BasicTextureUse() extends Game.ShaderPlayground:
 
-  val config: GameConfig =
-    Config.config.noResize
+  val gameId: GameId =
+    GameId("game")
 
-  val assets: Set[AssetType] = Assets.assets.assetSet
+  val config: EngineConfig =
+    Config.config
+
+  val assets: Set[AssetType] = Assets.assets.assetSetRelative
 
   /** To use a texture, we need to assign it to a channel. The incantation to do this varies
     * slightly between this example, a simple `IndigoShader` and using it in a full Indigo game
