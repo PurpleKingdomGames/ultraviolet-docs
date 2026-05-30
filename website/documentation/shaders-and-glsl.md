@@ -64,7 +64,7 @@ b   c
 
 ## What is GLSL?
 
-GLSL is a very small C-like language that is compiled and run on the GPU. There are other GLSL-like languages and formats (such as HLSL), but Ultraviolet only cares about GLSL since that is the language of WebGL (versions 100 and 300, specifically). 
+GLSL is a very small C-like language that is compiled and run on the GPU. There are other GLSL-like languages and formats (such as HLSL), but Ultraviolet only cares about GLSL since that is the language of WebGL (versions 100, 300 and 410, specifically). 
 
 ***GLSL is*** for doing maths on arrays of simple numeric data types.
 

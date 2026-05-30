@@ -1,6 +1,6 @@
 # Ultraviolet
 
-[Ultraviolet](https://github.com/PurpleKingdomGames/indigoengine) is a Scala 3 to GLSL 100/300 'inline' transpiler library.
+[Ultraviolet](https://github.com/PurpleKingdomGames/indigoengine) is a Scala 3 to GLSL 100/300/410 'inline' transpiler library.
 
 You can use Ultraviolet to generate GLSL shader code for any WebGL use case, such as with [ShaderToy](https://www.shadertoy.com/), but is primarily designed to support [Indigo](https://github.com/PurpleKingdomGames/indigoengine).
 
@@ -19,6 +19,10 @@ libraryDependencies += "io.indigoengine" %%% "ultraviolet" % "x.y.z"
 Mill
 
 ```
+// Mill >= 1.x.x
+def mvnDeps = Seq(mvn"io.indigoengine::ultraviolet::x.y.z")
+
+// Mill < 1.x.x
 def ivyDeps = Agg(ivy"io.indigoengine::ultraviolet::x.y.z")
 ```
 

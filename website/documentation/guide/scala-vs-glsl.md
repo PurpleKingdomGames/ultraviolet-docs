@@ -33,7 +33,7 @@ Only included are the differences or note worthy features. If they're the same i
 
 Other comments:
 
-- Although Ultraviolet is based primarily on GLSL 300, I've kept `texture2D` and `textureCube` from WebGL 1.0 for clarity, and these are automatically rewritten to `texture` for WebGL 2.0. 
+- Although Ultraviolet is based primarily on GLSL 300, we've kept `texture2D` and `textureCube` from WebGL 1.0 for clarity, and these are automatically rewritten to `texture` for WebGL 2.0. 
 - Preprocessor directives largely don't exist, but `#define` is supported for special cases where you need to define a global value based on a non-constant value.
 - GLSL headers can be provided via `PrinterHeader`s.
 

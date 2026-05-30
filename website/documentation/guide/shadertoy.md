@@ -1,6 +1,6 @@
 # Shadertoy
 
-Although Ultraviolet was designed to support [Indigo](https://indigoengine.io/), it will transpile Scala 3 to any flavor of GLSL for WebGL (i.e. versions 100 or 300).
+Although Ultraviolet was designed to support [Indigo](https://indigoengine.io/), it will transpile Scala 3 to any flavor of GLSL for WebGL (i.e. versions 100 or 300) and OpenGL GLSL 410 for desktop.
 
 However in the same way that it has special support for Indigo, it also has some special support for [Shadertoy](https://www.shadertoy.com/), the renowned website for sharing shader based creations.
 
