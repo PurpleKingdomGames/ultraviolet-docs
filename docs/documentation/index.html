@@ -145,7 +145,7 @@
       <main class="content">
 
         <h1 id="ultraviolet" class="title">Ultraviolet</h1>
-        <p><a href="https://github.com/PurpleKingdomGames/indigoengine">Ultraviolet</a> is a Scala 3 to GLSL 100/300 &#39;inline&#39; transpiler library.</p>
+        <p><a href="https://github.com/PurpleKingdomGames/indigoengine">Ultraviolet</a> is a Scala 3 to GLSL 100/300/410 &#39;inline&#39; transpiler library.</p>
         <p>You can use Ultraviolet to generate GLSL shader code for any WebGL use case, such as with <a href="https://www.shadertoy.com/">ShaderToy</a>, but is primarily designed to support <a href="https://github.com/PurpleKingdomGames/indigoengine">Indigo</a>.</p>
         <p>All the shader examples and demos in these docs are written in <a href="https://github.com/PurpleKingdomGames/indigoengine">Ultraviolet</a> and presented using <a href="https://indigoengine.io/">Indigo</a>.</p>
         
@@ -154,7 +154,11 @@
         <p>sbt</p>
         <pre><code>libraryDependencies += &quot;io.indigoengine&quot; %%% &quot;ultraviolet&quot; % &quot;x.y.z&quot;</code></pre>
         <p>Mill</p>
-        <pre><code>def ivyDeps = Agg(ivy&quot;io.indigoengine::ultraviolet::x.y.z&quot;)</code></pre>
+        <pre><code>// Mill &gt;= 1.x.x
+def mvnDeps = Seq(mvn&quot;io.indigoengine::ultraviolet::x.y.z&quot;)
+
+// Mill &lt; 1.x.x
+def ivyDeps = Agg(ivy&quot;io.indigoengine::ultraviolet::x.y.z&quot;)</code></pre>
         <p>Scala-CLI</p>
         <pre><code>//&gt; using dep io.indigoengine::ultraviolet:x.y.z</code></pre>
 

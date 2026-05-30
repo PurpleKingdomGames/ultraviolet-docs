@@ -176,21 +176,16 @@
         shaders.</p>
         <p>There are some important things to note about this small section of code.</p>
         <ol class="arabic">
-          <li>
-            <p>We&#39;ve imported <code>ultraviolet.syntax.*</code>. Recall that, unfortunately, both Indigo and
-            Ultraviolet both have types called things like <code>vec2</code>, <code>vec4</code>, etc. This import is to
-            ensure that we&#39;re using the Ultraviolet types. In this specific example the import is done
-            inside the object because indigo is imported at the top, but if the code was in a separate
-            class then you could just put the import at the top as usual.</p>
-          </li>
-          <li>
-            <p>All the fields and functions are declared as <code>inline</code>. This is because Ultraviolet is
-            implemented with inline macros, and if the code isn&#39;t inlined, then Ultraviolet can&#39;t see it.</p>
-          </li>
-          <li>
-            <p><code>redAmount</code> looks like it should be a <code>val</code>... and indeed normally it would be. However,
-            <code>val</code> declarations do not work, so we have to use <code>inline def</code> instead.</p>
-          </li>
+          <li>We&#39;ve imported <code>ultraviolet.syntax.*</code>. Recall that, unfortunately, both Indigo and
+          Ultraviolet both have types called things like <code>vec2</code>, <code>vec4</code>, etc. This import is to
+          ensure that we&#39;re using the Ultraviolet types. In this specific example the import is done
+          inside the object because indigo is imported at the top, but if the code was in a separate
+          class then you could just put the import at the top as usual.</li>
+          <li>All the fields and functions are declared as <code>inline</code>. This is because Ultraviolet is
+          implemented with inline macros, and if the code isn&#39;t inlined, then Ultraviolet can&#39;t see
+          it.</li>
+          <li><code>redAmount</code> looks like it should be a <code>val</code>... and indeed normally it would be. However,
+          <code>val</code> declarations do not work, so we have to use <code>inline def</code> instead.</li>
         </ol>
         <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">object</span><span> </span><span class="type-name">SharedCode</span><span>:
   </span><span class="keyword">import</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">syntax</span><span>.*
