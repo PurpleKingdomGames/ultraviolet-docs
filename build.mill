@@ -9,11 +9,12 @@ import mill.scalalib.*
 import mill.scalajslib.*
 import mill.scalajslib.api.*
 import mill.api.BuildCtx
+import mill.scalalib.scalafmt.*
 
 import indigoplugin.*
 import org.typelevel.scalacoptions.*
 
-trait ShaderModule extends MillIndigoJS {
+trait ShaderModule extends MillIndigoJS with ScalafmtModule {
   def scalaVersion   = "3.8.3"
   def scalaJSVersion = "1.21.0"
 
