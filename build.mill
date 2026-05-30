@@ -24,6 +24,7 @@ trait ShaderModule extends MillIndigoJS {
         ScalacOptions.fatalWarningOptions
     )
     
+    // "-Xfatal-warnings" removed because it's been replaced with "-Werror"
     val excluded = Set(
       "-Xfatal-warnings",
       "-Wunused:all",

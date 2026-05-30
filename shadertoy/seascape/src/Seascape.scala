@@ -6,7 +6,7 @@ import generated.*
 import ultraviolet.predef.shadertoy.*
 import ultraviolet.syntax.*
 
-final class Default() extends Game[Unit, Unit, Unit]:
+final class Seascape() extends Game[Unit, Unit, Unit]:
 
   val gameId: GameId =
     GameId("game")

@@ -13,7 +13,7 @@ website:
   #   height: 50.0
   # logo:
   #   image: tyrian-menu-logo.svg
-  latestRelease: 0.8.0
+  latestRelease: 0.30.0-M1-PREVIEW
   baseUrl: https://ultraviolet.indigoengine.io/
   navigationOrder:
     - documentation
