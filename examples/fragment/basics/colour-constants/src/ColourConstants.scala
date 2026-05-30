@@ -5,7 +5,7 @@ import indigo.*
 import generated.*
 import ultraviolet.syntax.*
 
-final class ColourInterpolators() extends Game.ShaderPlayground:
+final class ColourConstants() extends Game.ShaderPlayground:
 
   val gameId: GameId =
     GameId("game")

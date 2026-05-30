@@ -8,7 +8,7 @@ import scala.scalajs.js.annotation.*
 object Runtime extends BasicGameRuntime:
 
   def game: Game[?, ?, ?] =
-    ColourInterpolators()
+    ColourConstants()
 
   def settings: Settings =
     Settings.default
