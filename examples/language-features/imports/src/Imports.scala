@@ -20,12 +20,11 @@ import ultraviolet.syntax.*
   *      ensure that we're using the Ultraviolet types. In this specific example the import is done
   *      inside the object because indigo is imported at the top, but if the code was in a separate
   *      class then you could just put the import at the top as usual.
-  *
-  * 2. All the fields and functions are declared as `inline`. This is because Ultraviolet is
-  * implemented with inline macros, and if the code isn't inlined, then Ultraviolet can't see it.
-  *
-  * 3. `redAmount` looks like it should be a `val`... and indeed normally it would be. However,
-  * `val` declarations do not work, so we have to use `inline def` instead.
+  *   2. All the fields and functions are declared as `inline`. This is because Ultraviolet is
+  *      implemented with inline macros, and if the code isn't inlined, then Ultraviolet can't see
+  *      it.
+  *   3. `redAmount` looks like it should be a `val`... and indeed normally it would be. However,
+  *      `val` declarations do not work, so we have to use `inline def` instead.
   */
 // ```scala
 object SharedCode:
