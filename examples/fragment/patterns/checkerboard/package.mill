@@ -1,0 +1,7 @@
+package build.examples.fragment.patterns.checkerboard
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Checker Board")
