@@ -34,9 +34,9 @@ object CheckerBoardShader:
   inline def fragment =
     Shader[FragmentEnv] { env =>
       def checkerBoard(pt: vec2, size: Float): vec4 =
-        val pos = floor(pt / size)
+        val pos     = floor(pt / size)
         val pattern = mod(pos.x + mod(pos.y, 2.0f), 2.0f)
-        
+
         pattern * vec4(1.0f)
 
       def fragment(color: vec4): vec4 =
