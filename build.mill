@@ -61,7 +61,7 @@ trait ShaderModule extends MillIndigoJS with ScalafmtModule {
       .generateConfig("Config")
       .listAssets("Assets")
 
-  val indigoEngineVersion = "0.30.0-M1-PREVIEW"
+  val indigoEngineVersion = "0.30.0-M2-PREVIEW"
 
   def mvnDeps =
     Seq(
