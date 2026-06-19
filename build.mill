@@ -1,5 +1,5 @@
 //| mvnDeps:
-//|   - "io.indigoengine:mill-indigo_mill1_3:0.30.0-M1-PREVIEW"
+//|   - "io.indigoengine:mill-indigo_mill1_3:0.30.0-M3-PREVIEW"
 //|   - "org.typelevel::scalac-options:0.1.11"
 
 package build
@@ -15,7 +15,7 @@ import indigoplugin.*
 import org.typelevel.scalacoptions.*
 
 trait ShaderModule extends MillIndigoJS with ScalafmtModule {
-  def scalaVersion   = "3.8.3"
+  def scalaVersion   = "3.8.4"
   def scalaJSVersion = "1.21.0"
 
   override def scalacOptions = Task {
@@ -61,7 +61,7 @@ trait ShaderModule extends MillIndigoJS with ScalafmtModule {
       .generateConfig("Config")
       .listAssets("Assets")
 
-  val indigoEngineVersion = "0.30.0-M2-PREVIEW"
+  val indigoEngineVersion = "0.30.0-M3-PREVIEW"
 
   def mvnDeps =
     Seq(

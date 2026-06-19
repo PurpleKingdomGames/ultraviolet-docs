@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.*
 object Runtime extends BasicGameRuntime[Unit]:
 
   def game: Game[?, ?, ?] =
-    SpecifyingTextureCoordinates()
+    UBOsWithArrays()
 
   def settings: Settings =
     Settings.default

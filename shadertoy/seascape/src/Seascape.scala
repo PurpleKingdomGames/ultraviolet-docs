@@ -11,7 +11,7 @@ final class Seascape() extends Game[Unit, Unit, Unit]:
   val gameId: GameId =
     GameId("game")
 
-  def scenes(bootData: Unit): NonEmptyBatch[Scene[Unit, Unit]] =
+  def scenes(bootData: Unit): NonEmptyBatch[Scene[Unit]] =
     NonEmptyBatch(Scene.empty)
 
   def initialScene(bootData: Unit): Option[SceneName] =
