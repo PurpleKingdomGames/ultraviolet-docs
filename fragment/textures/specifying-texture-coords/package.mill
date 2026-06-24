@@ -1,0 +1,7 @@
+package build.fragment.textures.`specifying-texture-coords`
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Specifying Texture Coordinates")

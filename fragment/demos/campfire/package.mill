@@ -1,0 +1,8 @@
+package build.fragment.demos.campfire
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Campfire")
+      .withWindowSize(192, 192)

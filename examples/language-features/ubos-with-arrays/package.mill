@@ -1,7 +1,0 @@
-package build.examples.`language-features`.`ubos-with-arrays`
-
-import indigoplugin.*
-
-object `package` extends build.ShaderModule:
-  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
-    makeIndigoOptions("Supplying Array Data to a Shader via UBOs")

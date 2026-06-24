@@ -1,3 +1,0 @@
-package build.examples.fragment.demos
-
-object `package` extends mill.Module

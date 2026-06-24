@@ -13,12 +13,20 @@ website:
   #   height: 50.0
   # logo:
   #   image: tyrian-menu-logo.svg
-  latestRelease: 0.30.0-M3-PREVIEW
+  latestRelease: 0.30.0-M4-PREVIEW
   baseUrl: https://ultraviolet.indigoengine.io/
   navigationOrder:
     - documentation
-    - examples
+    - language
+    - vertex
+    - fragment
     - shadertoy
+  navigationMappings:
+    documentation: Documentation
+    language: Scala 3 as GLSL
+    vertex: Vertex Shaders
+    fragment: Fragment Shaders
+    shadertoy: Shadertoy
 docsRepo:
   name: Docs
   url: https://github.com/PurpleKingdomGames/ultraviolet-docs

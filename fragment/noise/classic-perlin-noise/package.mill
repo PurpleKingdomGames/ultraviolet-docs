@@ -1,0 +1,7 @@
+package build.fragment.noise.`classic-perlin-noise`
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Classic Perlin Noise")

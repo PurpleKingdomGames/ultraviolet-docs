@@ -1,0 +1,3 @@
+package build.fragment.sdf
+
+object `package` extends mill.Module

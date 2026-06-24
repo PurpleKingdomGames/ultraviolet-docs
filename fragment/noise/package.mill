@@ -1,0 +1,3 @@
+package build.fragment.noise
+
+object `package` extends mill.Module

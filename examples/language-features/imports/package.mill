@@ -1,7 +1,0 @@
-package build.examples.`language-features`.imports
-
-import indigoplugin.*
-
-object `package` extends build.ShaderModule:
-  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
-    makeIndigoOptions("Using Imports & Shared Code")

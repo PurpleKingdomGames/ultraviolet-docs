@@ -1,0 +1,3 @@
+package build.fragment
+
+object `package` extends mill.Module

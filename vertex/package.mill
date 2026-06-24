@@ -1,0 +1,3 @@
+package build.vertex
+
+object `package` extends mill.Module

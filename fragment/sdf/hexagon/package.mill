@@ -1,0 +1,7 @@
+package build.fragment.sdf.hexagon
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Hexagon SDF")

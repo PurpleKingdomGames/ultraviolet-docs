@@ -1,0 +1,3 @@
+package build.language
+
+object `package` extends mill.Module

@@ -1,3 +1,0 @@
-package build.examples.fragment.textures
-
-object `package` extends mill.Module

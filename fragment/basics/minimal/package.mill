@@ -1,0 +1,7 @@
+package build.fragment.basics.minimal
+
+import indigoplugin.*
+
+object `package` extends build.ShaderModule:
+  def indigoOptions(assetsDirectory: os.Path): IndigoOptions =
+    makeIndigoOptions("Minimal Fragment Shader Setup")
