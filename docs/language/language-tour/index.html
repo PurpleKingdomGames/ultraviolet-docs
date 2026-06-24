@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Typelevel Laika + Helium Theme" />
+  <title>Scala 3 as GLSL - Language Tour</title>
+  
+  
+  <meta name="description" content="Scala 3 to GLSL transpiler"/>
+  
+  
+  
+  <link rel="icon" sizes="32x32" type="image/png" href="../../img/favicon.png"/>
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:500">
+  
+  <link rel="stylesheet" type="text/css" href="../../helium/site/icofont.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../helium/site/laika-helium.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/custom.css" />
+  <script src="../../helium/site/laika-helium.js"></script>
+  
+  
+  <script> /* for avoiding page load transitions */ </script>
+</head>
+
+  <body>
+
+    <header id="top-bar" class="light-default dark-default">
+
+  <div class="row">
+    <a id="nav-icon">
+      <i class="icofont-laika navigationMenu" title="Navigation">&#xefa2;</i>
+    </a>
+    
+    
+  </div>
+
+  <a class="icon-link glyph-link" href="../../documentation/"><i class="icofont-laika home" title="Home">&#xef47;</i></a>
+
+  <div class="row links">
+    
+    <a class="button-link" href="https://ultraviolet.indigoengine.io/live_demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/3E2r9FwwHu">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/indigoengine">Github</a>
+    
+  </div>  
+
+</header>
+    
+    <nav id="sidebar">
+
+  <div class="row">
+    
+    <a class="button-link" href="https://ultraviolet.indigoengine.io/live_demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/3E2r9FwwHu">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/indigoengine">Github</a>
+    
+  </div>
+
+  <ul class="nav-list">
+    <li class="level1 nav-node"><a href="../../documentation/">Ultraviolet</a></li>
+    <li class="level2 nav-leaf"><a href="../../documentation/shaders-and-glsl.html">Shaders and GLSL</a></li>
+    <li class="level2 nav-leaf"><a href="../../documentation/motivation.html">Motivation</a></li>
+    <li class="level2 nav-node"><a href="../../documentation/guide/">Writing Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="../../documentation/guide/scala-vs-glsl.html">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="../../documentation/guide/premultiplied-alpha.html">Premultiplied Alpha</a></li>
+    <li class="level3 nav-leaf"><a href="../../documentation/guide/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
+    <li class="level3 nav-leaf"><a href="../../documentation/guide/shadertoy.html">Shadertoy</a></li>
+    <li class="level1 nav-node"><a href="../">Scala 3 as GLSL</a></li>
+    <li class="level2 active nav-leaf"><a href="#">Scala 3 as GLSL - Language Tour</a></li>
+    <li class="level2 nav-leaf"><a href="../sharing-code/">Using Imports &amp; Shared Code</a></li>
+    <li class="level2 nav-leaf"><a href="../ubos/">Supplying Data with UBOs</a></li>
+    <li class="level2 nav-leaf"><a href="../ubos-with-arrays/">Supplying Array Data via UBOs in Indigo</a></li>
+    <li class="level1 nav-node"><a href="../../vertex/">Vertex Shaders</a></li>
+    <li class="level2 nav-leaf"><a href="../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level2 nav-leaf"><a href="../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
+    <li class="level2 nav-leaf"><a href="../../vertex/movingvertices/">Moving Vertices</a></li>
+    <li class="level1 nav-node"><a href="../../fragment/">Fragment Shaders</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/basics/">Basics</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/basics/colour-constants/">Colour Constants</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/basics/colour-interpolators/">Colour Interpolators</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/basics/colours/">Colours</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/basics/minimal/">Minimal Fragment Shader Setup</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/demos/">Demos</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/demos/campfire/">Campfire Demo</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/demos/glowing-star/">Glowing Star Demo</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/demos/pulsingbox/">Pulsing Box Demo</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/noise/">Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/cellular-noise/">Cellular Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/classic-perlin-noise/">Classic Perlin Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/gradient-noise/">Gradient Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/simplex-noise/">Simplex Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/white-noise/">White Noise</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/patterns/">Patterns</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/checkerboard/">Checker Board Pattern</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/grid/">Grid</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/rainbow/">Rainbow</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/simple-voronoi/">Voronoi Example</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/stripes/">Stripes</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/wavy-stripes/">Wavy stripes</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/sdf/">Sdf</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/box/">Square SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/circle/">Circle SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/hexagon/">Hexagon SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/segment/">Segment SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/star/">Star SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/triangle/">Triangle SDF</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/shapes/">Shapes</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/shapes/doughnut/">Doughnut</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/shapes/metaballs/">Metaballs</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/textures/">Textures</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/textures/basic-texture-use/">Basic texture use</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/textures/blending-textures/">Blending Textures</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
+    <li class="level1 nav-node"><a href="../../shadertoy/">Shadertoy</a></li>
+    <li class="level2 nav-leaf"><a href="../../shadertoy/default/">Default</a></li>
+    <li class="level2 nav-leaf"><a href="../../shadertoy/plasma/">Plasma</a></li>
+    <li class="level2 nav-leaf"><a href="../../shadertoy/seascape/">Seascape</a></li>
+    <li class="level1 nav-leaf"><a href="../../examples/">Examples</a></li>
+  </ul>
+
+</nav>
+
+    <div id="container">
+
+      
+<nav id="page-nav">
+  <p class="header"><a href="#">Scala 3 as GLSL - Language Tour</a></p>
+
+  <ul class="nav-list">
+    <li class="level1 nav-leaf"><a href="#demo">Demo</a></li>
+    <li class="level1 nav-leaf"><a href="#links">Links</a></li>
+    <li class="level1 nav-leaf"><a href="#primitive-types">Primitive types</a></li>
+    <li class="level1 nav-leaf"><a href="#variables">Variables</a></li>
+    <li class="level1 nav-leaf"><a href="#functions">Functions</a></li>
+    <li class="level1 nav-leaf"><a href="#if-statements">If statements</a></li>
+    <li class="level1 nav-leaf"><a href="#loops">Loops</a></li>
+    <li class="level1 nav-leaf"><a href="#pattern-matching-switch-statements">Pattern matching / Switch statements</a></li>
+    <li class="level1 nav-leaf"><a href="#casting">Casting</a></li>
+    <li class="level1 nav-leaf"><a href="#swizzling">Swizzling</a></li>
+    <li class="level1 nav-leaf"><a href="#structs">Structs</a></li>
+    <li class="level1 nav-leaf"><a href="#arrays">Arrays</a></li>
+    <li class="level1 nav-leaf"><a href="#accessing-the-environment">Accessing the Environment</a></li>
+    <li class="level1 nav-leaf"><a href="#glsl-annotations">GLSL Annotations</a></li>
+    <li class="level1 nav-leaf"><a href="#common-shader-operations-and-values">Common Shader Operations and Values</a></li>
+    <li class="level1 nav-leaf"><a href="#embedding-raw-glsl">Embedding Raw GLSL</a></li>
+  </ul>
+
+  <p class="footer"></p>
+</nav>
+
+
+      <main class="content">
+
+        <h1 id="scala-3-as-glsl-language-tour" class="title">Scala 3 as GLSL - Language Tour</h1>
+        <p>These examples illustrate the <em>basic</em> language syntax and features available for writing GLSL shaders in Scala 3 with Ultraviolet.</p>
+        <p>This is not an attempt to cover everything, but it should give you enough to get started.</p>
+        
+        <h2 id="demo" class="section"><a class="anchor-link left" href="#demo"><i class="icofont-laika link">&#xef71;</i></a>Demo</h2>
+        <div id="live-demo" style="border:2px solid #e400ff;width:400px;height:400px;background:#a888db33;color: #e400ff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          ▶  Click to play
+        </div>
+        <script>
+  document.getElementById("live-demo").addEventListener("click", function() {
+    this.innerHTML = '<iframe width="396" height="396" src="/live_demos/language/language-tour/index.html" frameborder="0" allow="autoplay; encrypted-media" scrolling="no"></iframe>';
+  });
+</script>
+        
+        <h2 id="links" class="section"><a class="anchor-link left" href="#links"><i class="icofont-laika link">&#xef71;</i></a>Links</h2>
+        <ul>
+          <li><a href="https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main/language/language-tour">View example code</a></li>
+        </ul>
+        <ul>
+          <li><a href="../../live_demos/language/language-tour/">Live demo</a></li>
+        </ul>
+        
+        <h2 id="primitive-types" class="section"><a class="anchor-link left" href="#primitive-types"><i class="icofont-laika link">&#xef71;</i></a>Primitive types</h2>
+        <p>Shaders are numeric calculations, so all of the primitives are arrays of floats in
+        disguise.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">vec2</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">vec3</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">vec4</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">mat2</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">mat3</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">mat4</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>,
+  </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">array</span><span>[</span><span class="number-literal">2</span><span>, </span><span class="type-name">Float</span><span>](</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)</span></code></pre>
+        <p>All of the types work with all of the opperations, so you can mod a vec2 if you like /
+        need. They are all pretty adaptable and come with very expressive constructors.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">vec2</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">vec2</span><span>(</span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">vec3</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">vec4</span><span>(</span><span class="identifier">vec3</span><span>(</span><span class="number-literal">1.0f</span><span>), </span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">vec4</span><span>(</span><span class="number-literal">1.0f</span><span>)</span></code></pre>
+        
+        <h2 id="variables" class="section"><a class="anchor-link left" href="#variables"><i class="icofont-laika link">&#xef71;</i></a>Variables</h2>
+        <p>Almost everything is a Float, and there is poor support for automative numeric conversion.
+        If you&#39;re seeing errors, you probably forgot to add the <code>f</code> to <code>10.0f</code>.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">someValue</span><span>: </span><span class="type-name">Float</span><span> = </span><span class="number-literal">1.0f</span></code></pre>
+        <p><code>val</code>s work as normal, and continue to enjoy type inference.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">position</span><span>: </span><span class="identifier">vec2</span><span> = </span><span class="identifier">vec2</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">2.0f</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">color</span><span>          = </span><span class="identifier">vec4</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">3.0f</span><span>, </span><span class="number-literal">4.0f</span><span>)</span></code></pre>
+        <p>You will need an occasional <code>var</code> too, there is only so far you can go with functional
+        programming here.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">var</span><span> </span><span class="identifier">c</span><span>: </span><span class="type-name">Float</span><span> = </span><span class="number-literal">0.0f</span><span>
+</span><span class="identifier">c</span><span> = </span><span class="number-literal">4.0f</span></code></pre>
+        
+        <h2 id="functions" class="section"><a class="anchor-link left" href="#functions"><i class="icofont-laika link">&#xef71;</i></a>Functions</h2>
+        <p>Functions can be declared in two ways, and they behave differently, so beware.</p>
+        <p>You can declare a <code>def</code>, and ultraviolet will place it in the same relative position that
+        you did.</p>
+        <p><strong>Rules: You cannot nest def&#39;s, and you cannot use name shadowing.</strong></p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">def</span><span> </span><span class="declaration-name">addOne</span><span>(</span><span class="identifier">i</span><span>: </span><span class="type-name">Int</span><span>): </span><span class="type-name">Int</span><span> = </span><span class="identifier">i</span><span> + </span><span class="number-literal">1</span></code></pre>
+        <p>You can also declare functions as vals. This concept is not natively supported in GLSL,
+        and to make it work, Ultraviolet <em>assumes</em> that functions declared this way are <em>pure</em>,
+        i.e. they do not refer, for example to any variables declared at the same level.</p>
+        <p>This is important, because at compile time the body of this functions is moved to the top
+        of the output code. The avoids numerous problems, but if you have refered to something you
+        shouldn&#39;t have, you&#39;ll get a confusing &#39;forward reference&#39; error.</p>
+        <p><strong>Rules: Functions declared as vals must be pure.</strong></p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">addTwo</span><span>: </span><span class="type-name">Int</span><span> =&gt; </span><span class="type-name">Int</span><span>   = </span><span class="identifier">i</span><span> =&gt; </span><span class="identifier">i</span><span> + </span><span class="number-literal">2</span><span>
+</span><span class="keyword">def</span><span> </span><span class="declaration-name">addThree</span><span>: </span><span class="type-name">Int</span><span> =&gt; </span><span class="type-name">Int</span><span> = </span><span class="identifier">i</span><span> =&gt; </span><span class="identifier">i</span><span> + </span><span class="number-literal">3</span></code></pre>
+        <p>Unary functions can be composed with <code>compose</code> and <code>andThen</code>, as normal</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">e</span><span>: </span><span class="type-name">Float</span><span> =&gt; </span><span class="type-name">Float</span><span> = </span><span class="identifier">v</span><span> =&gt; </span><span class="identifier">v</span><span> - </span><span class="number-literal">0.5f</span><span>
+</span><span class="keyword">val</span><span> </span><span class="identifier">f</span><span>: </span><span class="type-name">Float</span><span> =&gt; </span><span class="identifier">vec3</span><span>  = </span><span class="identifier">r</span><span> =&gt; </span><span class="identifier">vec3</span><span>(</span><span class="identifier">r</span><span>, </span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">0.0f</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">g</span><span>: </span><span class="identifier">vec3</span><span> =&gt; </span><span class="identifier">vec4</span><span>   = </span><span class="identifier">val3</span><span> =&gt; </span><span class="identifier">vec4</span><span>(</span><span class="identifier">val3</span><span>, </span><span class="number-literal">0.5f</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">h</span><span>: </span><span class="type-name">Float</span><span> =&gt; </span><span class="identifier">vec4</span><span>  = </span><span class="identifier">g</span><span> </span><span class="identifier">compose</span><span> </span><span class="identifier">f</span><span> </span><span class="identifier">compose</span><span> </span><span class="identifier">e</span><span>
+
+</span><span class="identifier">h</span><span>(</span><span class="number-literal">1.0f</span><span>)</span></code></pre>
+        
+        <h2 id="if-statements" class="section"><a class="anchor-link left" href="#if-statements"><i class="icofont-laika link">&#xef71;</i></a>If statements</h2>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">red</span><span>    = </span><span class="identifier">vec4</span><span>(</span><span class="number-literal">1.0</span><span>, </span><span class="number-literal">0.0</span><span>, </span><span class="number-literal">0.0</span><span>, </span><span class="number-literal">1.0</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">green</span><span>  = </span><span class="identifier">vec4</span><span>(</span><span class="number-literal">0.0</span><span>, </span><span class="number-literal">1.0</span><span>, </span><span class="number-literal">0.0</span><span>, </span><span class="number-literal">1.0</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">blue</span><span>   = </span><span class="identifier">vec4</span><span>(</span><span class="number-literal">0.0</span><span>, </span><span class="number-literal">0.0</span><span>, </span><span class="number-literal">1.0</span><span>, </span><span class="number-literal">1.0</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">w</span><span>: </span><span class="type-name">Int</span><span> = </span><span class="number-literal">1</span><span>
+
+</span><span class="keyword">if</span><span> </span><span class="identifier">w</span><span> &lt;= </span><span class="number-literal">0</span><span> </span><span class="identifier">then</span><span> </span><span class="identifier">red</span><span>
+</span><span class="keyword">else</span><span> {
+  </span><span class="keyword">val</span><span> </span><span class="identifier">y</span><span> = </span><span class="number-literal">10</span><span>
+  </span><span class="keyword">if</span><span> </span><span class="identifier">w</span><span> == </span><span class="number-literal">1</span><span> &amp;&amp; </span><span class="identifier">y</span><span> == </span><span class="number-literal">10</span><span> </span><span class="identifier">then</span><span> </span><span class="identifier">blue</span><span>
+  </span><span class="keyword">else</span><span> </span><span class="identifier">green</span><span>
+}</span></code></pre>
+        
+        <h2 id="loops" class="section"><a class="anchor-link left" href="#loops"><i class="icofont-laika link">&#xef71;</i></a>Loops</h2>
+        <p>Loops can either be while loops...</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">var</span><span> </span><span class="identifier">i</span><span> = </span><span class="number-literal">0.0f</span><span>
+</span><span class="keyword">while</span><span> </span><span class="identifier">i</span><span> &lt; </span><span class="number-literal">4.0f</span><span> </span><span class="identifier">do</span><span> </span><span class="identifier">i</span><span> += </span><span class="number-literal">1.0f</span></code></pre>
+        <p>...or for loops.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">steps</span><span> = </span><span class="number-literal">10</span><span>
+</span><span class="identifier">cfor</span><span>(</span><span class="number-literal">0</span><span>, </span><span class="identifier">_</span><span> &lt; </span><span class="identifier">steps</span><span>, </span><span class="identifier">_</span><span> + </span><span class="number-literal">1</span><span>) { </span><span class="identifier">_</span><span> =&gt;
+  </span><span class="identifier">i</span><span> += </span><span class="number-literal">1.0f</span><span>
+}</span></code></pre>
+        
+        <h2 id="pattern-matching-switch-statements" class="section"><a class="anchor-link left" href="#pattern-matching-switch-statements"><i class="icofont-laika link">&#xef71;</i></a>Pattern matching / Switch statements</h2>
+        <p><strong>Rules: Yes, there is pattern matching BUT it is converted to switch statements, and GLSL
+        isn&#39;t terrible clever about what it can switch on. Keep it simple!</strong></p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">flag</span><span>: </span><span class="type-name">Int</span><span> = </span><span class="number-literal">2</span><span>
+
+</span><span class="keyword">var</span><span> </span><span class="identifier">res</span><span>: </span><span class="type-name">Int</span><span> = -</span><span class="number-literal">1</span><span>
+
+</span><span class="identifier">flag</span><span> </span><span class="keyword">match</span><span>
+  </span><span class="keyword">case</span><span> </span><span class="number-literal">0</span><span> =&gt; </span><span class="identifier">res</span><span> = </span><span class="number-literal">10</span><span>
+  </span><span class="keyword">case</span><span> </span><span class="number-literal">1</span><span> =&gt; </span><span class="identifier">res</span><span> = </span><span class="number-literal">20</span><span>
+  </span><span class="keyword">case</span><span> </span><span class="number-literal">2</span><span> =&gt; </span><span class="identifier">res</span><span> = </span><span class="number-literal">30</span><span>
+  </span><span class="keyword">case</span><span> </span><span class="identifier">_</span><span> =&gt; </span><span class="identifier">res</span><span> = -</span><span class="number-literal">100</span><span>
+
+</span><span class="identifier">res</span></code></pre>
+        
+        <h2 id="casting" class="section"><a class="anchor-link left" href="#casting"><i class="icofont-laika link">&#xef71;</i></a>Casting</h2>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">x</span><span>  = </span><span class="number-literal">1.0f</span><span>.</span><span class="identifier">toInt</span><span> </span><span class="comment">// Cast is inlined on literal
+</span><span class="keyword">val</span><span> </span><span class="identifier">y</span><span>  = </span><span class="number-literal">1</span><span>.</span><span class="identifier">toFloat</span><span>  </span><span class="comment">// Cast is inlined on literal
+</span><span class="keyword">val</span><span> </span><span class="identifier">z</span><span>  = </span><span class="identifier">x</span><span>.</span><span class="identifier">toFloat</span><span>
+</span><span class="keyword">val</span><span> </span><span class="identifier">zz</span><span> = </span><span class="identifier">y</span><span>.</span><span class="identifier">toInt</span><span>
+</span><span class="keyword">val</span><span> </span><span class="identifier">w1</span><span> = </span><span class="number-literal">2</span><span>
+</span><span class="keyword">val</span><span> </span><span class="identifier">w2</span><span> = (</span><span class="number-literal">1</span><span> + </span><span class="identifier">w1</span><span>).</span><span class="identifier">toFloat</span><span>
+</span><span class="identifier">x</span><span> + </span><span class="identifier">y</span></code></pre>
+        
+        <h2 id="swizzling" class="section"><a class="anchor-link left" href="#swizzling"><i class="icofont-laika link">&#xef71;</i></a>Swizzling</h2>
+        <p>Swizzling is very important in shader programming. It allows you to access and reorganise
+        component values quickly as needed.</p>
+        <p>A common example is that you are given an RGBA color, but you only want the rgb values.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">vec4</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">3.0f</span><span>, </span><span class="number-literal">4.0f</span><span>).</span><span class="identifier">wzyx</span><span>
+</span><span class="identifier">vec3</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">3.0f</span><span>).</span><span class="identifier">xxy</span><span>
+
+</span><span class="keyword">val</span><span> </span><span class="identifier">fill</span><span> = </span><span class="identifier">vec3</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">3.0f</span><span>)
+</span><span class="identifier">fill</span><span>.</span><span class="identifier">zyx</span><span>
+</span><span class="identifier">fill</span><span>.</span><span class="identifier">x</span><span>
+</span><span class="identifier">fill</span><span>.</span><span class="identifier">yyy</span><span>
+</span><span class="identifier">fill</span><span>.</span><span class="identifier">yz</span><span>
+
+</span><span class="identifier">vec4</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">3.0f</span><span>, </span><span class="number-literal">4.0f</span><span>).</span><span class="identifier">abgr</span></code></pre>
+        
+        <h2 id="structs" class="section"><a class="anchor-link left" href="#structs"><i class="icofont-laika link">&#xef71;</i></a>Structs</h2>
+        <p>You can delare a struct with a normal class.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">class</span><span> </span><span class="type-name">Light</span><span>(
+    </span><span class="keyword">val</span><span> </span><span class="identifier">eyePosOrDir</span><span>: </span><span class="identifier">vec3</span><span>,
+    </span><span class="keyword">val</span><span> </span><span class="identifier">isDirectional</span><span>: </span><span class="type-name">Boolean</span><span>,
+    </span><span class="keyword">val</span><span> </span><span class="identifier">intensity</span><span>: </span><span class="identifier">vec3</span><span>,
+    </span><span class="keyword">val</span><span> </span><span class="identifier">attenuation</span><span>: </span><span class="type-name">Float</span><span>
+)</span></code></pre>
+        
+        <h2 id="arrays" class="section"><a class="anchor-link left" href="#arrays"><i class="icofont-laika link">&#xef71;</i></a>Arrays</h2>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">arr</span><span>: </span><span class="identifier">array</span><span>[</span><span class="number-literal">4</span><span>, </span><span class="type-name">Float</span><span>] = </span><span class="identifier">array</span><span>[</span><span class="number-literal">4</span><span>, </span><span class="type-name">Float</span><span>](</span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">3.0f</span><span>, </span><span class="number-literal">4.0f</span><span>)
+</span><span class="keyword">val</span><span> </span><span class="identifier">valueAtOne</span><span>           = </span><span class="identifier">arr</span><span>(</span><span class="number-literal">1</span><span>)</span></code></pre>
+        
+        <h2 id="accessing-the-environment" class="section"><a class="anchor-link left" href="#accessing-the-environment"><i class="icofont-laika link">&#xef71;</i></a>Accessing the Environment</h2>
+        <p>The environment comes loaded with lots of useful data points. If are animating your
+        shaders, for example, your environment might include the time:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">t</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">TIME</span></code></pre>
+        <p>Environments in general are customisable, however if you&#39;re using Indigo or Shadertoy,
+        there are premade environments for them that you can use or augment.</p>
+        
+        <h2 id="glsl-annotations" class="section"><a class="anchor-link left" href="#glsl-annotations"><i class="icofont-laika link">&#xef71;</i></a>GLSL Annotations</h2>
+        <p>Sometimes you need to annotate to give GLSL / UV more information.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="annotation">@flat</span><span> </span><span class="annotation">@in</span><span> </span><span class="keyword">var</span><span> </span><span class="identifier">a1</span><span>: </span><span class="identifier">vec2</span><span>       = </span><span class="literal-value">null</span><span>
+</span><span class="annotation">@smooth</span><span> </span><span class="annotation">@out</span><span> </span><span class="keyword">val</span><span> </span><span class="identifier">b1</span><span>: </span><span class="identifier">vec4</span><span>    = </span><span class="literal-value">null</span><span>
+</span><span class="annotation">@global</span><span> </span><span class="keyword">var</span><span> </span><span class="identifier">c1</span><span>: </span><span class="identifier">vec2</span><span>         = </span><span class="literal-value">null</span><span>
+</span><span class="annotation">@layout</span><span>(</span><span class="number-literal">7</span><span>) </span><span class="annotation">@in</span><span> </span><span class="keyword">val</span><span> </span><span class="identifier">d1</span><span>: </span><span class="type-name">Float</span><span> = </span><span class="number-literal">0.0</span><span>;
+</span><span class="annotation">@const</span><span> </span><span class="keyword">var</span><span> </span><span class="identifier">e1</span><span>: </span><span class="identifier">vec2</span><span>          = </span><span class="literal-value">null</span><span>
+</span><span class="annotation">@uniform</span><span> </span><span class="keyword">var</span><span> </span><span class="identifier">f1</span><span>: </span><span class="type-name">Float</span><span>       = </span><span class="number-literal">0.0f</span></code></pre>
+        
+        <h2 id="common-shader-operations-and-values" class="section"><a class="anchor-link left" href="#common-shader-operations-and-values"><i class="icofont-laika link">&#xef71;</i></a>Common Shader Operations and Values</h2>
+        <p>Ultraviolet supports a comprehensive full suite of shader operations, and while they use
+        the real GPU implementation in your shaders, most of them also have Scala implementations
+        to help you with testing.</p>
+        <p>Here are a few:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">sin</span><span>(</span><span class="number-literal">1.0f</span><span>)
+</span><span class="identifier">mix</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">2.0f</span><span>, </span><span class="number-literal">0.6f</span><span>)
+</span><span class="identifier">step</span><span>(</span><span class="number-literal">0.5f</span><span>, </span><span class="number-literal">0.1f</span><span>)
+</span><span class="identifier">mod</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">10.0f</span><span>)</span></code></pre>
+        
+        <h2 id="embedding-raw-glsl" class="section"><a class="anchor-link left" href="#embedding-raw-glsl"><i class="icofont-laika link">&#xef71;</i></a>Embedding Raw GLSL</h2>
+        <p>You can embed RAW GLSL if you need to. It is up to you to ensure it is corect, no compiler
+        support!</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span>      </span><span class="type-name">RawGLSL</span><span>(</span><span class="string-literal">&quot;float v = 1.0;&quot;</span><span>)
+      </span><span class="identifier">raw</span><span>(</span><span class="string-literal">&quot;COLOR = vec4(v, v, v, 0.5);&quot;</span><span>)
+      </span><span class="type-name">RawGLSL</span><span>(
+        </span><span class="string-literal">&quot;&quot;&quot;
+//#vertex_start
+vec4 vertex(vec4 v){
+return v;
+}
+//#vertex_end
+        &quot;&quot;&quot;</span><span>
+      )</span></code></pre>
+
+        
+<hr class="footer-rule"/>
+<footer>
+  Site generated by <a href="https://typelevel.org/Laika/">Laika</a> with the Helium theme.
+</footer>
+
+
+      </main>
+
+    </div>
+
+  </body>
+
+</html>

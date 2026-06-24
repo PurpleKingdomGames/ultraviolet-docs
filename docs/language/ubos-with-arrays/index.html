@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Typelevel Laika + Helium Theme" />
+  <title>Supplying Array Data via UBOs in Indigo</title>
+  
+  
+  <meta name="description" content="Scala 3 to GLSL transpiler"/>
+  
+  
+  
+  <link rel="icon" sizes="32x32" type="image/png" href="../../img/favicon.png"/>
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:500">
+  
+  <link rel="stylesheet" type="text/css" href="../../helium/site/icofont.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../helium/site/laika-helium.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/custom.css" />
+  <script src="../../helium/site/laika-helium.js"></script>
+  
+  
+  <script> /* for avoiding page load transitions */ </script>
+</head>
+
+  <body>
+
+    <header id="top-bar" class="light-default dark-default">
+
+  <div class="row">
+    <a id="nav-icon">
+      <i class="icofont-laika navigationMenu" title="Navigation">&#xefa2;</i>
+    </a>
+    
+    
+  </div>
+
+  <a class="icon-link glyph-link" href="../../documentation/"><i class="icofont-laika home" title="Home">&#xef47;</i></a>
+
+  <div class="row links">
+    
+    <a class="button-link" href="https://ultraviolet.indigoengine.io/live_demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/3E2r9FwwHu">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/indigoengine">Github</a>
+    
+  </div>  
+
+</header>
+    
+    <nav id="sidebar">
+
+  <div class="row">
+    
+    <a class="button-link" href="https://ultraviolet.indigoengine.io/live_demos">Live Demos</a>
+    
+    <a class="button-link" href="https://discord.gg/3E2r9FwwHu">Discord</a>
+    
+    <a class="button-link" href="https://github.com/PurpleKingdomGames/indigoengine">Github</a>
+    
+  </div>
+
+  <ul class="nav-list">
+    <li class="level1 nav-node"><a href="../../documentation/">Ultraviolet</a></li>
+    <li class="level2 nav-leaf"><a href="../../documentation/shaders-and-glsl.html">Shaders and GLSL</a></li>
+    <li class="level2 nav-leaf"><a href="../../documentation/motivation.html">Motivation</a></li>
+    <li class="level2 nav-node"><a href="../../documentation/guide/">Writing Shaders</a></li>
+    <li class="level3 nav-leaf"><a href="../../documentation/guide/scala-vs-glsl.html">Scala 3 vs GLSL</a></li>
+    <li class="level3 nav-leaf"><a href="../../documentation/guide/premultiplied-alpha.html">Premultiplied Alpha</a></li>
+    <li class="level3 nav-leaf"><a href="../../documentation/guide/gotchas.html">Gotcha&#39;s, foot guns, and weird stuff</a></li>
+    <li class="level3 nav-leaf"><a href="../../documentation/guide/shadertoy.html">Shadertoy</a></li>
+    <li class="level1 nav-node"><a href="../">Scala 3 as GLSL</a></li>
+    <li class="level2 nav-leaf"><a href="../language-tour/">Scala 3 as GLSL - Language Tour</a></li>
+    <li class="level2 nav-leaf"><a href="../sharing-code/">Using Imports &amp; Shared Code</a></li>
+    <li class="level2 nav-leaf"><a href="../ubos/">Supplying Data with UBOs</a></li>
+    <li class="level2 active nav-leaf"><a href="#">Supplying Array Data via UBOs in Indigo</a></li>
+    <li class="level1 nav-node"><a href="../../vertex/">Vertex Shaders</a></li>
+    <li class="level2 nav-leaf"><a href="../../vertex/manipulatinguvs/">Manipulating UVs</a></li>
+    <li class="level2 nav-leaf"><a href="../../vertex/minimal/">Minimal Vertex Shader Setup</a></li>
+    <li class="level2 nav-leaf"><a href="../../vertex/movingvertices/">Moving Vertices</a></li>
+    <li class="level1 nav-node"><a href="../../fragment/">Fragment Shaders</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/basics/">Basics</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/basics/colour-constants/">Colour Constants</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/basics/colour-interpolators/">Colour Interpolators</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/basics/colours/">Colours</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/basics/minimal/">Minimal Fragment Shader Setup</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/demos/">Demos</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/demos/campfire/">Campfire Demo</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/demos/glowing-star/">Glowing Star Demo</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/demos/pulsingbox/">Pulsing Box Demo</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/noise/">Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/cellular-noise/">Cellular Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/classic-perlin-noise/">Classic Perlin Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/gradient-noise/">Gradient Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/simplex-noise/">Simplex Noise</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/noise/white-noise/">White Noise</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/patterns/">Patterns</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/checkerboard/">Checker Board Pattern</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/grid/">Grid</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/rainbow/">Rainbow</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/simple-voronoi/">Voronoi Example</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/stripes/">Stripes</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/patterns/wavy-stripes/">Wavy stripes</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/sdf/">Sdf</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/box/">Square SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/circle/">Circle SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/hexagon/">Hexagon SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/segment/">Segment SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/star/">Star SDF</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/sdf/triangle/">Triangle SDF</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/shapes/">Shapes</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/shapes/doughnut/">Doughnut</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/shapes/metaballs/">Metaballs</a></li>
+    <li class="level2 nav-node"><a href="../../fragment/textures/">Textures</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/textures/basic-texture-use/">Basic texture use</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/textures/blending-textures/">Blending Textures</a></li>
+    <li class="level3 nav-leaf"><a href="../../fragment/textures/specifying-texture-coords/">Specifying Texture Coordinates</a></li>
+    <li class="level1 nav-node"><a href="../../shadertoy/">Shadertoy</a></li>
+    <li class="level2 nav-leaf"><a href="../../shadertoy/default/">Default</a></li>
+    <li class="level2 nav-leaf"><a href="../../shadertoy/plasma/">Plasma</a></li>
+    <li class="level2 nav-leaf"><a href="../../shadertoy/seascape/">Seascape</a></li>
+    <li class="level1 nav-leaf"><a href="../../examples/">Examples</a></li>
+  </ul>
+
+</nav>
+
+    <div id="container">
+
+      
+<nav id="page-nav">
+  <p class="header"><a href="#">Supplying Array Data via UBOs in Indigo</a></p>
+
+  <ul class="nav-list">
+    <li class="level1 nav-node"><a href="#notes">Notes</a></li>
+    <li class="level2 nav-leaf"><a href="#always-send-arrays-in-ubos-separate-from-other-data">Always send arrays in UBOs, separate from other data</a></li>
+    <li class="level2 nav-leaf"><a href="#array-sizes-must-be-known">Array sizes must be known</a></li>
+    <li class="level2 nav-leaf"><a href="#beware-of-large-arrays-performance-bottleneck">Beware of large arrays (Performance bottleneck)</a></li>
+    <li class="level1 nav-leaf"><a href="#demo">Demo</a></li>
+    <li class="level1 nav-leaf"><a href="#links">Links</a></li>
+    <li class="level1 nav-leaf"><a href="#uniformblock-derivation-limitations">UniformBlock derivation limitations</a></li>
+    <li class="level1 nav-leaf"><a href="#avoid-derives-for-arrays">Avoid <code>derives</code> for arrays</a></li>
+    <li class="level1 nav-leaf"><a href="#setting-up-the-shader-environment">Setting up the shader Environment</a></li>
+    <li class="level1 nav-leaf"><a href="#sending-the-array-data">Sending the array data</a></li>
+    <li class="level1 nav-leaf"><a href="#using-the-array-data">Using the array data</a></li>
+  </ul>
+
+  <p class="footer"></p>
+</nav>
+
+
+      <main class="content">
+
+        <h1 id="supplying-array-data-via-ubos-in-indigo" class="title">Supplying Array Data via UBOs in Indigo</h1>
+        <p>At the time of writing, sending array data to your shaders via UBOs in Indigo is a bit of a rough experience. There are open tickets to try and improve the situation, but this is an attempt to document a path that works and to call out a few points worth knowing. The goal is to give people a way forward while acknowledging that it&#39;s less than ideal.</p>
+        
+        <h2 id="notes" class="section"><a class="anchor-link left" href="#notes"><i class="icofont-laika link">&#xef71;</i></a>Notes</h2>
+        
+        <h3 id="always-send-arrays-in-ubos-separate-from-other-data" class="section"><a class="anchor-link left" href="#always-send-arrays-in-ubos-separate-from-other-data"><i class="icofont-laika link">&#xef71;</i></a>Always send arrays in UBOs, separate from other data</h3>
+        <p>For the sake of your sanity. Example:</p>
+        <p>Do:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">UBO1</span><span>(</span><span class="type-name">COUNT</span><span>: </span><span class="type-name">Int</span><span>)
+</span><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">UBO2</span><span>(</span><span class="type-name">MAP</span><span>: </span><span class="type-name">Array</span><span>[</span><span class="type-name">Float</span><span>])</span></code></pre>
+        <p>Do NOT:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">UBO1</span><span>(</span><span class="type-name">COUNT</span><span>: </span><span class="type-name">Int</span><span>, </span><span class="type-name">MAP</span><span>: </span><span class="type-name">Array</span><span>[</span><span class="type-name">Float</span><span>])</span></code></pre>
+        
+        <h3 id="array-sizes-must-be-known" class="section"><a class="anchor-link left" href="#array-sizes-must-be-known"><i class="icofont-laika link">&#xef71;</i></a>Array sizes must be known</h3>
+        <p>Arrays in GLSL are a fixed size. If you need to send variable amounts of data, what you need to do is set an array large enough for all your possible data, and then supply another value indicating the count.</p>
+        
+        <h3 id="beware-of-large-arrays-performance-bottleneck" class="section"><a class="anchor-link left" href="#beware-of-large-arrays-performance-bottleneck"><i class="icofont-laika link">&#xef71;</i></a>Beware of large arrays (Performance bottleneck)</h3>
+        <p>By default, Ultraviolet supports auto conversion of array sizes up to <code>4096</code>.</p>
+        <p>You <em>can</em> add support for arbitrarily sized arrays, up to the UBO max (..max supported by Indigo, in practice this is hardware dependent), like this:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">given</span><span> </span><span class="identifier">ultraviolet</span><span>.</span><span class="identifier">macros</span><span>.</span><span class="type-name">ShaderTypeOf</span><span>[</span><span class="type-name">Array</span><span>[</span><span class="type-name">Float</span><span>]] </span><span class="keyword">with</span><span>
+  </span><span class="keyword">def</span><span> </span><span class="declaration-name">typeOf</span><span>: </span><span class="type-name">String</span><span> = </span><span class="string-literal">s&quot;float [65536]&quot;</span></code></pre>
+        <p><strong><em>HOWEVER.</em></strong></p>
+        <p>Because Indigo sets UBOs whenever it needs them, you pay the data transfer cost every time (unless you&#39;re using the same shader many times sequentially). The transfer cost is surprisingly high, and you may quickly find yourself running into performance problems.</p>
+        
+        <h2 id="demo" class="section"><a class="anchor-link left" href="#demo"><i class="icofont-laika link">&#xef71;</i></a>Demo</h2>
+        <div id="live-demo" style="border:2px solid #e400ff;width:400px;height:400px;background:#a888db33;color: #e400ff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          ▶  Click to play
+        </div>
+        <script>
+  document.getElementById("live-demo").addEventListener("click", function() {
+    this.innerHTML = '<iframe width="396" height="396" src="/live_demos/language/ubos-with-arrays/index.html" frameborder="0" allow="autoplay; encrypted-media" scrolling="no"></iframe>';
+  });
+</script>
+        
+        <h2 id="links" class="section"><a class="anchor-link left" href="#links"><i class="icofont-laika link">&#xef71;</i></a>Links</h2>
+        <ul>
+          <li><a href="https://github.com/PurpleKingdomGames/ultraviolet-docs/blob/main/language/ubos-with-arrays">View example code</a></li>
+        </ul>
+        <ul>
+          <li><a href="../../live_demos/language/ubos-with-arrays/">Live demo</a></li>
+        </ul>
+        
+        <h2 id="uniformblock-derivation-limitations" class="section"><a class="anchor-link left" href="#uniformblock-derivation-limitations"><i class="icofont-laika link">&#xef71;</i></a>UniformBlock derivation limitations</h2>
+        <p>Ultraviolet is particular about what you can derive to ToUniformBlock:</p>
+        <pre><code>Unsupported shader uniform type. Supported types From Scala (Int, Long, Float, Double), Indigo [RGBA, RGB, Point, Size, Vertex, Vector2, Vector3, Vector4, Rectangle, Matrix4, Radians, Millis, Seconds, Array[Float], js.Array[Float]], and UltraViolet [vec2, vec3, vec4, mat4]. However, if you intend to use the same case class for both Indigo and UltraViolet, you should stick to Float + the UltraViolet types.</code></pre>
+        <p>Here out first UBO with some simple data in it.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">CustomData</span><span>(</span><span class="type-name">CUSTOM_COLOR</span><span>: </span><span class="identifier">vec4</span><span>) </span><span class="identifier">derives</span><span> </span><span class="type-name">ToUniformBlock</span></code></pre>
+        
+        <h2 id="avoid-derives-for-arrays" class="section"><a class="anchor-link left" href="#avoid-derives-for-arrays"><i class="icofont-laika link">&#xef71;</i></a>Avoid <code>derives</code> for arrays</h2>
+        <p>Technically, derives is supported, but if we&#39;re treating this example as a recipe, then in this
+        recipe we&#39;ll opt to avoid it and follow a known good path.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">ArrayData</span><span>(</span><span class="type-name">ANOTHER_COLOR</span><span>: </span><span class="identifier">array</span><span>[</span><span class="number-literal">4</span><span>, </span><span class="type-name">Float</span><span>])</span></code></pre>
+        
+        <h2 id="setting-up-the-shader-environment" class="section"><a class="anchor-link left" href="#setting-up-the-shader-environment"><i class="icofont-laika link">&#xef71;</i></a>Setting up the shader Environment</h2>
+        <p>This is a bit unfortunate. There are a number of ways to declare the Environment in the shader
+        itself, i.e. <code>Shader[Env]</code>. For example, you can do things like <code>Env &amp; CustomData</code>.</p>
+        <p>In this case (..and again we&#39;re doing a happy path for arrays specifically) we&#39;re just going to
+        make a new type with the same fields.</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">case</span><span> </span><span class="keyword">class</span><span> </span><span class="type-name">Env</span><span>(
+    </span><span class="type-name">CUSTOM_COLOR</span><span>: </span><span class="identifier">vec4</span><span>,
+    </span><span class="type-name">ANOTHER_COLOR</span><span>: </span><span class="identifier">array</span><span>[</span><span class="number-literal">4</span><span>, </span><span class="type-name">Float</span><span>]
+) </span><span class="keyword">extends</span><span> </span><span class="type-name">FragmentEnvReference</span><span>
+</span><span class="keyword">object</span><span> </span><span class="type-name">Env</span><span>:
+  </span><span class="keyword">def</span><span> </span><span class="declaration-name">ref</span><span>: </span><span class="type-name">Env</span><span> =
+    </span><span class="type-name">Env</span><span>(</span><span class="identifier">vec4</span><span>(</span><span class="number-literal">0.0f</span><span>), </span><span class="identifier">array</span><span>[</span><span class="number-literal">4</span><span>, </span><span class="type-name">Float</span><span>]())</span></code></pre>
+        
+        <h2 id="sending-the-array-data" class="section"><a class="anchor-link left" href="#sending-the-array-data"><i class="icofont-laika link">&#xef71;</i></a>Sending the array data</h2>
+        <p>More repetition as we send over our data to the shader via the shader data.</p>
+        <pre><code class="nohighlight"><span class="keyword">def</span><span> </span><span class="declaration-name">present</span><span>(</span><span class="identifier">context</span><span>: </span><span class="type-name">Context</span><span>, </span><span class="identifier">model</span><span>: </span><span class="type-name">Model</span><span>): </span><span class="type-name">Outcome</span><span>[</span><span class="type-name">SceneUpdateFragment</span><span>] =
+  </span><span class="type-name">Outcome</span><span>(
+    </span><span class="type-name">SceneUpdateFragment</span><span>(
+      </span><span class="type-name">Layer</span><span>(
+        </span><span class="type-name">BlankEntity</span><span>(
+          </span><span class="identifier">model</span><span>.</span><span class="identifier">viewport</span><span>,
+          </span><span class="type-name">ShaderData</span><span>(</span><span class="type-name">CustomShader</span><span>.</span><span class="identifier">shader</span><span>.</span><span class="identifier">id</span><span>)
+            .</span><span class="identifier">withUniformBlocks</span><span>(
+              </span><span class="type-name">Batch</span><span>(
+                </span><span class="type-name">UniformBlock</span><span>(
+                  </span><span class="type-name">UniformBlockName</span><span>(</span><span class="string-literal">&quot;ArrayData&quot;</span><span>),
+                  </span><span class="type-name">Batch</span><span>(
+                    </span><span class="type-name">Uniform</span><span>(</span><span class="string-literal">&quot;ANOTHER_COLOR&quot;</span><span>) -&gt; </span><span class="type-name">ShaderPrimitive</span><span>
+                      .</span><span class="identifier">array</span><span>(</span><span class="number-literal">4</span><span>, </span><span class="type-name">Array</span><span>(</span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>))
+                  )
+                )
+              )
+            )
+            .</span><span class="identifier">addUniformData</span><span>(</span><span class="type-name">CustomData</span><span>(</span><span class="identifier">vec4</span><span>(</span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">0.0f</span><span>, </span><span class="number-literal">1.0f</span><span>, </span><span class="number-literal">1.0f</span><span>)))
+        )
+      )
+    )
+  )</span></code></pre>
+        
+        <h2 id="using-the-array-data" class="section"><a class="anchor-link left" href="#using-the-array-data"><i class="icofont-laika link">&#xef71;</i></a>Using the array data</h2>
+        <p>Once we&#39;ve gone through the steps to get our array data set-up, things get back to normal. In
+        this example we&#39;re accessing the components by index, but you could also loop over the arrays
+        with something like a while loop if you prefered.</p>
+        <pre><code class="nohighlight"><span class="identifier">inline</span><span> </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>: </span><span class="type-name">Shader</span><span>[</span><span class="type-name">Env</span><span>, </span><span class="type-name">Unit</span><span>] =
+  </span><span class="type-name">Shader</span><span>[</span><span class="type-name">Env</span><span>] { </span><span class="identifier">env</span><span> =&gt;
+    </span><span class="identifier">ubo</span><span>[</span><span class="type-name">CustomData</span><span>]
+    </span><span class="identifier">ubo</span><span>[</span><span class="type-name">ArrayData</span><span>]
+
+    </span><span class="keyword">def</span><span> </span><span class="declaration-name">fragment</span><span>(</span><span class="identifier">color</span><span>: </span><span class="identifier">vec4</span><span>): </span><span class="identifier">vec4</span><span> =
+      </span><span class="keyword">val</span><span> </span><span class="identifier">magenta</span><span> = </span><span class="identifier">env</span><span>.</span><span class="type-name">CUSTOM_COLOR</span><span>
+      </span><span class="keyword">val</span><span> </span><span class="identifier">cyan</span><span> = </span><span class="identifier">vec4</span><span>(
+        </span><span class="identifier">env</span><span>.</span><span class="type-name">ANOTHER_COLOR</span><span>(</span><span class="number-literal">0</span><span>),
+        </span><span class="identifier">env</span><span>.</span><span class="type-name">ANOTHER_COLOR</span><span>(</span><span class="number-literal">1</span><span>),
+        </span><span class="identifier">env</span><span>.</span><span class="type-name">ANOTHER_COLOR</span><span>(</span><span class="number-literal">2</span><span>),
+        </span><span class="identifier">env</span><span>.</span><span class="type-name">ANOTHER_COLOR</span><span>(</span><span class="number-literal">3</span><span>)
+      )
+
+      </span><span class="keyword">val</span><span> </span><span class="identifier">mByX</span><span> = </span><span class="identifier">vec4</span><span>(</span><span class="identifier">magenta</span><span>.</span><span class="identifier">xyz</span><span> * </span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>.</span><span class="identifier">x</span><span>, </span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>.</span><span class="identifier">x</span><span>)
+      </span><span class="keyword">val</span><span> </span><span class="identifier">cByY</span><span> = </span><span class="identifier">vec4</span><span>(</span><span class="identifier">cyan</span><span>.</span><span class="identifier">xyz</span><span> * </span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>.</span><span class="identifier">y</span><span>, </span><span class="identifier">env</span><span>.</span><span class="type-name">UV</span><span>.</span><span class="identifier">y</span><span>)
+
+      </span><span class="identifier">mix</span><span>(</span><span class="identifier">mByX</span><span>, </span><span class="identifier">cByY</span><span>, </span><span class="identifier">mByX</span><span>.</span><span class="identifier">a</span><span>)
+  }</span></code></pre>
+
+        
+<hr class="footer-rule"/>
+<footer>
+  Site generated by <a href="https://typelevel.org/Laika/">Laika</a> with the Helium theme.
+</footer>
+
+
+      </main>
+
+    </div>
+
+  </body>
+
+</html>
